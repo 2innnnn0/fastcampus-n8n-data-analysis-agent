@@ -1,0 +1,4505 @@
+{
+  "name": "Apify",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "48765627-8fcd-46a4-98f3-794de4ce042e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "Actor runs",
+        "operation": "Get run",
+        "runId": {
+          "__rl": true,
+          "value": "9mKpHRPedteogOFUS",
+          "mode": "list",
+          "cachedResultName": "Mon Aug 04 2025 12:52:43 AM - SUCCEEDED",
+          "cachedResultUrl": "https://console.apify.com/runs/9mKpHRPedteogOFUS"
+        }
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "0d116aae-0b94-43f0-a199-cf611f2c219f",
+      "name": "Get run",
+      "credentials": {
+        "apifyApi": {
+          "id": "RtoD3vINArsgeuEA",
+          "name": "(DP) Apify account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.defaultDatasetId }}"
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "5f40980d-6e3f-4475-8efc-3c9d84b9721c",
+      "name": "Get dataset items",
+      "credentials": {
+        "apifyApi": {
+          "id": "RtoD3vINArsgeuEA",
+          "name": "(DP) Apify account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### Actor 실행(이미 실행한 결과도 가져올 수 있음)",
+        "height": 272,
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        176,
+        -96
+      ],
+      "id": "cce4481f-21e8-4ccd-998a-810e5074b49e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### Actor결과 가져오기",
+        "height": 272,
+        "width": 208,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -96
+      ],
+      "id": "43846085-3f4a-4b43-9f29-4bb27845d7de",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {
+    "Get run": [
+      {
+        "json": {
+          "id": "9mKpHRPedteogOFUS",
+          "actId": "61RPP7dywgiy0JPD0",
+          "userId": "NkVgnsVt02V7kzGG3",
+          "startedAt": "2025-08-04T00:52:38.556Z",
+          "finishedAt": "2025-08-04T00:52:43.967Z",
+          "status": "SUCCEEDED",
+          "statusMessage": "Users with the Free Plan can retrieve a maximum of 10 items. Please subscribe to a paid plan on Apify. Link: https://apify.com/pricing?fpr=yhdrb",
+          "isStatusMessageTerminal": null,
+          "meta": {
+            "origin": "WEB",
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Whale/4.32.315.22 Safari/537.36"
+          },
+          "stats": {
+            "inputBodyLen": 578,
+            "migrationCount": 0,
+            "rebootCount": 0,
+            "restartCount": 0,
+            "durationMillis": 5204,
+            "resurrectCount": 0,
+            "runTimeSecs": 5.204,
+            "metamorph": 0,
+            "computeUnits": 0.0003613888888888889,
+            "memAvgBytes": 46089583.11091801,
+            "memMaxBytes": 79691776,
+            "memCurrentBytes": 0,
+            "cpuAvgUsage": 25.82476846208674,
+            "cpuMaxUsage": 123.88872591671847,
+            "cpuCurrentUsage": 0,
+            "netRxBytes": 74326,
+            "netTxBytes": 21159
+          },
+          "options": {
+            "build": "latest",
+            "timeoutSecs": 0,
+            "memoryMbytes": 256,
+            "maxItems": 114,
+            "diskMbytes": 512
+          },
+          "buildId": "4088Sb1JB9YisPOkB",
+          "exitCode": 0,
+          "defaultKeyValueStoreId": "xd6wcjnykr3kmi9vU",
+          "defaultDatasetId": "AMWc7Vkmj7PxtzGx7",
+          "defaultRequestQueueId": "TcRGh8gMvWtLGluQq",
+          "pricingInfo": {
+            "pricingModel": "PRICE_PER_DATASET_ITEM",
+            "reasonForChange": "We are introducing Apify Store discounts to offer better pricing to our customers.",
+            "startedAt": "2025-06-10T10:00:00.000Z",
+            "unitName": "tweet",
+            "apifyMarginPercentage": 0.2,
+            "createdAt": "2025-06-04T13:26:42.641Z",
+            "notifiedAboutFutureChangeAt": "2025-06-04T13:27:27.336Z",
+            "notifiedAboutChangeAt": "2025-06-10T11:05:17.674Z",
+            "pricePerUnitUsd": 0.04
+          },
+          "platformUsageBillingModel": "DEVELOPER",
+          "generalAccess": "FOLLOW_USER_SETTING",
+          "buildNumber": "0.0.991",
+          "containerUrl": "https://ewzs4mjmu3nl.runs.apify.net",
+          "consoleUrl": "https://console.apify.com/view/runs/9mKpHRPedteogOFUS"
+        }
+      }
+    ],
+    "Get dataset items": [
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1952162597865984077",
+          "url": "https://x.com/KOSHAnet/status/1952162597865984077",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1952162597865984077",
+          "text": "🚨사망사고속보\n\n2025. 7. 31.(목), 08:02경\n\n충북 음성군 소재 공사현장에서\n차양시설 상부에 올라가 작업 중 떨어짐(5.2m)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/Yr7my9zH8l",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 31.(목), 08:02경\n\n충북 음성군 소재 공사현장에서\n차양시설 상부에 올라가 작업 중 떨어짐(5.2m)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/Yr7my9zH8l",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 11,
+          "createdAt": "Mon Aug 04 00:20:07 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1952162597865984077",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/Yr7my9zH8l",
+                "expanded_url": "https://x.com/KOSHAnet/status/1952162597865984077/photo/1",
+                "id_str": "1952162274845822976",
+                "indices": [
+                  134,
+                  157
+                ],
+                "media_key": "3_1952162274845822976",
+                "media_url_https": "https://pbs.twimg.com/media/Gxd5PvgakAA6tP_.jpg",
+                "type": "photo",
+                "url": "https://t.co/Yr7my9zH8l",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 497,
+                        "y": 692,
+                        "h": 42,
+                        "w": 42
+                      },
+                      {
+                        "x": 210,
+                        "y": 530,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 738,
+                        "y": 530,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 556,
+                        "y": 393,
+                        "h": 69,
+                        "w": 69
+                      },
+                      {
+                        "x": 617,
+                        "y": 227,
+                        "h": 75,
+                        "w": 75
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 497,
+                        "y": 692,
+                        "h": 42,
+                        "w": 42
+                      },
+                      {
+                        "x": 210,
+                        "y": 530,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 738,
+                        "y": 530,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 556,
+                        "y": 393,
+                        "h": 69,
+                        "w": 69
+                      },
+                      {
+                        "x": 617,
+                        "y": 227,
+                        "h": 75,
+                        "w": 75
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 332,
+                        "y": 462,
+                        "h": 28,
+                        "w": 28
+                      },
+                      {
+                        "x": 140,
+                        "y": 354,
+                        "h": 36,
+                        "w": 36
+                      },
+                      {
+                        "x": 493,
+                        "y": 354,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 371,
+                        "y": 262,
+                        "h": 46,
+                        "w": 46
+                      },
+                      {
+                        "x": 412,
+                        "y": 151,
+                        "h": 50,
+                        "w": 50
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 497,
+                        "y": 692,
+                        "h": 42,
+                        "w": 42
+                      },
+                      {
+                        "x": 210,
+                        "y": 530,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 738,
+                        "y": 530,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 556,
+                        "y": 393,
+                        "h": 69,
+                        "w": 69
+                      },
+                      {
+                        "x": 617,
+                        "y": 227,
+                        "h": 75,
+                        "w": 75
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 760,
+                    "w": 1017,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 760,
+                    "w": 1017,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 508,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 760,
+                  "width": 1017,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 190,
+                      "w": 1017,
+                      "h": 570
+                    },
+                    {
+                      "x": 128,
+                      "y": 0,
+                      "w": 760,
+                      "h": 760
+                    },
+                    {
+                      "x": 175,
+                      "y": 0,
+                      "w": 667,
+                      "h": 760
+                    },
+                    {
+                      "x": 318,
+                      "y": 0,
+                      "w": 380,
+                      "h": 760
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1017,
+                      "h": 760
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1952162274845822976"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/Yr7my9zH8l",
+                "expanded_url": "https://x.com/KOSHAnet/status/1952162597865984077/photo/1",
+                "id_str": "1952162274845822976",
+                "indices": [
+                  134,
+                  157
+                ],
+                "media_key": "3_1952162274845822976",
+                "media_url_https": "https://pbs.twimg.com/media/Gxd5PvgakAA6tP_.jpg",
+                "type": "photo",
+                "url": "https://t.co/Yr7my9zH8l",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 497,
+                        "y": 692,
+                        "h": 42,
+                        "w": 42
+                      },
+                      {
+                        "x": 210,
+                        "y": 530,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 738,
+                        "y": 530,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 556,
+                        "y": 393,
+                        "h": 69,
+                        "w": 69
+                      },
+                      {
+                        "x": 617,
+                        "y": 227,
+                        "h": 75,
+                        "w": 75
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 497,
+                        "y": 692,
+                        "h": 42,
+                        "w": 42
+                      },
+                      {
+                        "x": 210,
+                        "y": 530,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 738,
+                        "y": 530,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 556,
+                        "y": 393,
+                        "h": 69,
+                        "w": 69
+                      },
+                      {
+                        "x": 617,
+                        "y": 227,
+                        "h": 75,
+                        "w": 75
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 332,
+                        "y": 462,
+                        "h": 28,
+                        "w": 28
+                      },
+                      {
+                        "x": 140,
+                        "y": 354,
+                        "h": 36,
+                        "w": 36
+                      },
+                      {
+                        "x": 493,
+                        "y": 354,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 371,
+                        "y": 262,
+                        "h": 46,
+                        "w": 46
+                      },
+                      {
+                        "x": 412,
+                        "y": 151,
+                        "h": 50,
+                        "w": 50
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 497,
+                        "y": 692,
+                        "h": 42,
+                        "w": 42
+                      },
+                      {
+                        "x": 210,
+                        "y": 530,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 738,
+                        "y": 530,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 556,
+                        "y": 393,
+                        "h": 69,
+                        "w": 69
+                      },
+                      {
+                        "x": 617,
+                        "y": 227,
+                        "h": 75,
+                        "w": 75
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 760,
+                    "w": 1017,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 760,
+                    "w": 1017,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 508,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 760,
+                  "width": 1017,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 190,
+                      "w": 1017,
+                      "h": 570
+                    },
+                    {
+                      "x": 128,
+                      "y": 0,
+                      "w": 760,
+                      "h": 760
+                    },
+                    {
+                      "x": 175,
+                      "y": 0,
+                      "w": 667,
+                      "h": 760
+                    },
+                    {
+                      "x": 318,
+                      "y": 0,
+                      "w": 380,
+                      "h": 760
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1017,
+                      "h": 760
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1952162274845822976"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/Gxd5PvgakAA6tP_.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1950352222866522537",
+          "url": "https://x.com/KOSHAnet/status/1950352222866522537",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1950352222866522537",
+          "text": "🚨사망사고속보\n\n2025. 7. 24. (목), 13:30경\n\n전북 김제시 소재 고압가스관 매설지역 측량현장에서\n배관 수심 측정 작업 중 쓰러짐(온열질환 추정)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/dpONzVMdgD",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 24. (목), 13:30경\n\n전북 김제시 소재 고압가스관 매설지역 측량현장에서\n배관 수심 측정 작업 중 쓰러짐(온열질환 추정)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/dpONzVMdgD",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 87,
+          "createdAt": "Wed Jul 30 00:26:20 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1950352222866522537",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/dpONzVMdgD",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950352222866522537/photo/1",
+                "id_str": "1950352018079625216",
+                "indices": [
+                  145,
+                  168
+                ],
+                "media_key": "3_1950352018079625216",
+                "media_url_https": "https://pbs.twimg.com/media/GxEK07iaMAAojia.jpg",
+                "type": "photo",
+                "url": "https://t.co/dpONzVMdgD",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 587,
+                        "y": 487,
+                        "h": 77,
+                        "w": 77
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 566,
+                        "y": 469,
+                        "h": 74,
+                        "w": 74
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 320,
+                        "y": 266,
+                        "h": 42,
+                        "w": 42
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 587,
+                        "y": 487,
+                        "h": 77,
+                        "w": 77
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950352018079625216"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/dpONzVMdgD",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950352222866522537/photo/1",
+                "id_str": "1950352018079625216",
+                "indices": [
+                  145,
+                  168
+                ],
+                "media_key": "3_1950352018079625216",
+                "media_url_https": "https://pbs.twimg.com/media/GxEK07iaMAAojia.jpg",
+                "type": "photo",
+                "url": "https://t.co/dpONzVMdgD",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 587,
+                        "y": 487,
+                        "h": 77,
+                        "w": 77
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 566,
+                        "y": 469,
+                        "h": 74,
+                        "w": 74
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 320,
+                        "y": 266,
+                        "h": 42,
+                        "w": 42
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 587,
+                        "y": 487,
+                        "h": 77,
+                        "w": 77
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950352018079625216"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/GxEK07iaMAAojia.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1950351821383651747",
+          "url": "https://x.com/KOSHAnet/status/1950351821383651747",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1950351821383651747",
+          "text": "🚨사망사고속보\n\n2025. 7. 21. (월), 14:30경\n\n경기 파주시 소재 공사현장에서\n천장부에 배관설치 작업 후\n이동식 비계에서 내려오다가 떨어짐(4.6m)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/HZ00K0MGP1",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 21. (월), 14:30경\n\n경기 파주시 소재 공사현장에서\n천장부에 배관설치 작업 후\n이동식 비계에서 내려오다가 떨어짐(4.6m)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/HZ00K0MGP1",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 68,
+          "createdAt": "Wed Jul 30 00:24:44 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1950351821383651747",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/HZ00K0MGP1",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950351821383651747/photo/1",
+                "id_str": "1950350916408004609",
+                "indices": [
+                  147,
+                  170
+                ],
+                "media_key": "3_1950350916408004609",
+                "media_url_https": "https://pbs.twimg.com/media/GxEJ0zfbUAEJsWv.jpg",
+                "type": "photo",
+                "url": "https://t.co/HZ00K0MGP1",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 607,
+                        "y": 476,
+                        "h": 91,
+                        "w": 91
+                      },
+                      {
+                        "x": 753,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 585,
+                        "y": 459,
+                        "h": 87,
+                        "w": 87
+                      },
+                      {
+                        "x": 726,
+                        "y": 268,
+                        "h": 90,
+                        "w": 90
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 331,
+                        "y": 260,
+                        "h": 49,
+                        "w": 49
+                      },
+                      {
+                        "x": 411,
+                        "y": 151,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 607,
+                        "y": 476,
+                        "h": 91,
+                        "w": 91
+                      },
+                      {
+                        "x": 753,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950350916408004609"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/HZ00K0MGP1",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950351821383651747/photo/1",
+                "id_str": "1950350916408004609",
+                "indices": [
+                  147,
+                  170
+                ],
+                "media_key": "3_1950350916408004609",
+                "media_url_https": "https://pbs.twimg.com/media/GxEJ0zfbUAEJsWv.jpg",
+                "type": "photo",
+                "url": "https://t.co/HZ00K0MGP1",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 607,
+                        "y": 476,
+                        "h": 91,
+                        "w": 91
+                      },
+                      {
+                        "x": 753,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 585,
+                        "y": 459,
+                        "h": 87,
+                        "w": 87
+                      },
+                      {
+                        "x": 726,
+                        "y": 268,
+                        "h": 90,
+                        "w": 90
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 331,
+                        "y": 260,
+                        "h": 49,
+                        "w": 49
+                      },
+                      {
+                        "x": 411,
+                        "y": 151,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 607,
+                        "y": 476,
+                        "h": 91,
+                        "w": 91
+                      },
+                      {
+                        "x": 753,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950350916408004609"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/GxEJ0zfbUAEJsWv.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1950350884115812767",
+          "url": "https://x.com/KOSHAnet/status/1950350884115812767",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1950350884115812767",
+          "text": "🚨사망사고속보\n\n2025. 7. 27. (일), 08:19경\n\n경기 안성시 소재 공사현장에서 가로수 전정작업 중\n시내버스가 고소작업대의 붐대 하부를 충격하여\n중심을 잃고 떨어짐(5m)(사망 1명, 부상 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/ZrxYbIbWea",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 27. (일), 08:19경\n\n경기 안성시 소재 공사현장에서 가로수 전정작업 중\n시내버스가 고소작업대의 붐대 하부를 충격하여\n중심을 잃고 떨어짐(5m)(사망 1명, 부상 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/ZrxYbIbWea",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 98,
+          "createdAt": "Wed Jul 30 00:21:01 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1950350884115812767",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/ZrxYbIbWea",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950350884115812767/photo/1",
+                "id_str": "1950350478241648642",
+                "indices": [
+                  165,
+                  188
+                ],
+                "media_key": "3_1950350478241648642",
+                "media_url_https": "https://pbs.twimg.com/media/GxEJbTMbUAIgaNX.jpg",
+                "type": "photo",
+                "url": "https://t.co/ZrxYbIbWea",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 1078,
+                        "y": 496,
+                        "h": 70,
+                        "w": 70
+                      },
+                      {
+                        "x": 866,
+                        "y": 477,
+                        "h": 88,
+                        "w": 88
+                      },
+                      {
+                        "x": 751,
+                        "y": 276,
+                        "h": 95,
+                        "w": 95
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 1039,
+                        "y": 478,
+                        "h": 67,
+                        "w": 67
+                      },
+                      {
+                        "x": 835,
+                        "y": 460,
+                        "h": 84,
+                        "w": 84
+                      },
+                      {
+                        "x": 724,
+                        "y": 266,
+                        "h": 91,
+                        "w": 91
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 589,
+                        "y": 271,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 473,
+                        "y": 260,
+                        "h": 48,
+                        "w": 48
+                      },
+                      {
+                        "x": 410,
+                        "y": 150,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 1078,
+                        "y": 496,
+                        "h": 70,
+                        "w": 70
+                      },
+                      {
+                        "x": 866,
+                        "y": 477,
+                        "h": 88,
+                        "w": 88
+                      },
+                      {
+                        "x": 751,
+                        "y": 276,
+                        "h": 95,
+                        "w": 95
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950350478241648642"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/ZrxYbIbWea",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950350884115812767/photo/1",
+                "id_str": "1950350478241648642",
+                "indices": [
+                  165,
+                  188
+                ],
+                "media_key": "3_1950350478241648642",
+                "media_url_https": "https://pbs.twimg.com/media/GxEJbTMbUAIgaNX.jpg",
+                "type": "photo",
+                "url": "https://t.co/ZrxYbIbWea",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 1078,
+                        "y": 496,
+                        "h": 70,
+                        "w": 70
+                      },
+                      {
+                        "x": 866,
+                        "y": 477,
+                        "h": 88,
+                        "w": 88
+                      },
+                      {
+                        "x": 751,
+                        "y": 276,
+                        "h": 95,
+                        "w": 95
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 1039,
+                        "y": 478,
+                        "h": 67,
+                        "w": 67
+                      },
+                      {
+                        "x": 835,
+                        "y": 460,
+                        "h": 84,
+                        "w": 84
+                      },
+                      {
+                        "x": 724,
+                        "y": 266,
+                        "h": 91,
+                        "w": 91
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 589,
+                        "y": 271,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 473,
+                        "y": 260,
+                        "h": 48,
+                        "w": 48
+                      },
+                      {
+                        "x": 410,
+                        "y": 150,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 1078,
+                        "y": 496,
+                        "h": 70,
+                        "w": 70
+                      },
+                      {
+                        "x": 866,
+                        "y": 477,
+                        "h": 88,
+                        "w": 88
+                      },
+                      {
+                        "x": 751,
+                        "y": 276,
+                        "h": 95,
+                        "w": 95
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950350478241648642"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/GxEJbTMbUAIgaNX.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1950350327573545231",
+          "url": "https://x.com/KOSHAnet/status/1950350327573545231",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1950350327573545231",
+          "text": "🚨사망사고속보\n\n2025. 7. 24. (목), 13:50경\n\n대구 중구 소재 공사현장에서 \n고소작업대의 붐대가 흔들려  반동에 의해\n중심을 잃고 떨어짐(4m)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/sdaVRn1kD2",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 24. (목), 13:50경\n\n대구 중구 소재 공사현장에서 \n고소작업대의 붐대가 흔들려  반동에 의해\n중심을 잃고 떨어짐(4m)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/sdaVRn1kD2",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 85,
+          "createdAt": "Wed Jul 30 00:18:48 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1950350327573545231",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/sdaVRn1kD2",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950350327573545231/photo/1",
+                "id_str": "1950350203883831296",
+                "indices": [
+                  145,
+                  168
+                ],
+                "media_key": "3_1950350203883831296",
+                "media_url_https": "https://pbs.twimg.com/media/GxEJLVIbQAAKZTL.jpg",
+                "type": "photo",
+                "url": "https://t.co/sdaVRn1kD2",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 670,
+                        "y": 473,
+                        "h": 95,
+                        "w": 95
+                      },
+                      {
+                        "x": 553,
+                        "y": 284,
+                        "h": 87,
+                        "w": 87
+                      },
+                      {
+                        "x": 717,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 646,
+                        "y": 456,
+                        "h": 91,
+                        "w": 91
+                      },
+                      {
+                        "x": 533,
+                        "y": 273,
+                        "h": 83,
+                        "w": 83
+                      },
+                      {
+                        "x": 691,
+                        "y": 268,
+                        "h": 90,
+                        "w": 90
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 366,
+                        "y": 258,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 302,
+                        "y": 155,
+                        "h": 47,
+                        "w": 47
+                      },
+                      {
+                        "x": 391,
+                        "y": 151,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 670,
+                        "y": 473,
+                        "h": 95,
+                        "w": 95
+                      },
+                      {
+                        "x": 553,
+                        "y": 284,
+                        "h": 87,
+                        "w": 87
+                      },
+                      {
+                        "x": 717,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950350203883831296"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/sdaVRn1kD2",
+                "expanded_url": "https://x.com/KOSHAnet/status/1950350327573545231/photo/1",
+                "id_str": "1950350203883831296",
+                "indices": [
+                  145,
+                  168
+                ],
+                "media_key": "3_1950350203883831296",
+                "media_url_https": "https://pbs.twimg.com/media/GxEJLVIbQAAKZTL.jpg",
+                "type": "photo",
+                "url": "https://t.co/sdaVRn1kD2",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 670,
+                        "y": 473,
+                        "h": 95,
+                        "w": 95
+                      },
+                      {
+                        "x": 553,
+                        "y": 284,
+                        "h": 87,
+                        "w": 87
+                      },
+                      {
+                        "x": 717,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 646,
+                        "y": 456,
+                        "h": 91,
+                        "w": 91
+                      },
+                      {
+                        "x": 533,
+                        "y": 273,
+                        "h": 83,
+                        "w": 83
+                      },
+                      {
+                        "x": 691,
+                        "y": 268,
+                        "h": 90,
+                        "w": 90
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 366,
+                        "y": 258,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 302,
+                        "y": 155,
+                        "h": 47,
+                        "w": 47
+                      },
+                      {
+                        "x": 391,
+                        "y": 151,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 670,
+                        "y": 473,
+                        "h": 95,
+                        "w": 95
+                      },
+                      {
+                        "x": 553,
+                        "y": 284,
+                        "h": 87,
+                        "w": 87
+                      },
+                      {
+                        "x": 717,
+                        "y": 278,
+                        "h": 94,
+                        "w": 94
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 933,
+                    "w": 1244,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 900,
+                    "w": 1200,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 510,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 933,
+                  "width": 1244,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 697
+                    },
+                    {
+                      "x": 156,
+                      "y": 0,
+                      "w": 933,
+                      "h": 933
+                    },
+                    {
+                      "x": 213,
+                      "y": 0,
+                      "w": 818,
+                      "h": 933
+                    },
+                    {
+                      "x": 389,
+                      "y": 0,
+                      "w": 467,
+                      "h": 933
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1244,
+                      "h": 933
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1950350203883831296"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/GxEJLVIbQAAKZTL.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1949623670051336396",
+          "url": "https://x.com/KOSHAnet/status/1949623670051336396",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1949623670051336396",
+          "text": "🚨사망사고속보\n\n2025. 7. 24. (목), 12:23경\n\n경북 포항시 소재 야산에서\n풀베기 작업 후 하산 중 쓰러짐(온열질환 추정)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/9k1cHNnEUx",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 24. (목), 12:23경\n\n경북 포항시 소재 야산에서\n풀베기 작업 후 하산 중 쓰러짐(온열질환 추정)(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/9k1cHNnEUx",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 49,
+          "createdAt": "Mon Jul 28 00:11:19 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1949623670051336396",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/9k1cHNnEUx",
+                "expanded_url": "https://x.com/KOSHAnet/status/1949623670051336396/photo/1",
+                "id_str": "1949623448235634688",
+                "indices": [
+                  132,
+                  155
+                ],
+                "media_key": "3_1949623448235634688",
+                "media_url_https": "https://pbs.twimg.com/media/Gw50MlXbcAArnYL.jpg",
+                "type": "photo",
+                "url": "https://t.co/9k1cHNnEUx",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 363,
+                        "y": 388,
+                        "h": 76,
+                        "w": 76
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 363,
+                        "y": 388,
+                        "h": 76,
+                        "w": 76
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 241,
+                        "y": 258,
+                        "h": 50,
+                        "w": 50
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 363,
+                        "y": 388,
+                        "h": 76,
+                        "w": 76
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 760,
+                    "w": 1022,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 760,
+                    "w": 1022,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 506,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 760,
+                  "width": 1022,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 188,
+                      "w": 1022,
+                      "h": 572
+                    },
+                    {
+                      "x": 131,
+                      "y": 0,
+                      "w": 760,
+                      "h": 760
+                    },
+                    {
+                      "x": 178,
+                      "y": 0,
+                      "w": 667,
+                      "h": 760
+                    },
+                    {
+                      "x": 321,
+                      "y": 0,
+                      "w": 380,
+                      "h": 760
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1022,
+                      "h": 760
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1949623448235634688"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/9k1cHNnEUx",
+                "expanded_url": "https://x.com/KOSHAnet/status/1949623670051336396/photo/1",
+                "id_str": "1949623448235634688",
+                "indices": [
+                  132,
+                  155
+                ],
+                "media_key": "3_1949623448235634688",
+                "media_url_https": "https://pbs.twimg.com/media/Gw50MlXbcAArnYL.jpg",
+                "type": "photo",
+                "url": "https://t.co/9k1cHNnEUx",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 363,
+                        "y": 388,
+                        "h": 76,
+                        "w": 76
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 363,
+                        "y": 388,
+                        "h": 76,
+                        "w": 76
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 241,
+                        "y": 258,
+                        "h": 50,
+                        "w": 50
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 363,
+                        "y": 388,
+                        "h": 76,
+                        "w": 76
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 760,
+                    "w": 1022,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 760,
+                    "w": 1022,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 506,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 760,
+                  "width": 1022,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 188,
+                      "w": 1022,
+                      "h": 572
+                    },
+                    {
+                      "x": 131,
+                      "y": 0,
+                      "w": 760,
+                      "h": 760
+                    },
+                    {
+                      "x": 178,
+                      "y": 0,
+                      "w": 667,
+                      "h": 760
+                    },
+                    {
+                      "x": 321,
+                      "y": 0,
+                      "w": 380,
+                      "h": 760
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1022,
+                      "h": 760
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1949623448235634688"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/Gw50MlXbcAArnYL.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1948546163130728515",
+          "url": "https://x.com/KOSHAnet/status/1948546163130728515",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1948546163130728515",
+          "text": "🚨사망사고속보\n\n2025. 7. 23. (수), 09:42경\n\n인천 연수구 소재 물류센터 야외 야적장에서\n이동 중이던 지게차가 부딪힘(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/gpznTFECP9",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 23. (수), 09:42경\n\n인천 연수구 소재 물류센터 야외 야적장에서\n이동 중이던 지게차가 부딪힘(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/gpznTFECP9",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 105,
+          "createdAt": "Fri Jul 25 00:49:42 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1948546163130728515",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/gpznTFECP9",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948546163130728515/photo/1",
+                "id_str": "1948545944028676099",
+                "indices": [
+                  130,
+                  153
+                ],
+                "media_key": "3_1948545944028676099",
+                "media_url_https": "https://pbs.twimg.com/media/GwqgNlZbgAMAiYo.jpg",
+                "type": "photo",
+                "url": "https://t.co/gpznTFECP9",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 502,
+                        "y": 696,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 878,
+                        "y": 104,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 743,
+                        "y": 533,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 214,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 502,
+                        "y": 696,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 878,
+                        "y": 104,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 743,
+                        "y": 533,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 214,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 333,
+                        "y": 462,
+                        "h": 25,
+                        "w": 25
+                      },
+                      {
+                        "x": 583,
+                        "y": 69,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 493,
+                        "y": 353,
+                        "h": 33,
+                        "w": 33
+                      },
+                      {
+                        "x": 142,
+                        "y": 353,
+                        "h": 35,
+                        "w": 35
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 502,
+                        "y": 696,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 878,
+                        "y": 104,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 743,
+                        "y": 533,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 214,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 765,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 765,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 508,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 765,
+                  "width": 1024,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 192,
+                      "w": 1024,
+                      "h": 573
+                    },
+                    {
+                      "x": 130,
+                      "y": 0,
+                      "w": 765,
+                      "h": 765
+                    },
+                    {
+                      "x": 177,
+                      "y": 0,
+                      "w": 671,
+                      "h": 765
+                    },
+                    {
+                      "x": 321,
+                      "y": 0,
+                      "w": 383,
+                      "h": 765
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1024,
+                      "h": 765
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948545944028676099"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/gpznTFECP9",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948546163130728515/photo/1",
+                "id_str": "1948545944028676099",
+                "indices": [
+                  130,
+                  153
+                ],
+                "media_key": "3_1948545944028676099",
+                "media_url_https": "https://pbs.twimg.com/media/GwqgNlZbgAMAiYo.jpg",
+                "type": "photo",
+                "url": "https://t.co/gpznTFECP9",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 502,
+                        "y": 696,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 878,
+                        "y": 104,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 743,
+                        "y": 533,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 214,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 502,
+                        "y": 696,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 878,
+                        "y": 104,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 743,
+                        "y": 533,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 214,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 333,
+                        "y": 462,
+                        "h": 25,
+                        "w": 25
+                      },
+                      {
+                        "x": 583,
+                        "y": 69,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 493,
+                        "y": 353,
+                        "h": 33,
+                        "w": 33
+                      },
+                      {
+                        "x": 142,
+                        "y": 353,
+                        "h": 35,
+                        "w": 35
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 502,
+                        "y": 696,
+                        "h": 38,
+                        "w": 38
+                      },
+                      {
+                        "x": 878,
+                        "y": 104,
+                        "h": 53,
+                        "w": 53
+                      },
+                      {
+                        "x": 743,
+                        "y": 533,
+                        "h": 51,
+                        "w": 51
+                      },
+                      {
+                        "x": 214,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 765,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 765,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 508,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 765,
+                  "width": 1024,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 192,
+                      "w": 1024,
+                      "h": 573
+                    },
+                    {
+                      "x": 130,
+                      "y": 0,
+                      "w": 765,
+                      "h": 765
+                    },
+                    {
+                      "x": 177,
+                      "y": 0,
+                      "w": 671,
+                      "h": 765
+                    },
+                    {
+                      "x": 321,
+                      "y": 0,
+                      "w": 383,
+                      "h": 765
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1024,
+                      "h": 765
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948545944028676099"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/GwqgNlZbgAMAiYo.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1948545465634750587",
+          "url": "https://x.com/KOSHAnet/status/1948545465634750587",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1948545465634750587",
+          "text": "🚨사망사고속보\n\n2025. 7. 23. (수), 08:45경\n\n전북 김제시 소재 자동차 부품 제조업 사업장에서\n설비 조정 작업 중 가동 중인 로봇에 부딪힘(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/D5PJL1farB",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 23. (수), 08:45경\n\n전북 김제시 소재 자동차 부품 제조업 사업장에서\n설비 조정 작업 중 가동 중인 로봇에 부딪힘(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/D5PJL1farB",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 66,
+          "createdAt": "Fri Jul 25 00:46:55 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1948545465634750587",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/D5PJL1farB",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948545465634750587/photo/1",
+                "id_str": "1948545332410974208",
+                "indices": [
+                  142,
+                  165
+                ],
+                "media_key": "3_1948545332410974208",
+                "media_url_https": "https://pbs.twimg.com/media/Gwqfp-8aAAAsRdS.jpg",
+                "type": "photo",
+                "url": "https://t.co/D5PJL1farB",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 215,
+                        "y": 531,
+                        "h": 53,
+                        "w": 53
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 215,
+                        "y": 531,
+                        "h": 53,
+                        "w": 53
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 142,
+                        "y": 351,
+                        "h": 35,
+                        "w": 35
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 215,
+                        "y": 531,
+                        "h": 53,
+                        "w": 53
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 764,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 764,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 506,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 764,
+                  "width": 1026,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 189,
+                      "w": 1026,
+                      "h": 575
+                    },
+                    {
+                      "x": 131,
+                      "y": 0,
+                      "w": 764,
+                      "h": 764
+                    },
+                    {
+                      "x": 178,
+                      "y": 0,
+                      "w": 670,
+                      "h": 764
+                    },
+                    {
+                      "x": 322,
+                      "y": 0,
+                      "w": 382,
+                      "h": 764
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1026,
+                      "h": 764
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948545332410974208"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/D5PJL1farB",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948545465634750587/photo/1",
+                "id_str": "1948545332410974208",
+                "indices": [
+                  142,
+                  165
+                ],
+                "media_key": "3_1948545332410974208",
+                "media_url_https": "https://pbs.twimg.com/media/Gwqfp-8aAAAsRdS.jpg",
+                "type": "photo",
+                "url": "https://t.co/D5PJL1farB",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 215,
+                        "y": 531,
+                        "h": 53,
+                        "w": 53
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 215,
+                        "y": 531,
+                        "h": 53,
+                        "w": 53
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 142,
+                        "y": 351,
+                        "h": 35,
+                        "w": 35
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 215,
+                        "y": 531,
+                        "h": 53,
+                        "w": 53
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 764,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 764,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 506,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 764,
+                  "width": 1026,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 189,
+                      "w": 1026,
+                      "h": 575
+                    },
+                    {
+                      "x": 131,
+                      "y": 0,
+                      "w": 764,
+                      "h": 764
+                    },
+                    {
+                      "x": 178,
+                      "y": 0,
+                      "w": 670,
+                      "h": 764
+                    },
+                    {
+                      "x": 322,
+                      "y": 0,
+                      "w": 382,
+                      "h": 764
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1026,
+                      "h": 764
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948545332410974208"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/Gwqfp-8aAAAsRdS.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1948545267177037872",
+          "url": "https://x.com/KOSHAnet/status/1948545267177037872",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1948545267177037872",
+          "text": "🚨사망사고속보\n\n2025. 7. 22. (화), 13:22경\n\n울산 울주군 소재 공사현장에서\n철골구조물 위에서 이동 중\n추락방호망을 뚫고 바닥으로 떨어짐(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/KpItsAa7TK",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 22. (화), 13:22경\n\n울산 울주군 소재 공사현장에서\n철골구조물 위에서 이동 중\n추락방호망을 뚫고 바닥으로 떨어짐(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/KpItsAa7TK",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 122,
+          "createdAt": "Fri Jul 25 00:46:08 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1948545267177037872",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/KpItsAa7TK",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948545267177037872/photo/1",
+                "id_str": "1948545105050435586",
+                "indices": [
+                  141,
+                  164
+                ],
+                "media_key": "3_1948545105050435586",
+                "media_url_https": "https://pbs.twimg.com/media/Gwqfcv9bgAIpUpb.jpg",
+                "type": "photo",
+                "url": "https://t.co/KpItsAa7TK",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 501,
+                        "y": 694,
+                        "h": 39,
+                        "w": 39
+                      },
+                      {
+                        "x": 622,
+                        "y": 226,
+                        "h": 82,
+                        "w": 82
+                      },
+                      {
+                        "x": 197,
+                        "y": 313,
+                        "h": 79,
+                        "w": 79
+                      },
+                      {
+                        "x": 685,
+                        "y": 396,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 140,
+                        "y": 516,
+                        "h": 104,
+                        "w": 104
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 501,
+                        "y": 694,
+                        "h": 39,
+                        "w": 39
+                      },
+                      {
+                        "x": 622,
+                        "y": 226,
+                        "h": 82,
+                        "w": 82
+                      },
+                      {
+                        "x": 197,
+                        "y": 313,
+                        "h": 79,
+                        "w": 79
+                      },
+                      {
+                        "x": 685,
+                        "y": 396,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 140,
+                        "y": 516,
+                        "h": 104,
+                        "w": 104
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 332,
+                        "y": 459,
+                        "h": 25,
+                        "w": 25
+                      },
+                      {
+                        "x": 412,
+                        "y": 149,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 130,
+                        "y": 207,
+                        "h": 52,
+                        "w": 52
+                      },
+                      {
+                        "x": 453,
+                        "y": 262,
+                        "h": 49,
+                        "w": 49
+                      },
+                      {
+                        "x": 92,
+                        "y": 341,
+                        "h": 68,
+                        "w": 68
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 501,
+                        "y": 694,
+                        "h": 39,
+                        "w": 39
+                      },
+                      {
+                        "x": 622,
+                        "y": 226,
+                        "h": 82,
+                        "w": 82
+                      },
+                      {
+                        "x": 197,
+                        "y": 313,
+                        "h": 79,
+                        "w": 79
+                      },
+                      {
+                        "x": 685,
+                        "y": 396,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 140,
+                        "y": 516,
+                        "h": 104,
+                        "w": 104
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 766,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 766,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 508,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 766,
+                  "width": 1026,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1026,
+                      "h": 575
+                    },
+                    {
+                      "x": 130,
+                      "y": 0,
+                      "w": 766,
+                      "h": 766
+                    },
+                    {
+                      "x": 177,
+                      "y": 0,
+                      "w": 672,
+                      "h": 766
+                    },
+                    {
+                      "x": 322,
+                      "y": 0,
+                      "w": 383,
+                      "h": 766
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1026,
+                      "h": 766
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948545105050435586"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/KpItsAa7TK",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948545267177037872/photo/1",
+                "id_str": "1948545105050435586",
+                "indices": [
+                  141,
+                  164
+                ],
+                "media_key": "3_1948545105050435586",
+                "media_url_https": "https://pbs.twimg.com/media/Gwqfcv9bgAIpUpb.jpg",
+                "type": "photo",
+                "url": "https://t.co/KpItsAa7TK",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 501,
+                        "y": 694,
+                        "h": 39,
+                        "w": 39
+                      },
+                      {
+                        "x": 622,
+                        "y": 226,
+                        "h": 82,
+                        "w": 82
+                      },
+                      {
+                        "x": 197,
+                        "y": 313,
+                        "h": 79,
+                        "w": 79
+                      },
+                      {
+                        "x": 685,
+                        "y": 396,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 140,
+                        "y": 516,
+                        "h": 104,
+                        "w": 104
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 501,
+                        "y": 694,
+                        "h": 39,
+                        "w": 39
+                      },
+                      {
+                        "x": 622,
+                        "y": 226,
+                        "h": 82,
+                        "w": 82
+                      },
+                      {
+                        "x": 197,
+                        "y": 313,
+                        "h": 79,
+                        "w": 79
+                      },
+                      {
+                        "x": 685,
+                        "y": 396,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 140,
+                        "y": 516,
+                        "h": 104,
+                        "w": 104
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 332,
+                        "y": 459,
+                        "h": 25,
+                        "w": 25
+                      },
+                      {
+                        "x": 412,
+                        "y": 149,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 130,
+                        "y": 207,
+                        "h": 52,
+                        "w": 52
+                      },
+                      {
+                        "x": 453,
+                        "y": 262,
+                        "h": 49,
+                        "w": 49
+                      },
+                      {
+                        "x": 92,
+                        "y": 341,
+                        "h": 68,
+                        "w": 68
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 501,
+                        "y": 694,
+                        "h": 39,
+                        "w": 39
+                      },
+                      {
+                        "x": 622,
+                        "y": 226,
+                        "h": 82,
+                        "w": 82
+                      },
+                      {
+                        "x": 197,
+                        "y": 313,
+                        "h": 79,
+                        "w": 79
+                      },
+                      {
+                        "x": 685,
+                        "y": 396,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 140,
+                        "y": 516,
+                        "h": 104,
+                        "w": 104
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 766,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 766,
+                    "w": 1026,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 508,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 766,
+                  "width": 1026,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1026,
+                      "h": 575
+                    },
+                    {
+                      "x": 130,
+                      "y": 0,
+                      "w": 766,
+                      "h": 766
+                    },
+                    {
+                      "x": 177,
+                      "y": 0,
+                      "w": 672,
+                      "h": 766
+                    },
+                    {
+                      "x": 322,
+                      "y": 0,
+                      "w": 383,
+                      "h": 766
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1026,
+                      "h": 766
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948545105050435586"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/Gwqfcv9bgAIpUpb.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      },
+      {
+        "json": {
+          "type": "tweet",
+          "id": "1948545045382266916",
+          "url": "https://x.com/KOSHAnet/status/1948545045382266916",
+          "twitterUrl": "https://twitter.com/KOSHAnet/status/1948545045382266916",
+          "text": "🚨사망사고속보\n\n2025. 7. 22. (화), 13:46경\n\n경기 안성시 소재 제조업 사업장에서\n제품 이송설비에 접근하였다가\n갑자기 움직이는 이송설비에 부딪힘(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/OKH4GoZyjf",
+          "fullText": "🚨사망사고속보\n\n2025. 7. 22. (화), 13:46경\n\n경기 안성시 소재 제조업 사업장에서\n제품 이송설비에 접근하였다가\n갑자기 움직이는 이송설비에 부딪힘(사망 1명)\n\n※ 위 내용은 신고 및 현재 파악된 내용으로 \n조사결과에 따라 변경될 수 있습니다. https://t.co/OKH4GoZyjf",
+          "source": "Twitter Web App",
+          "retweetCount": 0,
+          "replyCount": 0,
+          "likeCount": 0,
+          "quoteCount": 0,
+          "viewCount": 64,
+          "createdAt": "Fri Jul 25 00:45:15 +0000 2025",
+          "lang": "ko",
+          "bookmarkCount": 0,
+          "isReply": false,
+          "conversationId": "1948545045382266916",
+          "possiblySensitive": false,
+          "isPinned": false,
+          "author": {
+            "type": "user",
+            "userName": "KOSHAnet",
+            "url": "https://x.com/KOSHAnet",
+            "twitterUrl": "https://twitter.com/KOSHAnet",
+            "id": "287530405",
+            "name": "안전보건공단",
+            "isVerified": false,
+            "isBlueVerified": false,
+            "profilePicture": "https://pbs.twimg.com/profile_images/1691680758031843328/twGQzNPj_normal.jpg",
+            "coverPicture": "https://pbs.twimg.com/profile_banners/287530405/1745927060",
+            "description": "안전보건공단 공식 트위터",
+            "location": "대한민국",
+            "followers": 9047,
+            "following": 8841,
+            "status": "",
+            "canDm": false,
+            "canMediaTag": true,
+            "createdAt": "Mon Apr 25 05:16:44 +0000 2011",
+            "entities": {
+              "description": {
+                "urls": []
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "litt.ly/kosha",
+                    "expanded_url": "https://litt.ly/kosha",
+                    "url": "https://t.co/jEtsJcwzcF",
+                    "indices": [
+                      0,
+                      23
+                    ]
+                  }
+                ]
+              }
+            },
+            "fastFollowersCount": 0,
+            "favouritesCount": 1214,
+            "hasCustomTimelines": true,
+            "isTranslator": false,
+            "mediaCount": 4409,
+            "statusesCount": 6305,
+            "withheldInCountries": [],
+            "affiliatesHighlightedLabel": {},
+            "possiblySensitive": false,
+            "pinnedTweetIds": []
+          },
+          "extendedEntities": {
+            "media": [
+              {
+                "display_url": "pic.x.com/OKH4GoZyjf",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948545045382266916/photo/1",
+                "id_str": "1948544893531631616",
+                "indices": [
+                  145,
+                  168
+                ],
+                "media_key": "3_1948544893531631616",
+                "media_url_https": "https://pbs.twimg.com/media/GwqfQb_asAAWYeO.jpg",
+                "type": "photo",
+                "url": "https://t.co/OKH4GoZyjf",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 500,
+                        "y": 692,
+                        "h": 43,
+                        "w": 43
+                      },
+                      {
+                        "x": 215,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 743,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 444,
+                        "y": 405,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 285,
+                        "y": 320,
+                        "h": 78,
+                        "w": 78
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 500,
+                        "y": 692,
+                        "h": 43,
+                        "w": 43
+                      },
+                      {
+                        "x": 215,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 743,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 444,
+                        "y": 405,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 285,
+                        "y": 320,
+                        "h": 78,
+                        "w": 78
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 332,
+                        "y": 459,
+                        "h": 28,
+                        "w": 28
+                      },
+                      {
+                        "x": 142,
+                        "y": 353,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 493,
+                        "y": 353,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 294,
+                        "y": 268,
+                        "h": 49,
+                        "w": 49
+                      },
+                      {
+                        "x": 189,
+                        "y": 212,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 500,
+                        "y": 692,
+                        "h": 43,
+                        "w": 43
+                      },
+                      {
+                        "x": 215,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 743,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 444,
+                        "y": 405,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 285,
+                        "y": 320,
+                        "h": 78,
+                        "w": 78
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 764,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 764,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 507,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 764,
+                  "width": 1024,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1024,
+                      "h": 573
+                    },
+                    {
+                      "x": 130,
+                      "y": 0,
+                      "w": 764,
+                      "h": 764
+                    },
+                    {
+                      "x": 177,
+                      "y": 0,
+                      "w": 670,
+                      "h": 764
+                    },
+                    {
+                      "x": 321,
+                      "y": 0,
+                      "w": 382,
+                      "h": 764
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1024,
+                      "h": 764
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948544893531631616"
+                  }
+                }
+              }
+            ]
+          },
+          "card": {},
+          "place": {},
+          "entities": {
+            "hashtags": [],
+            "media": [
+              {
+                "display_url": "pic.x.com/OKH4GoZyjf",
+                "expanded_url": "https://x.com/KOSHAnet/status/1948545045382266916/photo/1",
+                "id_str": "1948544893531631616",
+                "indices": [
+                  145,
+                  168
+                ],
+                "media_key": "3_1948544893531631616",
+                "media_url_https": "https://pbs.twimg.com/media/GwqfQb_asAAWYeO.jpg",
+                "type": "photo",
+                "url": "https://t.co/OKH4GoZyjf",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "features": {
+                  "large": {
+                    "faces": [
+                      {
+                        "x": 500,
+                        "y": 692,
+                        "h": 43,
+                        "w": 43
+                      },
+                      {
+                        "x": 215,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 743,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 444,
+                        "y": 405,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 285,
+                        "y": 320,
+                        "h": 78,
+                        "w": 78
+                      }
+                    ]
+                  },
+                  "medium": {
+                    "faces": [
+                      {
+                        "x": 500,
+                        "y": 692,
+                        "h": 43,
+                        "w": 43
+                      },
+                      {
+                        "x": 215,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 743,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 444,
+                        "y": 405,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 285,
+                        "y": 320,
+                        "h": 78,
+                        "w": 78
+                      }
+                    ]
+                  },
+                  "small": {
+                    "faces": [
+                      {
+                        "x": 332,
+                        "y": 459,
+                        "h": 28,
+                        "w": 28
+                      },
+                      {
+                        "x": 142,
+                        "y": 353,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 493,
+                        "y": 353,
+                        "h": 35,
+                        "w": 35
+                      },
+                      {
+                        "x": 294,
+                        "y": 268,
+                        "h": 49,
+                        "w": 49
+                      },
+                      {
+                        "x": 189,
+                        "y": 212,
+                        "h": 51,
+                        "w": 51
+                      }
+                    ]
+                  },
+                  "orig": {
+                    "faces": [
+                      {
+                        "x": 500,
+                        "y": 692,
+                        "h": 43,
+                        "w": 43
+                      },
+                      {
+                        "x": 215,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 743,
+                        "y": 532,
+                        "h": 54,
+                        "w": 54
+                      },
+                      {
+                        "x": 444,
+                        "y": 405,
+                        "h": 75,
+                        "w": 75
+                      },
+                      {
+                        "x": 285,
+                        "y": 320,
+                        "h": 78,
+                        "w": 78
+                      }
+                    ]
+                  }
+                },
+                "sizes": {
+                  "large": {
+                    "h": 764,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "medium": {
+                    "h": 764,
+                    "w": 1024,
+                    "resize": "fit"
+                  },
+                  "small": {
+                    "h": 507,
+                    "w": 680,
+                    "resize": "fit"
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "w": 150,
+                    "resize": "crop"
+                  }
+                },
+                "original_info": {
+                  "height": 764,
+                  "width": 1024,
+                  "focus_rects": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1024,
+                      "h": 573
+                    },
+                    {
+                      "x": 130,
+                      "y": 0,
+                      "w": 764,
+                      "h": 764
+                    },
+                    {
+                      "x": 177,
+                      "y": 0,
+                      "w": 670,
+                      "h": 764
+                    },
+                    {
+                      "x": 321,
+                      "y": 0,
+                      "w": 382,
+                      "h": 764
+                    },
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "w": 1024,
+                      "h": 764
+                    }
+                  ]
+                },
+                "media_results": {
+                  "result": {
+                    "media_key": "3_1948544893531631616"
+                  }
+                }
+              }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+          },
+          "isRetweet": false,
+          "isQuote": false,
+          "media": [
+            "https://pbs.twimg.com/media/GwqfQb_asAAWYeO.jpg"
+          ],
+          "isConversationControlled": false
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get run": {
+      "main": [
+        [
+          {
+            "node": "Get dataset items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8138abc8-51f3-43d5-b96c-9ea3a6d09ba8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b5ece4a7f1d316800b5067c86423ddc5cb2f9cd86ec345924a6f385dc750a41b"
+  },
+  "id": "pVFAnyL9uGNKPPLZ",
+  "tags": [
+    {
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "updatedAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}

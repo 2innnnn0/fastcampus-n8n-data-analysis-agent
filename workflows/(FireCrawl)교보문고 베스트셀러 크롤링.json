@@ -1,0 +1,779 @@
+{
+  "name": "(FireCrawl) 교보문고 베스트셀러 크롤링",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "start-node",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        112
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "Wait 30 secs\n- 추출하는데 시간 필요",
+        "height": 392,
+        "width": 220,
+        "color": 7
+      },
+      "id": "bafe0ed1-b090-4296-934e-1218c3c063e3",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        336,
+        -128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "extract",
+        "urls": {
+          "items": [
+            {
+              "url": "https://store.kyobobook.co.kr/bestseller/online/daily"
+            }
+          ]
+        },
+        "prompt": "=Extract the list of books from the bestseller page. Include the title, author, price, and rank for each book. The title and author are required fields.",
+        "schema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"books\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"title\": {\n            \"type\": \"string\"\n          },\n          \"author\": {\n            \"type\": \"string\"\n          },\n          \"price\": {\n            \"type\": \"number\"\n          },\n          \"rank\": {\n            \"type\": \"number\"\n          }\n        },\n        \"required\": [\n          \"title\",\n          \"author\"\n        ]\n      }\n    }\n  },\n  \"required\": [\n    \"books\"\n  ]\n}",
+        "scrapeOptions": {
+          "options": {
+            "headers": {}
+          }
+        },
+        "requestOptions": {}
+      },
+      "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
+      "typeVersion": 1,
+      "position": [
+        144,
+        32
+      ],
+      "id": "b50d0ae0-f112-474f-a570-a02985059d78",
+      "name": "Extract Data",
+      "credentials": {
+        "firecrawlApi": {
+          "id": "AseE7asuqmJzZANm",
+          "name": "(DP) Firecrawl account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getExtractStatus",
+        "extractId": "={{ $json.id }}",
+        "requestOptions": {}
+      },
+      "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
+      "typeVersion": 1,
+      "position": [
+        624,
+        32
+      ],
+      "id": "0f082beb-9a7d-4c0e-b55d-15b89c273706",
+      "name": "Get Extract Status",
+      "credentials": {
+        "firecrawlApi": {
+          "id": "AseE7asuqmJzZANm",
+          "name": "(DP) Firecrawl account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data.data.books",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        800,
+        32
+      ],
+      "id": "bb26be61-5186-4ca5-b327-5700878411a7",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "id": "ae6b69e0-3b92-48e5-89a1-c1d2bd72f20d",
+      "name": "30 Secs1",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        400,
+        32
+      ],
+      "webhookId": "282bb09d-3241-4022-87fa-0b342ccd124a",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "content": "Send Result to Slack",
+        "height": 392,
+        "color": 5
+      },
+      "id": "06759f06-a00a-486a-949d-a678618a7eac",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1216,
+        -128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "GET Result\n- 추출완료한 값 가져오기.",
+        "height": 392,
+        "width": 336,
+        "color": 5
+      },
+      "id": "fa68d364-deaa-45f6-b922-0808aee37af6",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        -128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "Scheduled Trigger\n- 매일 아침 9시마다",
+        "height": 392,
+        "width": 340
+      },
+      "id": "ca1ca49a-aca0-4887-aaca-fc141da1080b",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "Firecrawl Extract POST\n- 교보문고 데일리 가져오기 https://store.kyobobook.co.kr/bestseller/online/daily",
+        "height": 392,
+        "width": 232,
+        "color": 3
+      },
+      "id": "65e4b98d-6f92-4413-922e-3168bf425800",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        -128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 18
+            }
+          ]
+        }
+      },
+      "id": "c2570a0c-f0b1-4401-bd34-5342bf2e1d60",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -176,
+        -32
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "projectId": {
+          "__rl": true,
+          "value": "datapopcorn",
+          "mode": "list",
+          "cachedResultName": "datapopcorn",
+          "cachedResultUrl": "https://console.cloud.google.com/bigquery?project=datapopcorn"
+        },
+        "datasetId": {
+          "__rl": true,
+          "value": "datasets2",
+          "mode": "list",
+          "cachedResultName": "datasets2"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "bestseller_books",
+          "mode": "list",
+          "cachedResultName": "bestseller_books"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        1008,
+        32
+      ],
+      "id": "b3c7534b-4b5d-41d8-9747-bd650f3df8c1",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "googleBigQueryOAuth2Api": {
+          "id": "cjvgDfPCafPSszxK",
+          "name": "(DP) Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C07PH5BRN1X",
+          "mode": "list",
+          "cachedResultName": "automation-n8n"
+        },
+        "text": "={{ $now }} 🔔 `datapopcorn.datasets2.bestseller_books` 테이블에 {{ $('Split Out').all().length }}개 아이템 적재완료",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        32
+      ],
+      "id": "c9c33e35-c570-4cef-b945-14df4503929c",
+      "name": "Send a message",
+      "webhookId": "e4021421-afa2-49e8-9da4-49b7dde00d58",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "uuTaxNZGMuNDjn2R",
+          "name": "(DP) OAuth2 Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Store in DB\n- 결과 적재",
+        "height": 392,
+        "color": 4
+      },
+      "id": "1400a0fe-4e42-4713-9cc0-816c7cc8f755",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        -128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    }
+  ],
+  "pinData": {
+    "Extract Data": [
+      {
+        "json": {
+          "success": true,
+          "id": "b5453b3d-70fd-416c-a6ce-f8823ecb3fe5",
+          "urlTrace": []
+        }
+      }
+    ],
+    "Get Extract Status": [
+      {
+        "json": {
+          "data": {
+            "success": true,
+            "data": {
+              "books": [
+                {
+                  "rank": 1,
+                  "price": 19800,
+                  "title": "가공범",
+                  "author": "히가시노 게이고"
+                },
+                {
+                  "rank": 2,
+                  "price": 19710,
+                  "title": "다크 심리학",
+                  "author": "다크 사이드 프로젝트"
+                },
+                {
+                  "rank": 3,
+                  "price": 19800,
+                  "title": "편안함의 습격",
+                  "author": "마이클 이스터"
+                },
+                {
+                  "rank": 4,
+                  "price": 16200,
+                  "title": "혼모노",
+                  "author": "성해나"
+                },
+                {
+                  "rank": 5,
+                  "price": 18900,
+                  "title": "박곰희 연금 부자 수업",
+                  "author": "박곰희"
+                },
+                {
+                  "rank": 6,
+                  "price": 7650,
+                  "title": "읽는 기도",
+                  "author": "무명의 기도자"
+                },
+                {
+                  "rank": 7,
+                  "price": 17550,
+                  "title": "월요일 수요일 토요일",
+                  "author": "페트라 펠리니"
+                },
+                {
+                  "rank": 8,
+                  "price": 18000,
+                  "title": "료의 생각 없는 생각",
+                  "author": "료"
+                },
+                {
+                  "rank": 9,
+                  "price": 11700,
+                  "title": "모순",
+                  "author": "양귀자"
+                },
+                {
+                  "rank": 10,
+                  "price": 17550,
+                  "title": "우리의 낙원에서 만나자",
+                  "author": "하태완"
+                },
+                {
+                  "rank": 11,
+                  "price": 17820,
+                  "title": "경험의 멸종",
+                  "author": "크리스틴 로젠"
+                },
+                {
+                  "rank": 12,
+                  "price": 15300,
+                  "title": "궤도",
+                  "author": "서맨사 하비"
+                },
+                {
+                  "rank": 13,
+                  "price": 17910,
+                  "title": "뇌가 멈추기 전에",
+                  "author": "이승훈"
+                },
+                {
+                  "rank": 14,
+                  "price": 5850,
+                  "title": "사카모토 데이즈 21: 오늘의 운세",
+                  "author": "Yuto Suzuki"
+                },
+                {
+                  "rank": 15,
+                  "price": 15120,
+                  "title": "안녕이라 그랬어",
+                  "author": "김애란"
+                },
+                {
+                  "rank": 16,
+                  "price": 22500,
+                  "title": "류수영의 평생 레시피",
+                  "author": "류수영"
+                },
+                {
+                  "rank": 17,
+                  "price": 17820,
+                  "title": "ETS 토익 정기시험 기출문제집 1000 Vol 4 LC(리스닝)",
+                  "author": "ETS"
+                },
+                {
+                  "rank": 18,
+                  "price": 17820,
+                  "title": "ETS 토익 정기시험 기출문제집 1000 Vol 4 RC(리딩)",
+                  "author": "ETS"
+                },
+                {
+                  "rank": 19,
+                  "price": 10800,
+                  "title": "자몽살구클럽",
+                  "author": "한로로"
+                },
+                {
+                  "rank": 20,
+                  "price": 16020,
+                  "title": "어른의 행복은 조용하다",
+                  "author": "태수"
+                }
+              ]
+            },
+            "status": "completed",
+            "expiresAt": "2025-08-04T05:15:20.000Z",
+            "tokensUsed": 623
+          }
+        }
+      }
+    ],
+    "Split Out": [
+      {
+        "json": {
+          "rank": 1,
+          "price": 19800,
+          "title": "가공범",
+          "author": "히가시노 게이고"
+        }
+      },
+      {
+        "json": {
+          "rank": 2,
+          "price": 19710,
+          "title": "다크 심리학",
+          "author": "다크 사이드 프로젝트"
+        }
+      },
+      {
+        "json": {
+          "rank": 3,
+          "price": 19800,
+          "title": "편안함의 습격",
+          "author": "마이클 이스터"
+        }
+      },
+      {
+        "json": {
+          "rank": 4,
+          "price": 16200,
+          "title": "혼모노",
+          "author": "성해나"
+        }
+      },
+      {
+        "json": {
+          "rank": 5,
+          "price": 18900,
+          "title": "박곰희 연금 부자 수업",
+          "author": "박곰희"
+        }
+      },
+      {
+        "json": {
+          "rank": 6,
+          "price": 7650,
+          "title": "읽는 기도",
+          "author": "무명의 기도자"
+        }
+      },
+      {
+        "json": {
+          "rank": 7,
+          "price": 17550,
+          "title": "월요일 수요일 토요일",
+          "author": "페트라 펠리니"
+        }
+      },
+      {
+        "json": {
+          "rank": 8,
+          "price": 18000,
+          "title": "료의 생각 없는 생각",
+          "author": "료"
+        }
+      },
+      {
+        "json": {
+          "rank": 9,
+          "price": 11700,
+          "title": "모순",
+          "author": "양귀자"
+        }
+      },
+      {
+        "json": {
+          "rank": 10,
+          "price": 17550,
+          "title": "우리의 낙원에서 만나자",
+          "author": "하태완"
+        }
+      },
+      {
+        "json": {
+          "rank": 11,
+          "price": 17820,
+          "title": "경험의 멸종",
+          "author": "크리스틴 로젠"
+        }
+      },
+      {
+        "json": {
+          "rank": 12,
+          "price": 15300,
+          "title": "궤도",
+          "author": "서맨사 하비"
+        }
+      },
+      {
+        "json": {
+          "rank": 13,
+          "price": 17910,
+          "title": "뇌가 멈추기 전에",
+          "author": "이승훈"
+        }
+      },
+      {
+        "json": {
+          "rank": 14,
+          "price": 5850,
+          "title": "사카모토 데이즈 21: 오늘의 운세",
+          "author": "Yuto Suzuki"
+        }
+      },
+      {
+        "json": {
+          "rank": 15,
+          "price": 15120,
+          "title": "안녕이라 그랬어",
+          "author": "김애란"
+        }
+      },
+      {
+        "json": {
+          "rank": 16,
+          "price": 22500,
+          "title": "류수영의 평생 레시피",
+          "author": "류수영"
+        }
+      },
+      {
+        "json": {
+          "rank": 17,
+          "price": 17820,
+          "title": "ETS 토익 정기시험 기출문제집 1000 Vol 4 LC(리스닝)",
+          "author": "ETS"
+        }
+      },
+      {
+        "json": {
+          "rank": 18,
+          "price": 17820,
+          "title": "ETS 토익 정기시험 기출문제집 1000 Vol 4 RC(리딩)",
+          "author": "ETS"
+        }
+      },
+      {
+        "json": {
+          "rank": 19,
+          "price": 10800,
+          "title": "자몽살구클럽",
+          "author": "한로로"
+        }
+      },
+      {
+        "json": {
+          "rank": 20,
+          "price": 16020,
+          "title": "어른의 행복은 조용하다",
+          "author": "태수"
+        }
+      }
+    ],
+    "Insert rows in a table": [
+      {
+        "json": {
+          "kind": "bigquery#tableDataInsertAllResponse"
+        }
+      }
+    ],
+    "Send a message": [
+      {
+        "json": {
+          "ok": true,
+          "channel": "C07PH5BRN1X",
+          "message": {
+            "user": "U42D3C69F",
+            "type": "message",
+            "ts": "1754266449.675559",
+            "bot_id": "B07TDLDPVDJ",
+            "app_id": "A07NXQJJPFG",
+            "text": "2025-08-03T20:14:09.460-04:00 :bell: `datapopcorn.datasets2.bestseller_books` 테이블에 20개 아이템 적재완료\n_Automated with this <https://n8n.datapopcorn.xyz/workflow/GXCdQRdtEIbH56WE?utm_source=n8n-internal&amp;utm_medium=powered_by&amp;utm_campaign=n8n-nodes-base.slack_b5ece4a7f1d316800b5067c86423ddc5cb2f9cd86ec345924a6f385dc750a41b|n8n workflow>_",
+            "team": "T42C9CN8G",
+            "bot_profile": {
+              "id": "B07TDLDPVDJ",
+              "app_id": "A07NXQJJPFG",
+              "name": "n8n-bot",
+              "icons": {
+                "image_36": "https://avatars.slack-edge.com/2025-06-04/8988063442487_c8dc41babc257d224cf6_36.png",
+                "image_48": "https://avatars.slack-edge.com/2025-06-04/8988063442487_c8dc41babc257d224cf6_48.png",
+                "image_72": "https://avatars.slack-edge.com/2025-06-04/8988063442487_c8dc41babc257d224cf6_72.png"
+              },
+              "deleted": false,
+              "updated": 1752758346,
+              "team_id": "T42C9CN8G"
+            },
+            "blocks": [
+              {
+                "type": "rich_text",
+                "block_id": "iZcg",
+                "elements": [
+                  {
+                    "type": "rich_text_section",
+                    "elements": [
+                      {
+                        "type": "text",
+                        "text": "2025-08-03T20:14:09.460-04:00 "
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "bell",
+                        "unicode": "1f514"
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      },
+                      {
+                        "type": "text",
+                        "text": "datapopcorn.datasets2.bestseller_books",
+                        "style": {
+                          "code": true
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": " 테이블에 20개 아이템 적재완료\n"
+                      },
+                      {
+                        "type": "text",
+                        "text": "Automated with this ",
+                        "style": {
+                          "italic": true
+                        }
+                      },
+                      {
+                        "type": "link",
+                        "url": "https://n8n.datapopcorn.xyz/workflow/GXCdQRdtEIbH56WE?utm_source=n8n-internal&amp;utm_medium=powered_by&amp;utm_campaign=n8n-nodes-base.slack_b5ece4a7f1d316800b5067c86423ddc5cb2f9cd86ec345924a6f385dc750a41b",
+                        "text": "n8n workflow",
+                        "style": {
+                          "italic": true
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "message_timestamp": "1754266449.675559"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Data": {
+      "main": [
+        [
+          {
+            "node": "30 Secs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Extract Status": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "30 Secs1": {
+      "main": [
+        [
+          {
+            "node": "Get Extract Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true
+  },
+  "versionId": "9c98310a-1fe5-41d7-99fc-29ab2e02304f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b5ece4a7f1d316800b5067c86423ddc5cb2f9cd86ec345924a6f385dc750a41b"
+  },
+  "id": "GXCdQRdtEIbH56WE",
+  "tags": []
+}

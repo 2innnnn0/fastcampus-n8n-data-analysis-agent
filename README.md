@@ -22,7 +22,7 @@ n8n 데이터분석 AI Agent 프로젝트
 - `/workflows` : 강의 실습용 n8n 워크플로우 JSON 파일
 - `/datasets` : 예제 데이터셋 (CSV, JSON 등)
 - `/prompts` : GPT 활용 프롬프트 예시
-- `/docs` : 주요 기능 설명 및 워크플로우 문서화
+- (위키독스) n8n 노코드 자동화 한글 가이드북 : https://wikidocs.net/book/18092
 
 ---
 
@@ -49,7 +49,7 @@ n8n 데이터분석 AI Agent 프로젝트
 추가적인 기여나 피드백은 언제든 환영합니다.
 
 - 문의: `data.popcorn@gmail.com`
-- 강사: 팝콘 (n8n 글로벌 앰버서더)
+- 강사: 데이터팝콘 (n8n 글로벌 앰버서더)
 
 ---
 
