@@ -1,0 +1,216 @@
+{
+  "name": "Text-To-SQL(via OpenAI - Assistants)",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1920,
+        -2336
+      ],
+      "id": "619035b6-aa66-407c-87d3-5ef4f2e9e188",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        -2544
+      ],
+      "id": "8af1fd0d-b9db-476b-819f-0f05fb620b78",
+      "name": "When chat message received",
+      "webhookId": "ecb82b48-330b-40cb-a28e-1185230f924b"
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "value": "asst_wsj9CBDafI3l8rCn4GcXzAF3",
+          "mode": "list",
+          "cachedResultName": "TEXT-TO-SQL bot"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1744,
+        -2544
+      ],
+      "id": "d1166591-f7e9-4f63-b39d-0712b29ef686",
+      "name": "Text-To-SQL",
+      "credentials": {
+        "openAiApi": {
+          "id": "ledUugAWoH4Uadky",
+          "name": "(fastcampus)OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "![](https://raw.githubusercontent.com/2innnnn0/assets/refs/heads/master/image/datapopcorn_logo_50px.png)\n# 10분안에 Text-To-SQL 만들기\n- 준비물 : OpenAI 계정 필요 - https://platform.openai.com/ 접속 후 Payment Billing 등록해야 함.\n1. Chinook DB 스키마 [다운](https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_Sqlite.sql)받기.\n2. [OpenAI Assistants](https://platform.openai.com/assistants/) 메뉴에 들어가서 Text-to-SQL 에이전트를 만들기.\n\n```\n- System Inst. : 오른쪽 참고\n- Model : gpt-4.1\n- Tools : File Search에 1번에서 다운 받은 텍스트 파일 업로드하기. -> Vector Store로 저장.\n- Temperature : 0 또는 0.1  (생성 결과의 무작위성 조절 (0=완전 결정적) : SQL은 정해진 구조와 문법을 따르기 때문에 변동성이 없어야 합니다.)\n- Top P : 1 (누적 확률 기반 토큰 필터링 (1=전체 사용), 가능한 모든 후보 토큰 중 가장 높은 확률을 기준으로 선택하도록 설정. top_p < 1은 의미 없이 일부 토큰을 제외할 수 있음.)\n```\n\n3. n8n에서 OpenAI 노드 > Message Assistant 선택.\n4. chat Trigger 연결 후 \"아티스트별 앨범 수 구해줘.\"\n5. (옵션) Tool으로 Slack 연결해서 채널에 쏘기.",
+        "height": 500,
+        "width": 840
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -3104
+      ],
+      "id": "f9a53489-267e-44ca-be5f-ac7cb1974f61",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## System Instruction\n```\n당신은 숙련된 SQL 전문가이며, 주어진 자연어 질문을 기반으로 Chinook SQLite 데이터베이스에 대한 정확하고 최적화된 SQL 쿼리를 생성해야 합니다.\n\n다음은 Chinook 데이터베이스의 주요 테이블과 그 관계입니다:\n\n- **Artist(ArtistId, Name)**\n- **Album(AlbumId, Title, ArtistId)** — Artist에 종속됨\n- **Track(TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)** — Album, Genre, MediaType에 종속됨\n- **Genre(GenreId, Name)**\n- **MediaType(MediaTypeId, Name)**\n- **Customer(CustomerId, FirstName, LastName, Country, Email, ...)** — 고객 정보\n- **Invoice(InvoiceId, CustomerId, InvoiceDate, Total, ...)**\n- **InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)** — 구매 내역\n- **Employee(EmployeeId, FirstName, LastName, Title, ReportsTo, ...)**\n- **Playlist(PlaylistId, Name)**\n- **PlaylistTrack(PlaylistId, TrackId)** — 다대다 관계 테이블\n\n📌 다음 원칙을 반드시 따르십시오:\n1. **SQL 문만 출력하십시오.** 자연어 설명은 포함하지 마십시오.\n2. 가능한 경우 **JOIN**을 활용하여 의미 있는 결과를 구성하십시오.\n3. 사용자의 질문이 애매하거나 누락된 정보가 있을 경우, **가능한 범위 내에서 가장 합리적인 기본값**을 가정해 작성하십시오.\n4. 날짜, 문자열 등의 조건은 항상 적절한 **형식을 유지**하십시오. (예: `'USA'`, `'2009-01-01'`)\n5. SELECT 절에는 **명확하고 해석 가능한 컬럼명(alias 포함)**을 사용하십시오.\n6. 질문자가 **Top N**, **정렬**, **집계(합계/평균/카운트)** 등을 요청하면 정확히 반영하십시오.\n7. SQL은 항상 **SQLite 문법**을 기반으로 하십시오.\n\n예시:\n질문: \"가장 비싼 트랙 5개를 알려줘\"\n출력:\n```sql\nSELECT Name, UnitPrice\nFROM Track\nORDER BY UnitPrice DESC\nLIMIT 5;\n```",
+        "height": 640,
+        "width": 1200,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        -3104
+      ],
+      "id": "fbc906b5-7c02-4edc-8bfd-8417e780d41a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.imgur.com/IoZ4RKK.gif)",
+        "height": 180,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -3072
+      ],
+      "id": "8e22ab4a-9585-4fcf-85a5-b2f34ce54086",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Chinook Database?\n[![Chinook sample database | YugabyteDB Docs](https://tse3.mm.bing.net/th?id=OIP.ns_hFVgQ7r8jzVsHTOKPTAHaHx\\&pid=Api)](https://docs.yugabyte.com/latest/sample-data/chinook/)\n\nChinook Database는 디지털 음악 스토어를 모델링한 오픈소스 샘플 데이터베이스로, SQL 학습, 데이터 분석 실습, ORM 도구 테스트, 데이터 시각화 등 다양한 용도로 활용됩니다.\n---\n### 📌 주요 특징\n* **데이터 모델**: 아티스트, 앨범, 트랙, 고객, 직원, 청구서 등 총 11개의 테이블로 구성되어 있으며, 실제 iTunes 라이브러리 데이터를 기반으로 설계되었습니다.\n* **지원 플랫폼**: SQLite, PostgreSQL, MySQL, SQL Server, Oracle 등 다양한 DBMS에서 사용 가능합니다.\n* **데이터 규모**: 15,000개 이상의 레코드와 다양한 제약 조건(Primary Key, Foreign Key 등)을 포함하고 있어 관계형 데이터 모델링 및 쿼리 실습에 적합합니다.\n\n---\n\n### 🧩 테이블 구성 예시\n\n* `Artist`: 아티스트 정보\n* `Album`: 앨범 정보\n* `Track`: 트랙 정보\n* `Customer`: 고객 정보\n* `Invoice`: 청구서 정보\n* `InvoiceLine`: 청구 항목 정보\n* `Employee`: 직원 정보\n* `Genre`: 장르 정보\n* `MediaType`: 미디어 유형 정보\n* `Playlist`: 재생 목록 정보\n* `PlaylistTrack`: 재생 목록과 트랙의 관계\n\n---\n\n### 📥 다운로드 및 설치\n\nChinook Database는 GitHub에서 다양한 DBMS용 SQL 스크립트와 함께 제공됩니다.\n* GitHub 저장소: ([github.com][1])\n* SQLite 버전 다운로드: `Chinook_Sqlite.sqlite` 파일을 해당 저장소에서 찾을 수 있습니다.\n\n---\n\n### 🎯 활용 사례\n* **SQL 학습**: JOIN, GROUP BY, 서브쿼리 등 다양한 SQL 문법 실습\n* **데이터 분석**: 고객 구매 패턴 분석, 장르별 판매 통계 등\n* **시각화 도구 연동**: Power BI, Tableau 등을 활용한 데이터 시각화\n* **ORM 테스트**: Entity Framework, SQLAlchemy 등 ORM 도구의 기능 검증\n",
+        "height": 1560,
+        "width": 660,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2112,
+        -2400
+      ],
+      "id": "bd6177e4-4688-42d8-9cb7-67b26477e37c",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.imgur.com/5bprhww.png)",
+        "height": 392,
+        "width": 700,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        -2144
+      ],
+      "id": "bc53a2d4-8602-42c7-a46e-31ccc3b43d54",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C435YGHAQ",
+          "mode": "list",
+          "cachedResultName": "general"
+        },
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_Text', ``, 'string') }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slackTool",
+      "typeVersion": 2.3,
+      "position": [
+        1744,
+        -2336
+      ],
+      "id": "1617ae03-ee6d-4962-963e-a89e7d80f4a4",
+      "name": "Send a message in Slack",
+      "webhookId": "12e7e713-3f97-44ca-a458-8ac811cdb509",
+      "credentials": {
+        "slackApi": {
+          "id": "WZW1Kqym7BnJSCSZ",
+          "name": "(n8n-agent-bot) Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Text-To-SQL",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Text-To-SQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Slack": {
+      "ai_tool": [
+        [
+          {
+            "node": "Text-To-SQL",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c0326094-d5ec-4dd8-9e49-49729e67d69e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b5ece4a7f1d316800b5067c86423ddc5cb2f9cd86ec345924a6f385dc750a41b"
+  },
+  "id": "Cyr8dqEx6QNMwBQ0",
+  "tags": [
+    {
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "updatedAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}
