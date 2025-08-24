@@ -1,0 +1,390 @@
+{
+  "name": "🚨 Report n8n workflow errors to Slack",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "9babcea6-ac7c-4a75-bd4c-f3d6a54c0ec7",
+      "name": "On Error",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        464,
+        528
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "message",
+              "value": "=:warning: [prod] workflow `{{$json[\"workflow\"][\"name\"]}}` failed to run! <{{ $json.execution.url }}|execution>\n\nerror message from node: {{ $json.execution.lastNodeExecuted }}\n {{ $json.execution.error.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "134acca3-d4a7-485c-ab45-5a2721ed6a2c",
+      "name": "Set message",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        688,
+        528
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 👨‍🎤 Setup\n1. Add Slack creds\n2. Add this error workflow to other workflows\nhttps://docs.n8n.io/flow-logic/error-handling/#create-and-set-an-error-workflow",
+        "height": 154.7766688696994,
+        "width": 424.4907862645661,
+        "color": 5
+      },
+      "id": "b6dfce1e-95c0-43c4-8a81-098b33130232",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        384,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 👆🏽 Adjust error message here",
+        "height": 80,
+        "width": 241
+      },
+      "id": "619e2628-6860-47ca-9e6a-9294ea123f8f",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        912,
+        208
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "4630f4e9-efad-48fd-982d-7afeffdfafc5",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        912,
+        320
+      ],
+      "webhookId": "ff6f0e29-8834-428e-b0b4-10a30aa93852",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "vDkU7SPT66ABCUzD",
+          "name": "(DP) alert Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kauth.kakao.com/oauth/token",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "grant_type",
+              "value": "refresh_token"
+            },
+            {
+              "name": "client_id",
+              "value": "8fed318339d625acf8be5da00ab7d289"
+            },
+            {
+              "name": "redirect_uri",
+              "value": "https://datapopcorn.win"
+            },
+            {
+              "name": "refresh_token",
+              "value": "YyBra6L9Ngbv5i_rpB2H0vU5bUccyOIfAAAAAgoXEC8AAAGXio-wNgVUwjIHKObK"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        912,
+        720
+      ],
+      "id": "71ebd92d-f01d-40d2-9ae2-24164593686b",
+      "name": "Refresh Token > Access Token",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.access_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "template_object",
+              "value": "={\n  \"object_type\": \"feed\",\n  \"content\": {\n    \"title\": \"🚨 워크플로우 오류 발생\",\n    \"description\": \"{{ $('On Error').item.json.workflow.name }} | {{ $('On Error').item.json.execution.error.node.name }} | {{ $('On Error').item.json.execution.error.message }}\",\n    \"image_url\": \"https://www.gousypet.com/cdn/shop/files/1_5b83353e-96b8-402e-a3c0-d2ed3aefb9d2.png?v=1713500559&width=1445\",\n    \"link\": {\n      \"web_url\": \"{{ $('On Error').item.json.execution.url }}\",\n      \"mobile_web_url\": \"{{ $('On Error').item.json.execution.url }}\"\n    }\n  },\n  \"buttons\": [\n    {\n      \"title\": \"🔎 워크플로우 확인\",\n      \"link\": {\n        \"web_url\": \"{{ $('On Error').item.json.execution.url }}\",\n        \"mobile_web_url\": \"{{ $('On Error').item.json.execution.url }}\"\n      }\n    }\n  ]\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1152,
+        720
+      ],
+      "id": "1c3b0acc-2b07-4e39-b4b2-b4d4d24ec69e",
+      "name": "메시지 전송을 위한 HTTP Request1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## USECASE - 오류 알림\n\n![](https://i.imgur.com/Kv06xPh.png)",
+        "height": 600,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        304
+      ],
+      "id": "92bc0399-dc52-4a91-beca-9a1fa2bc318a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C080PD1TH60",
+          "mode": "list",
+          "cachedResultName": "alerts-n8n-workflows"
+        },
+        "text": "={{ $json.message }}",
+        "otherOptions": {}
+      },
+      "id": "eb305364-de39-4b9e-ad6e-eea54ebf712d",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        912,
+        528
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "42cde3c1-c417-4a91-9e1d-e6a380cf4a32",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "S6JRlSsjvOGIEQpW",
+          "name": "datapopcorn2"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "On Error": [
+      {
+        "json": {
+          "execution": {
+            "id": "161957",
+            "url": "https://datapopcorn.win/workflow/iLBqZ6EgGLJW1CFt/executions/161957",
+            "error": {
+              "level": "warning",
+              "tags": {},
+              "context": {
+                "itemIndex": 0,
+                "request": {
+                  "body": {
+                    "video_url": "https://raw.githubusercontent.com/2innnnn0/assets/refs/heads/master/Progress_lawn_mp4/2025_47.mp4",
+                    "media_type": "REELS",
+                    "caption": "올해 47% 만큼의 잔디가 자랐습니다."
+                  },
+                  "headers": {
+                    "authorization": "**hidden**",
+                    "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7"
+                  },
+                  "method": "POST",
+                  "uri": "https://graph.instagram.com/v21.0/17841470889541067/media",
+                  "gzip": true,
+                  "rejectUnauthorized": true,
+                  "followRedirect": true,
+                  "resolveWithFullResponse": true,
+                  "followAllRedirects": true,
+                  "timeout": 300000,
+                  "encoding": null,
+                  "json": false,
+                  "useStream": true
+                }
+              },
+              "functionality": "regular",
+              "name": "NodeApiError",
+              "timestamp": 1750431618971,
+              "node": {
+                "parameters": {
+                  "curlImport": "",
+                  "method": "POST",
+                  "url": "=https://graph.instagram.com/v21.0/{{ $json.instagram_id }}/media",
+                  "authentication": "none",
+                  "provideSslCertificates": false,
+                  "sendQuery": false,
+                  "sendHeaders": true,
+                  "specifyHeaders": "keypair",
+                  "headerParameters": {
+                    "parameters": [
+                      {
+                        "name": "Authorization",
+                        "value": "=Bearer {{ $json.API_ACCESS_TOKEN }}"
+                      }
+                    ]
+                  },
+                  "sendBody": true,
+                  "contentType": "json",
+                  "specifyBody": "keypair",
+                  "bodyParameters": {
+                    "parameters": [
+                      {
+                        "name": "video_url",
+                        "value": "={{ $json.video_url_short }}"
+                      },
+                      {
+                        "name": "media_type",
+                        "value": "REELS"
+                      },
+                      {
+                        "name": "caption",
+                        "value": "={{ $json.instagram_post_caption }}"
+                      }
+                    ]
+                  },
+                  "options": {
+                    "response": {
+                      "response": {
+                        "fullResponse": true,
+                        "neverError": false,
+                        "responseFormat": "autodetect"
+                      }
+                    }
+                  },
+                  "infoMessage": ""
+                },
+                "type": "n8n-nodes-base.httpRequest",
+                "typeVersion": 4.2,
+                "position": [
+                  920,
+                  60
+                ],
+                "id": "340b8e59-723c-4d85-8b7a-af2633e789a8",
+                "name": "media container(REELS)"
+              },
+              "messages": [
+                "401 - \"{\\\"error\\\":{\\\"message\\\":\\\"Error validating access token: Session has expired on Monday, 09-Jun-25 20:40:22 PDT. The current time is Friday, 20-Jun-25 08:00:18 PDT.\\\",\\\"type\\\":\\\"OAuthException\\\",\\\"code\\\":190,\\\"fbtrace_id\\\":\\\"A1JNTXf--p8lLIFVsJbhRAb\\\"}}\""
+              ],
+              "httpCode": "401",
+              "description": "Error validating access token: Session has expired on Monday, 09-Jun-25 20:40:22 PDT. The current time is Friday, 20-Jun-25 08:00:18 PDT.",
+              "message": "Authorization failed - please check your credentials",
+              "stack": "NodeApiError: Authorization failed - please check your credentials\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_12b981d6b49d407a163f4d5244314033/node_modules/n8n-nodes-base/nodes/HttpRequest/V3/HttpRequestV3.node.ts:769:15)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1185:9)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1534:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_openai@4.78.1_encoding@0.1.13_zod@3.24.1_/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2098:11"
+            },
+            "lastNodeExecuted": "media container(REELS)",
+            "mode": "trigger"
+          },
+          "workflow": {
+            "id": "iLBqZ6EgGLJW1CFt",
+            "name": "2025 ProgressBar - upload Instagram automating"
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On Error": {
+      "main": [
+        [
+          {
+            "node": "Set message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set message": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Refresh Token > Access Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refresh Token > Access Token": {
+      "main": [
+        [
+          {
+            "node": "메시지 전송을 위한 HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "5eeb78c0-d5f3-4666-9bd0-5d49f1898e74",
+  "meta": {
+    "templateId": "2150",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a8fb7fd31983317952de5fe842ded2643867d47ad03573d086b1bc8ab17aa03b"
+  },
+  "id": "8jEroFBvLE9kP9tm",
+  "tags": []
+}
