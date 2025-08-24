@@ -1,0 +1,960 @@
+{
+  "name": "Mistral OCR",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "id": "12a1329d-1bd0-42db-9d23-1ec5de34cf3a",
+      "name": "Convert invoice File to Base64",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        3440,
+        1024
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "id": "410cca53-0b68-473b-8972-660a57fc42ea",
+      "name": "AI Engine: GPT-4o-mini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        2912,
+        832
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "kYIZ8ZwQHS2d4GiD",
+          "name": "(datapopcorn )OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "6f1a8414-623a-4900-a57d-ad1a5f7137a8",
+      "name": "Data Aggregator: Combine Pages",
+      "type": "n8n-nodes-base.summarize",
+      "position": [
+        3040,
+        624
+      ],
+      "typeVersion": 1.1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "pages",
+        "options": {}
+      },
+      "id": "596679f5-a0a0-4ad3-bcdd-b5ff492a62e6",
+      "name": "Data Splitter: OCR Pages",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1152,
+        480
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/ocr",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "mistralCloudApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral-ocr-latest\",\n  \"document\": {\n    \"image_url\": \"https://drive.usercontent.google.com/download?id={{ $json.id }}&export=view&authuser=0\",\n    \"type\": \"image_url\"\n  }\n}",
+        "options": {}
+      },
+      "id": "0c469e90-095e-4551-a068-f62738f6d562",
+      "name": "Mistral OCR API: Extract Text",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        928,
+        480
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "MNE7orfntsrFXNE3",
+          "name": "(DP) Mistral Cloud account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.webViewLink }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "id": "48767a17-097d-4504-9688-6f7081ee52bb",
+      "name": "Google Drive: Download Invoice",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        3040,
+        880
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zqPBmIVALNK7RH8I",
+          "name": "DataPopcorn"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1-nVaGPFrjJNqXlV5sAl8CK0wCK-cjSr7",
+          "mode": "list",
+          "cachedResultName": "Scanning",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1-nVaGPFrjJNqXlV5sAl8CK0wCK-cjSr7"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "16bc5545-d125-4abf-a484-a14efabedccc",
+      "name": "Google Drive Trigger: New Invoice Detection",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "position": [
+        704,
+        480
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zqPBmIVALNK7RH8I",
+          "name": "DataPopcorn"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "=mistral-ocr-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        1248
+      ],
+      "id": "14a2787b-bbbf-4623-9ab0-b107cf1a42ac",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "MNE7orfntsrFXNE3",
+          "name": "(DP) Mistral Cloud account "
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "options": {}
+      },
+      "id": "b5b78bde-a86a-4ecd-9644-5355c2c80cdf",
+      "name": "MISTRAL OCR",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        3248,
+        768
+      ],
+      "typeVersion": 1.9,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"data\" : {\n  \"name\": \"홍길동\",\n  \"title\": \"수석 데이터 분석가\",\n  \"company\": \"데이터팝콘 주식회사\",\n  \"department\": \"비즈니스 인텔리전스팀\",\n  \"email\": \"hong.gildong@datapopcorn.com\",\n  \"phone\": \"010-1234-5678\",\n  \"address\": \"서울특별시 강남구 데이터로 1234\",\n  \"website\": \"https://www.datapopcorn.com\",\n  \"note\": \"컨설팅 프로젝트 및 강연 가능\"\n  }\n}",
+        "autoFix": true
+      },
+      "id": "b7fa311d-2cd4-4c70-9039-1591a503bb7e",
+      "name": "JSON Parser: Namecard Structure",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        1504,
+        672
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.markdown }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=당신은 명함 데이터 파서입니다.\n\n당신의 임무는 JSON 형식의 명함 데이터에서 구조화된 정보를 추출하고 이해하는 것입니다.\n\n해당 JSON에는 다음과 같은 필드들이 포함될 수 있습니다:\n•name (이름 : \"한글\" 이름으로만)\n•title (직책 또는 직위 : 대표 혹은 CEO)\n•company (회사 또는 조직명)\n•department (부서명, 선택사항)\n•email(@도메인) (연락처 정보) \n•phone(010-XXXX-XXXX) (개인번호)\n•address (도로명, 도시, 시/도, 우편번호, 국가 등으로 구성된 주소 정보)\n•website (개인 또는 회사 공식 웹사이트)\n•note (기타 추가 정보)\n\n\n+mobile컬럼은 010 1234 1234 혹은 010.1234.1234 이런식으로 들어오는 모바일 값은 010-1234-1234로 변경해주세여\n\n\n이 데이터를 실제 종이 명함에 인쇄된 정보처럼 해석하세요.\n추후 연락처 관리 시스템, CRM 연동, 챗봇 메모리 등 다양한 응용 환경에 사용할 수 있도록 형식화, 검증, 변환할 준비가 되어 있어야 합니다.\n\n별도의 지시가 없는 한 원래의 표기 및 형식을 유지해야 하며,\n선택 필드가 비어 있는 경우 값을 추정하거나 임의로 생성하지 마십시오.\n\n별도 요청이 없는 한 구조화된 데이터 또는 유효성 검증 메시지로만 응답하십시오."
+        }
+      },
+      "id": "70b3401b-a46f-4883-a9ab-1965baeb4c70",
+      "name": "AI Agent: Structure namecard Data",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1328,
+        480
+      ],
+      "typeVersion": 1.9
+    },
+    {
+      "parameters": {
+        "content": "# Trigger",
+        "height": 360,
+        "width": 260,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        368
+      ],
+      "id": "8cec4735-f4fb-4443-bb23-4d5f7f78a4f1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# TASK",
+        "height": 440,
+        "width": 960,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        368
+      ],
+      "id": "44b78eaa-2119-4379-ae7f-995bd3d13cbb",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Target",
+        "height": 440,
+        "width": 380,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        368
+      ],
+      "id": "849256ff-58a6-48cf-a37e-bccd33e6bfcb",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1yJQoudKyR9yBQ0iQ3_od2mEJXOBoPPpJ3fly6uTZax0",
+          "mode": "list",
+          "cachedResultName": "NAMECARD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yJQoudKyR9yBQ0iQ3_od2mEJXOBoPPpJ3fly6uTZax0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "시트1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yJQoudKyR9yBQ0iQ3_od2mEJXOBoPPpJ3fly6uTZax0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1920,
+        480
+      ],
+      "id": "7df37244-364c-4b69-9053-5b8b36198d7a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DelSAANjzyzgXaAK",
+          "name": "(datapopcorn )Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        688
+      ],
+      "id": "72b6b74c-7584-4568-b5c8-7db0c377d552",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Qsy5fcRNN3vvuEZE",
+          "name": "(DP) Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C080PD1TH60",
+          "mode": "list",
+          "cachedResultName": "alerts-n8n-workflows"
+        },
+        "text": "=명함이 {{ $items().length }} 개 등록이 완료되었습니다.",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2112,
+        480
+      ],
+      "id": "a9db11c2-4b9d-4825-b5d9-790fda89fe1b",
+      "name": "Send a message",
+      "webhookId": "14be0148-1a1e-4268-837d-79780425d401",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "S6JRlSsjvOGIEQpW",
+          "name": "datapopcorn2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "![](https://raw.githubusercontent.com/2innnnn0/assets/refs/heads/master/image/datapopcorn_logo_50px.png)\n# 명함 자동입력 (w/ Mistral OCR)\n\n## (TRIGGER 트리거) 어느 조건에 자동화가 실행되는가. \n- 구글 드라이브에 사진이 업로드 될 때\n\n## (TASK 태스크) 자동화가 해야할 역할이 무엇인가 \n1. Mistral OCR로 Text 추출\n2. [회사명, 이름, 연락처, 주소, ..] 형식에 맞춰서 데이터를 전처리\n\n## (TARGET 도착지) 최종결과를 어디에 전달해야하는가?\n- 구글 시트에 업로드\n- 완료되면 슬랙으로 알려주기",
+        "height": 500,
+        "width": 660
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -176
+      ],
+      "id": "de3d0024-b817-4954-b36c-0abfde7dc1e0",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## (광고)🔗 [패스트캠퍼스 강의] n8n x 데이터 분석: 원클릭으로 끝내는 데이터 분석 자동화 강의 보러가기: \n# https://fastcampus.info/43IdSGm \n![](https://cdn.day1company.io/prod/uploads/202506/120307-1424/main-web-1440-520.png)",
+        "height": 428,
+        "width": 720
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -80
+      ],
+      "id": "772dc9b2-2b04-48ca-9f82-64e8c1ed81cc",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.imgur.com/hqPuloD.gif)",
+        "height": 520,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -224
+      ],
+      "id": "7838750a-9ca2-44e8-ad1b-94fbca0a40e0",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {
+          "disableDotNotation": false
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        480
+      ],
+      "id": "4d2a0028-cb1b-48a3-aaf3-b4cdcc717e87",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "content": "## Prompt(EN)\n```\nYou are a business card data parser.\n\nYour task is to extract and understand structured information from JSON-formatted name card data.\n\nThe JSON will include fields such as:\n- name (full name of the person)\n- title (their job title or position)\n- company (organization or business name)\n- department (optional)\n- email, phone, mobile, fax (contact information)\n- address (structured as street, city, state, postalCode, and country)\n- website (official personal or company website)\n- note (any extra information)\n\nParse this data as if it were printed on a physical name card. Be ready to format, verify, or convert this data for downstream applications such as contact management systems, CRM integration, or chatbot memory.\n\nAlways preserve the original spelling and formatting unless instructed otherwise.\nIf any optional fields are missing, do not infer or fabricate values.\n\nRespond only with structured data or validation messages unless otherwise requested.\n```",
+        "height": 420,
+        "width": 396
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        832
+      ],
+      "id": "39a4108a-2d92-4607-90ba-ef87ce7f90f8",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Prompt(KO)\n```\n당신은 명함 데이터 파서입니다.\n\n당신의 임무는 JSON 형식의 명함 데이터에서 구조화된 정보를 추출하고 이해하는 것입니다.\n\n해당 JSON에는 다음과 같은 필드들이 포함될 수 있습니다:\n•name (이름)\n•title (직책 또는 직위)\n•company (회사 또는 조직명)\n•department (부서명, 선택사항)\n•email, phone, mobile, fax (연락처 정보)\n•address (도로명, 도시, 시/도, 우편번호, 국가 등으로 구성된 주소 정보)\n•website (개인 또는 회사 공식 웹사이트)\n•note (기타 추가 정보)\n\n이 데이터를 실제 종이 명함에 인쇄된 정보처럼 해석하세요.\n추후 연락처 관리 시스템, CRM 연동, 챗봇 메모리 등 다양한 응용 환경에 사용할 수 있도록 형식화, 검증, 변환할 준비가 되어 있어야 합니다.\n\n별도의 지시가 없는 한 원래의 표기 및 형식을 유지해야 하며,\n선택 필드가 비어 있는 경우 값을 추정하거나 임의로 생성하지 마십시오.\n\n별도 요청이 없는 한 구조화된 데이터 또는 유효성 검증 메시지로만 응답하십시오.\n```",
+        "height": 420,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        832
+      ],
+      "id": "5883debb-c231-4bf1-b557-5818799a586b",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## 📄 문서 자동화\n\t•\t✅ 계약서 분류 및 요약 자동화\n\t•\t✅ 세금계산서 OCR → 회계 시스템 연동\n\t•\t✅ 공공기관 제출서류 자동 검증\n\n## 📋 데이터 입력 자동화\n\t•\t✅ 명함 스캔 → CRM 자동 등록\n\t•\t✅ 수기 설문지 OCR → 구글 시트 정리\n\t•\t✅ 택배 운송장 스캔 → 발송 내역 자동 기록",
+        "height": 300,
+        "width": 560,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -416
+      ],
+      "id": "91dbbd77-919e-45dc-87c8-42780c529661",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.imgur.com/2Bf1N4q.png)",
+        "height": 500,
+        "width": 260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        -176
+      ],
+      "id": "1564c643-5bd1-4731-a22c-4f88cfff458f",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "documentType": "image_url",
+        "inputType": "url",
+        "url": "https://cdn.ccdailynews.com/news/photo/202206/2138582_596706_3358.jpg",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mistralAi",
+      "typeVersion": 1,
+      "position": [
+        928,
+        688
+      ],
+      "id": "eac6d1d2-7a66-41f4-9c68-1acc0a3e2c7d",
+      "name": "Extract text",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "Ed8MfP67WB7tHmBp",
+          "name": "Mistral Cloud account 3"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1424,
+        800
+      ],
+      "id": "21f759c3-6fcd-4a5a-ab7a-8d678c50fd41",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYIZ8ZwQHS2d4GiD",
+          "name": "(datapopcorn )OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Google Drive Trigger: New Invoice Detection": [
+      {
+        "json": {
+          "parents": [
+            "1-nVaGPFrjJNqXlV5sAl8CK0wCK-cjSr7"
+          ],
+          "lastModifyingUser": {
+            "displayName": "data.popcorn",
+            "kind": "drive#user",
+            "me": true,
+            "permissionId": "09205370294222721357",
+            "emailAddress": "datapopcorn@gmail.com",
+            "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLNOMDbaOWFMgW0wCyJatg5bzGID2FaKM9BcJVtwZStO-YZO8xT=s64"
+          },
+          "owners": [
+            {
+              "displayName": "data.popcorn",
+              "kind": "drive#user",
+              "me": true,
+              "permissionId": "09205370294222721357",
+              "emailAddress": "datapopcorn@gmail.com",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLNOMDbaOWFMgW0wCyJatg5bzGID2FaKM9BcJVtwZStO-YZO8xT=s64"
+            }
+          ],
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "anyoneWithLink",
+              "type": "anyone",
+              "role": "reader",
+              "allowFileDiscovery": false
+            },
+            {
+              "kind": "drive#permission",
+              "id": "09205370294222721357",
+              "type": "user",
+              "emailAddress": "datapopcorn@gmail.com",
+              "role": "owner",
+              "displayName": "data.popcorn",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocLNOMDbaOWFMgW0wCyJatg5bzGID2FaKM9BcJVtwZStO-YZO8xT=s64",
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": true,
+            "canChangeItemDownloadRestriction": true,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": true,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": true,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": true,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": true,
+            "canUntrash": true
+          },
+          "permissionIds": [
+            "anyoneWithLink",
+            "09205370294222721357"
+          ],
+          "imageMediaMetadata": {
+            "width": 1976,
+            "height": 1165,
+            "rotation": 0
+          },
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "kind": "drive#file",
+          "id": "1XvfvyXrOE8tKhHnwcn2E5GyOk_EhaX0D",
+          "name": "20250805_153804335.jpg",
+          "mimeType": "image/jpeg",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "version": "2",
+          "webContentLink": "https://drive.google.com/uc?id=1XvfvyXrOE8tKhHnwcn2E5GyOk_EhaX0D&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1XvfvyXrOE8tKhHnwcn2E5GyOk_EhaX0D/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg",
+          "hasThumbnail": true,
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM9iMh76_Q2bNzvW1E11m-CSMwT4OE49e8XztyjAqJ6jFRbK3Qyl5NiJjfoT7c3O6Vf7-i7d2P5hKcVH8kqDzIFCQkJJsyZYy7UsZoOrJ1taQ=s220",
+          "thumbnailVersion": "1",
+          "viewedByMe": false,
+          "createdTime": "2025-08-05T06:38:18.149Z",
+          "modifiedTime": "2025-08-05T06:38:04.443Z",
+          "modifiedByMeTime": "2025-08-05T06:38:04.443Z",
+          "modifiedByMe": true,
+          "shared": true,
+          "ownedByMe": true,
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "originalFilename": "20250805_153804335.jpg",
+          "fullFileExtension": "jpg",
+          "fileExtension": "jpg",
+          "md5Checksum": "9f1218aa3d127c29223aa580abc58377",
+          "sha1Checksum": "c5664bef5044869d3e5477ab1f75aad7f5eb2caa",
+          "sha256Checksum": "643dea9a78e26ff981feffae0b2b84e0286cfcf37889414e24fcfee730b4c7b1",
+          "size": "123625",
+          "quotaBytesUsed": "123625",
+          "headRevisionId": "0B04PNhPodAQtNzFQd1E3MThlTDQ3MzU0cGdxdXZNM2IwbnEwPQ",
+          "isAppAuthorized": false,
+          "inheritedPermissionsDisabled": false
+        }
+      }
+    ],
+    "Extract text": [
+      {
+        "json": {
+          "pages": [
+            {
+              "index": 0,
+              "markdown": "동남구청 세무과\n\n☎ (041)521-4155, 4151~4154\n\n관할 읍·면·동\n\n|  |   |   |\n| --- | --- | --- |\n|  목 | 천 | 읍  |\n|  통 | 세 | 면  |\n|  광 | 덕 | 면  |\n|  북 |  | 면  |\n|  성 |  | 남 면  |\n|  수 |  | 신 면  |\n|  병 |  | 천 면  |\n|  동 |  | 면  |\n|  분 |  | 성 동  |\n|  원 |  | 성 1 동  |\n|  원 |  | 성 2 동  |\n|  봉 |  | 봉 동  |\n|  실 |  | 봉 동  |\n|  신 |  | 방 동  |\n|  청 |  | 통  |\n|  신 |  | 안 동  |\n\n|  |   |\n| --- | --- |\n|  814어 |   |\n|  (관용,적재정량:900)스타리아 (STARIA) |   |\n\n과 세 기간 (2022.03.15~2022.12.31)\n\n남 부 방 법 전국 모든 금융기관(CD/ATM), 인터넷(위택스,지로), 가상계좌 이용\n\n남부 금액\n\n21,370 원\n\n2022.06.30 까지\n\n가상계좌\n\n* 농협은행\n* 하나은행\n* 국민은행\n* 기업은행\n* 신한은행\n* 우 체 국\n* 지방세입\n\n*지방차량은 지방세입계좌 이용*\n\n![img-0.jpeg](img-0.jpeg)",
+              "images": [
+                {
+                  "id": "img-0.jpeg",
+                  "top_left_x": 18,
+                  "top_left_y": 77,
+                  "bottom_right_x": 775,
+                  "bottom_right_y": 672,
+                  "image_base64": null,
+                  "image_annotation": null
+                }
+              ],
+              "dimensions": {
+                "dpi": 200,
+                "height": 701,
+                "width": 798
+              }
+            }
+          ],
+          "model": "mistral-ocr-2505-completion",
+          "document_annotation": null,
+          "usage_info": {
+            "pages_processed": 1,
+            "doc_size_bytes": 220040
+          },
+          "extractedText": "동남구청 세무과\n\n☎ (041)521-4155, 4151~4154\n\n관할 읍·면·동\n\n|  |   |   |\n| --- | --- | --- |\n|  목 | 천 | 읍  |\n|  통 | 세 | 면  |\n|  광 | 덕 | 면  |\n|  북 |  | 면  |\n|  성 |  | 남 면  |\n|  수 |  | 신 면  |\n|  병 |  | 천 면  |\n|  동 |  | 면  |\n|  분 |  | 성 동  |\n|  원 |  | 성 1 동  |\n|  원 |  | 성 2 동  |\n|  봉 |  | 봉 동  |\n|  실 |  | 봉 동  |\n|  신 |  | 방 동  |\n|  청 |  | 통  |\n|  신 |  | 안 동  |\n\n|  |   |\n| --- | --- |\n|  814어 |   |\n|  (관용,적재정량:900)스타리아 (STARIA) |   |\n\n과 세 기간 (2022.03.15~2022.12.31)\n\n남 부 방 법 전국 모든 금융기관(CD/ATM), 인터넷(위택스,지로), 가상계좌 이용\n\n남부 금액\n\n21,370 원\n\n2022.06.30 까지\n\n가상계좌\n\n* 농협은행\n* 하나은행\n* 국민은행\n* 기업은행\n* 신한은행\n* 우 체 국\n* 지방세입\n\n*지방차량은 지방세입계좌 이용*\n\n![img-0.jpeg](img-0.jpeg)",
+          "pageCount": 1
+        }
+      }
+    ],
+    "Mistral OCR API: Extract Text": [
+      {
+        "json": {
+          "pages": [
+            {
+              "index": 0,
+              "markdown": "![img-0.jpeg](img-0.jpeg)\n\n![img-1.jpeg](img-1.jpeg)\n\n# **이인영 Inyoung Lee**\n\n**CONTENTS CREATOR**\n\n**010 2363 1402**\n\ndatapopcorn@gmail.com",
+              "images": [
+                {
+                  "id": "img-0.jpeg",
+                  "top_left_x": 165,
+                  "top_left_y": 417,
+                  "bottom_right_x": 333,
+                  "bottom_right_y": 612,
+                  "image_base64": null,
+                  "image_annotation": null
+                },
+                {
+                  "id": "img-1.jpeg",
+                  "top_left_x": 414,
+                  "top_left_y": 417,
+                  "bottom_right_x": 891,
+                  "bottom_right_y": 612,
+                  "image_base64": null,
+                  "image_annotation": null
+                }
+              ],
+              "dimensions": {
+                "dpi": 200,
+                "height": 1165,
+                "width": 1976
+              }
+            }
+          ],
+          "model": "mistral-ocr-2505-completion",
+          "document_annotation": null,
+          "usage_info": {
+            "pages_processed": 1,
+            "doc_size_bytes": 123625
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "AI Engine: GPT-4o-mini": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Data Aggregator: Combine Pages": {
+      "main": [
+        []
+      ]
+    },
+    "Data Splitter: OCR Pages": {
+      "main": [
+        [
+          {
+            "node": "AI Agent: Structure namecard Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive: Download Invoice": {
+      "main": [
+        [
+          {
+            "node": "Convert invoice File to Base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger: New Invoice Detection": {
+      "main": [
+        [
+          {
+            "node": "Mistral OCR API: Extract Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "MISTRAL OCR",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral OCR API: Extract Text": {
+      "main": [
+        [
+          {
+            "node": "Data Splitter: OCR Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert invoice File to Base64": {
+      "main": [
+        []
+      ]
+    },
+    "JSON Parser: Namecard Structure": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent: Structure namecard Data",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent: Structure namecard Data": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent: Structure namecard Data",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "JSON Parser: Namecard Structure",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2f9c13f5-538d-4f9b-ba67-57f089c5cc7a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a8fb7fd31983317952de5fe842ded2643867d47ad03573d086b1bc8ab17aa03b"
+  },
+  "id": "Oc5x9pzSKGq1Iw3N",
+  "tags": [
+    {
+      "createdAt": "2025-05-20T05:37:20.732Z",
+      "updatedAt": "2025-05-20T05:37:20.732Z",
+      "id": "tqx1yZajxcxP5kJn",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}
