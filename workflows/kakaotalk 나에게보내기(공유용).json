@@ -1,0 +1,327 @@
+{
+  "name": "kakaotalk 나에게보내기(공유용)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "*주의\n- 1번에서 발급 받은 code는 한번 사용하고 나서 재사용 X\n- 매번 새로운 테스트를 할 때마다 새로운 인증 코드가 필요하다.",
+        "height": 100,
+        "width": 400,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        1328
+      ],
+      "id": "c911482b-2cd2-440d-886a-a6f2d8793ae5",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        288,
+        720
+      ],
+      "id": "03a3e40a-4a1a-44aa-bdd5-ed8590629c1e",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "![](https://raw.githubusercontent.com/2innnnn0/assets/refs/heads/master/image/datapopcorn_logo_50px.png)\n# 카카오톡 \"나에게 메시지\" 보내기\n- https://developers.kakao.com/console/app",
+        "height": 360,
+        "width": 510
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        464
+      ],
+      "id": "73506a81-5053-4b79-9628-07dfb58b09c9",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.imgur.com/3UfeyNh.gif)",
+        "height": 180,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        640
+      ],
+      "id": "e48df4ea-6512-4e6a-b3ae-2f7326d82347",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "# STEP2) Refresh Token발급 받기 > 이후 부터는 이걸로 Access Token 갱신\n\n## 1. grant_type=authorization_code 사용 시\n```\ncurl -v -X POST https://kauth.kakao.com/oauth/token \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"grant_type=authorization_code\" \\\n  -d \"client_id=YOUR_REST_API_KEY\" \\\n  -d \"redirect_uri=YOUR_REDIRECT_URI\" \\\n  -d \"code=AUTHORIZATION_CODE\"\n```\n\n## 2. grant_type=refresh_token 사용 시\n```\ncurl -v -X POST https://kauth.kakao.com/oauth/token \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"grant_type=refresh_token\" \\\n  -d \"client_id=YOUR_REST_API_KEY\" \\\n  -d \"refresh_token=YOUR_REFRESH_TOKEN\"\n```",
+        "height": 540,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        336,
+        896
+      ],
+      "id": "80edd371-e08f-41b8-aecb-b7e6be80a386",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "# STEP1) 인가코드 받기 (최초 1회)\n- 이건 웹으로 1회성으로 진행. 웹 인증을 거치기 때문에 n8n으로 자동화하기 어려움.\n\n```\nhttps://kauth.kakao.com/oauth/authorize? \\\nresponse_type=code& \\\nclient_id=${REST_API_KEY}& \\\nredirect_uri=${REDIRECT_URI}\n```\n\n예시)\nhttps://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8fed318339d625acf8be5da00ab7d289&redirect_uri=https://localhost:1234\n\n\n위 URL 결과로 아래 처럼 나옴. 뒤에 code 값만 복사하기.\nhttps://localhost:1234?code=dJWIdmCq3nMhZRJh0Ks_-PFXCCpPIyveeVlMOvdKKW-M9DzCL897GwAAAAQKDSBaAAABl5L5GH9ONYg--5I0Sw\n",
+        "height": 420,
+        "width": 620
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        896
+      ],
+      "id": "2331a558-af6e-4471-b8bc-fb0d8a1c3d5c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kauth.kakao.com/oauth/token",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "grant_type",
+              "value": "refresh_token"
+            },
+            {
+              "name": "client_id",
+              "value": "8fed318339d625acf8be5da00ab7d289"
+            },
+            {
+              "name": "redirect_uri",
+              "value": "https://datapopcorn.win"
+            },
+            {
+              "name": "refresh_token",
+              "value": "="
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        512,
+        720
+      ],
+      "id": "66c7bc5e-3970-4ae7-ab9c-2c805a94e52d",
+      "name": "2/ Refresh Token으로 Access Token갱신"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.access_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "template_object",
+              "value": "={\n    \"object_type\": \"text\",\n    \"text\": \"[데이터 알림 📊]\\n\\n🚨 실시간 트래픽 급증 감지\\n현재 접속자 수가 임계치를 초과했습니다.\\n\\n📍 대상 서비스: datapopcorn.win\\n⏰ 감지 시각: 2025-06-20 09:00\\n\\n자세히 보기 >\",\n    \"image_url\": \"https://www.gousypet.com/cdn/shop/files/1_5b83353e-96b8-402e-a3c0-d2ed3aefb9d2.png?v=1713500559&width=1445\",\n    \"link\": {\n      \"web_url\": \"https://datapopcorn.win/dashboard\",\n      \"mobile_web_url\": \"https://datapopcorn.win/dashboard\"\n    },\n    \"button_title\": \"대시보드 보기\"\n  }"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        752,
+        720
+      ],
+      "id": "219f6287-7cd1-480e-9c32-e962daef1d4e",
+      "name": "3/ 메시지 전송"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kauth.kakao.com/oauth/token",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "grant_type",
+              "value": "authorization_code"
+            },
+            {
+              "name": "client_id",
+              "value": "8fed318339d625acf8be5da00ab7d289"
+            },
+            {
+              "name": "redirect_uri",
+              "value": "https://datapopcorn.win"
+            },
+            {
+              "name": "code"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        512,
+        544
+      ],
+      "id": "e6e1f044-de45-435c-b324-fc0f54506d29",
+      "name": "1/ 엑세스 토큰 받기(+Refresh Token)"
+    },
+    {
+      "parameters": {
+        "content": "### ACCESS_TOKEN, REFRESH_TOKEN 이란\n\n📌 비유로 이해하기 – “놀이공원 입장권”\n\t•\t당신이 놀이공원(=API 서비스)에 가고 싶다고 해요.\n\t•\t입장하려면 입장권(=Access Token)이 필요합니다.\n\n⸻\n\n🎫 ACCESS_TOKEN: 입장권\n\t•\t이건 짧은 시간 동안만 유효한 입장권입니다.\n\t•\t이 입장권을 보여주면, 놀이기구(API)에 탈 수 있어요.\n\t•\t단점: 시간이 지나면 만료됩니다 (보안 때문에).\n\n→ ✅ 즉, 인증된 사용자가 API에 요청을 보낼 때 사용하는 “단기 사용 권한”입니다.\n\n⸻\n\n♻️ REFRESH_TOKEN: 연장권\n\t•\t입장권이 만료되면 다시 줄 서서 입장권을 사야 하나요? 아니요.\n\t•\t미리 받은 **“연장권” (Refresh Token)**을 제시하면, 새로운 입장권(Access Token)을 자동으로 발급받을 수 있어요.\n\n→ ✅ 즉, Access Token이 만료되었을 때 다시 로그인하지 않고도 새 토큰을 발급받기 위한 용도입니다.\n\n⸻\n\n💡 정리 요약 (표)\n\n항목\t설명\t유효기간\t사용 목적\nAccess Token\tAPI 요청 시 사용하는 인증 토큰\t짧음 (몇 분~1시간)\t사용 권한 인증\nRefresh Token\t새로운 Access Token을 발급받기 위한 토큰\t김 (보통 며칠~몇 주)\t자동 재인증\n\n\n⸻\n\n🔐 왜 이렇게 나눴을까?\n\t•\t보안을 강화하기 위해서입니다.\n\t•\tAccess Token이 유출되어도 피해를 최소화할 수 있도록 짧게 설정.\n\t•\t사용자의 불편을 줄이기 위해 Refresh Token으로 자동 재로그인 처리.",
+        "height": 740,
+        "width": 750,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        144
+      ],
+      "id": "d154ffb4-0ee5-4193-9117-92792858500d",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# USECASE \n## 1) 오류 알림\n![](https://i.imgur.com/Kv06xPh.png)\n\n## 2) 데이터 알림\n![](https://i.imgur.com/Kv06xPh.png)\n\n## 3) 이미지 생성\n![](https://i.imgur.com/Kv06xPh.png)",
+        "height": 760,
+        "width": 460
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        128
+      ],
+      "id": "2b15dad6-ebb7-4be3-a7cf-9bbfa938ce84",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# STEP3) 메시지 전송 ([템플릿](https://developers.kakao.com/docs/latest/ko/message-template/common#feed))\n\n### 1. 피드\n```\n{\n  \"object_type\": \"feed\",\n  \"content\": {\n    \"title\": \"🚨 워크플로우 오류 발생\",\n    \"description\": \"{{ $('On Error').item.json.workflow.name }} | {{ $('On Error').item.json.execution.error.node.name }} | {{ $('On Error').item.json.execution.error.message }}\",\n    \"image_url\": \"https://www.gousypet.com/cdn/shop/files/1_5b83353e-96b8-402e-a3c0-d2ed3aefb9d2.png?v=1713500559&width=1445\",\n    \"link\": {\n      \"web_url\": \"{{ $('On Error').item.json.execution.url }}\",\n      \"mobile_web_url\": \"{{ $('On Error').item.json.execution.url }}\"\n    }\n  },\n  \"buttons\": [\n    {\n      \"title\": \"🔎 워크플로우 확인\",\n      \"link\": {\n        \"web_url\": \"{{ $('On Error').item.json.execution.url }}\",\n        \"mobile_web_url\": \"{{ $('On Error').item.json.execution.url }}\"\n      }\n    }\n  ]\n}\n```\n\n### 2. 텍스트\n\n```\n{\n    \"object_type\": \"text\",\n    \"text\": \"[데이터 알림 📊]\\n\\n🚨 실시간 트래픽 급증 감지\\n현재 접속자 수가 임계치를 초과했습니다.\\n\\n📍 대상 서비스: datapopcorn.win\\n⏰ 감지 시각: 2025-06-20 09:00\\n\\n자세히 보기 >\",\n    \"link\": {\n      \"web_url\": \"https://datapopcorn.win/dashboard\",\n      \"mobile_web_url\": \"https://datapopcorn.win/dashboard\"\n    },\n    \"button_title\": \"대시보드 보기\"\n  }\n```",
+        "height": 800,
+        "width": 720
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        896
+      ],
+      "id": "f3a89071-7d43-41a3-b9ad-a4912c539176",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Test workflow’": [
+      {
+        "json": {
+          "access_token": "****-wPAVUwjIHKObK",
+          "token_type": "bearer",
+          "refresh_token": "****-wNgVUwjIHKObK",
+          "expires_in": 21599,
+          "scope": "account_email talk_calendar profile_image talk_message talk_calendar_task profile_nickname friends",
+          "refresh_token_expires_in": 5183999
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "2/ Refresh Token으로 Access Token갱신",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2/ Refresh Token으로 Access Token갱신": {
+      "main": [
+        [
+          {
+            "node": "3/ 메시지 전송",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1/ 엑세스 토큰 받기(+Refresh Token)": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "204ac7a9-3665-4b50-9519-fe08cb6b8832",
+  "meta": {
+    "instanceId": "a8fb7fd31983317952de5fe842ded2643867d47ad03573d086b1bc8ab17aa03b"
+  },
+  "id": "qAPFO1MDseLgo5Ir",
+  "tags": [
+    {
+      "createdAt": "2025-05-20T05:37:20.732Z",
+      "updatedAt": "2025-05-20T05:37:20.732Z",
+      "id": "tqx1yZajxcxP5kJn",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}
