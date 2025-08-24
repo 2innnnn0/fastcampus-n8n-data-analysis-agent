@@ -1,0 +1,622 @@
+{
+  "name": "slack command simple",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "n8n",
+        "options": {
+          "responseCode": {
+            "values": {
+              "responseCode": 204
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -192,
+        -128
+      ],
+      "id": "850b1e3e-2c54-4a56-bc8b-effd0a532e65",
+      "name": "Webhook",
+      "webhookId": "1ededee4-8d9a-4b99-a8ca-0be824b81d21"
+    },
+    {
+      "parameters": {
+        "content": "## Webhook",
+        "height": 240,
+        "width": 200,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -208
+      ],
+      "id": "28d49038-0f5b-416e-afaf-edcf4ad85351",
+      "name": "Sticky Note",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# 1. Slack Command\n- https://api.slack.com/ 에서 Slash Commands 를 입력\n- /n8n 명령어를 설정하기.",
+        "height": 144,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -368
+      ],
+      "id": "33b5279c-3b8d-4a2c-91ed-03f25867d37c",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "trigger": [
+          "app_mention"
+        ],
+        "watchWorkspace": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        448
+      ],
+      "id": "667d645f-9e26-4681-a036-b3ffa865397a",
+      "name": "Slack Trigger",
+      "webhookId": "ca370f7b-bf5d-4957-a6e6-a58b8efb19f9",
+      "credentials": {
+        "slackApi": {
+          "id": "VVNGWU6MPeJOCo5L",
+          "name": "Slack account (n8n-agent-bot)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://slack.com/api/chat.postMessage",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "slackApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "channel",
+              "value": "={{ $('Slack Trigger').first().json.channel }}"
+            },
+            {
+              "name": "thread_ts",
+              "value": "={{ $('Slack Trigger').first().json.ts }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        448
+      ],
+      "id": "f132c040-f347-464d-8db1-dae2a702f3e4",
+      "name": "chat.postMessage",
+      "credentials": {
+        "slackApi": {
+          "id": "VVNGWU6MPeJOCo5L",
+          "name": "Slack account (n8n-agent-bot)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 2. SlackBot\n\n- @n8n-agent-bot 태그해야만 사용가능.\n- 현재는 RAG없이 보편적인 답변만 주는 기능.",
+        "height": 140,
+        "width": 420
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        272
+      ],
+      "id": "23f56bad-45c3-441c-b214-0aaeb97fccfd",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C435YGHAQ",
+          "mode": "list",
+          "cachedResultName": "general"
+        },
+        "text": "=prompt : {{ $('Webhook').item.json.body.text }}\noutput : {{ $json.output }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        432,
+        -128
+      ],
+      "id": "8772dc77-8543-4679-81de-81b61bd55544",
+      "name": "Send a message",
+      "webhookId": "8d480b45-6f92-4b37-8f3f-8e9bf438d64d",
+      "credentials": {
+        "slackApi": {
+          "id": "53a8jnoZw3JwsXOP",
+          "name": "datapopcorn slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        96
+      ],
+      "id": "5213ba5f-776f-40c1-969b-7bd1055704be",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "2hpGmjN3TNt3AFtB",
+          "name": "(DP) OpenRouter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        32,
+        -128
+      ],
+      "id": "8f1a1609-db97-48b0-a801-c2ce9e3b21ee",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "resource": "channel",
+        "operation": "replies",
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $('Slack Trigger').item.json.channel }}",
+          "mode": "id"
+        },
+        "ts": "={{ $('Slack Trigger').item.json.thread_ts ||  $('Slack Trigger').item.json.ts }}",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        448
+      ],
+      "id": "ac6a78da-2339-47fb-a37d-9f2abaa20165",
+      "name": "Get a thread of messages posted to a channel",
+      "webhookId": "54d1a40e-59ec-4f3f-9b3b-abae4fdec4c3",
+      "credentials": {
+        "slackApi": {
+          "id": "VVNGWU6MPeJOCo5L",
+          "name": "Slack account (n8n-agent-bot)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2750b75c-a097-4f58-b74b-b1a58ff65c75",
+              "name": "bot_id",
+              "value": "=A09938PN12R",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        448
+      ],
+      "id": "1274c75a-0314-456d-a42d-510c6a238fe2",
+      "name": "BOT"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 봇 ID 추출\nconst botId = $('BOT').first().json.bot_id;\n\n// 메시지 변환\nconst transformedMessages = $input.all().map(item => {\n  const msg = item.json;\n\n  return {\n    role: msg.user === botId ? \"assistant\" : \"user\",\n    content: msg.text?.replaceAll(`<@${botId}>`, '').trim() || ''\n  };\n}).filter(item => item.content); // 빈 메시지는 제거\n\nreturn {\n  messages: JSON.stringify(transformedMessages)\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        448
+      ],
+      "id": "4cf572a2-e913-4fa8-a9bf-b62cfce87257",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Text', ``, 'string') }}",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notionTool",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        672
+      ],
+      "id": "d5f8da52-1afa-40d9-8eba-370177e945d0",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "xXOTF1RqqBv1lop0",
+          "name": "(datapopcorn) Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        544,
+        656
+      ],
+      "id": "c39f6ea9-d1fb-4378-9b7b-d0f6848c0d6d",
+      "name": "OpenAI Chat Model - 4.1 mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYIZ8ZwQHS2d4GiD",
+          "name": "(datapopcorn )OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages }}",
+        "options": {
+          "systemMessage": "=당신은 n8n 자동화 전문 봇입니다. \n사용자의 질문에 친근하고 도움이 되는 방식으로 답변해주세요.\n   \n   사용자 질문: {{ $json.event.text.replace(/<@.*?>/g, '').trim() }}\n   사용자 이름: {{ $json.event.user }}\n   채널: {{ $json.event.channel }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        448
+      ],
+      "id": "e757a20c-c182-40cd-9cc9-4b8ae5c58333",
+      "name": "SlackBot AI Agent"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "14XvsktecN18XAOPV-kBf1cZVxlgnBkxUOVcnI1i2dR8",
+          "mode": "list",
+          "cachedResultName": "Yes24 BestSeller",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14XvsktecN18XAOPV-kBf1cZVxlgnBkxUOVcnI1i2dR8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "bestSeller",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/14XvsktecN18XAOPV-kBf1cZVxlgnBkxUOVcnI1i2dR8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        880,
+        672
+      ],
+      "id": "08a76e0d-c49b-4b38-ad8d-b59d65f251f8",
+      "name": "Get BestSeller Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DelSAANjzyzgXaAK",
+          "name": "(datapopcorn )Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Makes an HTTP request and returns the response data\n\nINPUT KEYWORD에 들어갈 내용으로 검색해줘.\nURL : https://news.google.com/rss/search?q=<INPUT KEYWORD>&hl=ko&gl=KR&ceid=KR%3Ako",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        672
+      ],
+      "id": "97ce6634-3feb-4fa3-87f2-6f2c3c6493ef",
+      "name": "Google News"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "datapopcorn.win",
+            "x-real-ip": "162.158.79.35",
+            "x-forwarded-for": "54.80.88.245, 162.158.79.35",
+            "x-forwarded-proto": "http",
+            "connection": "upgrade",
+            "content-length": "486",
+            "accept-encoding": "gzip, br",
+            "accept": "application/json,*/*",
+            "content-type": "application/x-www-form-urlencoded",
+            "x-slack-request-timestamp": "1754455388",
+            "cf-ray": "96abdf22896ed67b-IAD",
+            "x-slack-signature": "v0=6403173dd3691ff341b101e08dc2cdafd6837538adce00bb89946218d6d33bb5",
+            "user-agent": "Slackbot 1.0 (+https://api.slack.com/robots)",
+            "cdn-loop": "cloudflare; loops=1",
+            "cf-connecting-ip": "54.80.88.245",
+            "cf-ipcountry": "US",
+            "cf-visitor": "{\"scheme\":\"https\"}"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "token": "ATgNx3CRnaBQCFy11W4CyY6B",
+            "team_id": "T42C9CN8G",
+            "team_domain": "datapopcorn",
+            "channel_id": "C435YGHAQ",
+            "channel_name": "general",
+            "user_id": "U42D3C69F",
+            "user_name": "newturn_ceo",
+            "command": "/n8n",
+            "text": "Slack에 대해서 알려줄래.",
+            "api_app_id": "A09938PN12R",
+            "is_enterprise_install": "false",
+            "response_url": "https://hooks.slack.com/commands/T42C9CN8G/9327235138721/X1jXIMpxwQOvWN8MKiLnxiUH",
+            "trigger_id": "9327235138817.138417430288.c266c5bee1f9e5765dbf24f98721b139"
+          },
+          "webhookUrl": "https://datapopcorn.win/webhook/n8n",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Slack Trigger": [
+      {
+        "json": {
+          "user": "U42D3C69F",
+          "type": "app_mention",
+          "ts": "1756039297.303009",
+          "client_msg_id": "faeb8aff-3912-4727-8bec-2dfdcf0d0875",
+          "text": "<@U09951MJ62W> 구글 뉴스 가져와줘",
+          "team": "T42C9CN8G",
+          "blocks": [
+            {
+              "type": "rich_text",
+              "block_id": "bE6T+",
+              "elements": [
+                {
+                  "type": "rich_text_section",
+                  "elements": [
+                    {
+                      "type": "user",
+                      "user_id": "U09951MJ62W"
+                    },
+                    {
+                      "type": "text",
+                      "text": " 구글 뉴스 가져와줘"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "channel": "C435YGHAQ",
+          "event_ts": "1756039297.303009"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Trigger": {
+      "main": [
+        [
+          {
+            "node": "BOT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a thread of messages posted to a channel": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chat.postMessage": {
+      "main": [
+        []
+      ]
+    },
+    "BOT": {
+      "main": [
+        [
+          {
+            "node": "Get a thread of messages posted to a channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "SlackBot AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion": {
+      "ai_tool": [
+        [
+          {
+            "node": "SlackBot AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model - 4.1 mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SlackBot AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SlackBot AI Agent": {
+      "main": [
+        [
+          {
+            "node": "chat.postMessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get BestSeller Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "SlackBot AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google News": {
+      "ai_tool": [
+        [
+          {
+            "node": "SlackBot AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "339b9e05-45ce-4e78-bfd5-ff01f57c4936",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a8fb7fd31983317952de5fe842ded2643867d47ad03573d086b1bc8ab17aa03b"
+  },
+  "id": "yRh6IZhpIA0N5fbB",
+  "tags": [
+    {
+      "createdAt": "2025-05-20T05:37:20.732Z",
+      "updatedAt": "2025-05-20T05:37:20.732Z",
+      "id": "tqx1yZajxcxP5kJn",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}
