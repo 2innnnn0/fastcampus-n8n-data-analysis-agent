@@ -24,6 +24,13 @@ n8n 데이터분석 AI Agent 프로젝트
 - `/prompts` : GPT 활용 프롬프트 예시
 - (위키독스) n8n 노코드 자동화 한글 가이드북 : https://wikidocs.net/book/18092
 
+
+### 워크플로우를 쉽게 가져오는 방법
+<img width="931" height="341" alt="image" src="https://github.com/user-attachments/assets/f3dda7cf-3155-4944-a78c-9922b18698d9" />
+<img width="1281" height="761" alt="image" src="https://github.com/user-attachments/assets/9947dabf-6dd1-400d-a6da-0d7ffa24ac1f" />
+
+
+
 ---
 
 ## ✅ 주요 기술 스택
