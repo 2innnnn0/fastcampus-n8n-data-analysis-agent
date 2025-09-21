@@ -1,0 +1,181 @@
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.0/webcomponents-loader.js"></script>
+<script src="https://www.unpkg.com/lit@2.0.0-rc.2/polyfill-support.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>n8n Workflow Preview</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #fff;
+      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header a { color: #0f62fe; text-decoration: none; }
+    header a:hover { text-decoration: underline; }
+    .controls {
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    textarea {
+      width: 100%;
+      height: 140px;
+      padding: 10px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.4;
+      resize: vertical;
+    }
+    button {
+      padding: 10px 14px;
+      background: #0f62fe;
+      color: #fff;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 40px;
+      align-self: start;
+    }
+    button.secondary { background: #6c757d; }
+    .content {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .viewer {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+    }
+    n8n-demo {
+      width: 100%;
+      height: 100%;
+    }
+    .note {
+      padding: 8px 16px;
+      font-size: 12px;
+      color: #555;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      n8n 워크플로우 미리보기 (<n8n-demo> 기반)
+      <a href="https://n8n-io.github.io/n8n-demo-webcomponent/" target="_blank" rel="noopener noreferrer">문서</a>
+    </header>
+
+    <div class="controls">
+      <textarea id="workflowInput" placeholder='여기에 워크플로우 JSON을 붙여넣으세요. 예: {"nodes":[...],"connections":{}}'></textarea>
+      <div style="display:flex; flex-direction: column; gap: 8px;">
+        <button id="applyBtn">미리보기 적용</button>
+        <button id="loadExampleBtn" class="secondary">예제 불러오기</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="viewer">
+        <n8n-demo id="preview" frame="true"></n8n-demo>
+      </div>
+      <div class="note">
+        참고: 이 컴포넌트는 워크플로우 JSON을 직접 렌더링합니다. 외부 서버 임베드는 필요하지 않습니다. 출처: <a href="https://n8n-io.github.io/n8n-demo-webcomponent/" target="_blank" rel="noopener noreferrer">n8n demo webcomponent</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var applyBtn = document.getElementById('applyBtn');
+      var loadExampleBtn = document.getElementById('loadExampleBtn');
+      var workflowInput = document.getElementById('workflowInput');
+      var preview = document.getElementById('preview');
+
+      function setWorkflowFromText(text) {
+        try {
+          // Accept either JSON or stringified JSON
+          var obj = typeof text === 'string' ? JSON.parse(text) : text;
+          preview.workflow = JSON.stringify(obj);
+        } catch (e) {
+          alert('유효한 JSON이 아닙니다.');
+        }
+      }
+
+      applyBtn.addEventListener('click', function () {
+        var text = workflowInput.value.trim();
+        if (!text) {
+          alert('워크플로우 JSON을 입력해 주세요.');
+          return;
+        }
+        setWorkflowFromText(text);
+      });
+
+      loadExampleBtn.addEventListener('click', function () {
+        var example = {
+          nodes: [
+            {
+              name: 'Start',
+              type: 'n8n-nodes-base.manualTrigger',
+              typeVersion: 1,
+              position: [300, 300],
+              parameters: {}
+            },
+            {
+              name: 'Set Example Data',
+              type: 'n8n-nodes-base.set',
+              typeVersion: 2,
+              position: [600, 300],
+              parameters: {
+                keepOnlySet: true,
+                values: {
+                  string: [
+                    { name: 'message', value: 'Hello from <n8n-demo>!' }
+                  ],
+                  number: [
+                    { name: 'year', value: 2025 }
+                  ]
+                }
+              }
+            }
+          ],
+          connections: {
+            'Start': {
+              main: [ [ { node: 'Set Example Data', type: 'main', index: 0 } ] ]
+            }
+          }
+        };
+        workflowInput.value = JSON.stringify(example, null, 2);
+        setWorkflowFromText(example);
+      });
+
+      // Initialize with example
+      loadExampleBtn.click();
+    })();
+  </script>
+</body>
+</html>
