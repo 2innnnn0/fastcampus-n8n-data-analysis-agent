@@ -1,1 +1,576 @@
-u�Zm�
+{
+  "updatedAt": "2025-09-19T07:22:01.997Z",
+  "createdAt": "2025-09-19T06:42:30.432Z",
+  "id": "dddnLZlMfOX0rstR",
+  "name": "[2-14] BigQuery API",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## SELECT\n\n```\nSELECT * FROM my_dataset.users;\r\n```",
+        "height": 208,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        -32
+      ],
+      "id": "3ac5d41c-cac3-4b05-a5f9-32d1bcf5fba9",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## INSERT\n기본 데이터 삽입\n```\nINSERT INTO my_dataset.users (user_id, name, age, country)\nVALUES\n  (1, 'Alice', 30, 'USA'),\n  (2, 'Bob', 25, 'KOR'),\n  (3, 'Charlie', 35, 'JPN');\n```",
+        "height": 208,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        -272
+      ],
+      "id": "7453b887-4dfc-408a-88b2-b1095b18b464",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## DELETE\n\n```\nDELETE FROM my_dataset.users\nWHERE age < 28;\n```",
+        "height": 208,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        464
+      ],
+      "id": "710a9e9a-1c7b-43b4-9ec7-02895603362f",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## UPDATE\n```\nUPDATE my_dataset.users\nSET country = 'KR'\nWHERE country = 'KOR';\n```",
+        "height": 208,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        208
+      ],
+      "id": "4bd48787-4fe8-4095-89e9-8b9137afc094",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "![](https://raw.githubusercontent.com/2innnnn0/assets/refs/heads/master/image/datapopcorn_logo_50px.png)\n## [BigQuery API](https://cloud.google.com/bigquery/docs/reference/rest)\n### BigQuery API란?\n- BigQuery API는 Google Cloud의 데이터 웨어하우스(BigQuery)에 프로그래밍 방식으로 접근할 수 있게 해주는 REST/Client API다.  \n- n8n에서 BigQuery와 연동하면 대규모 데이터 쿼리, 테이블 관리, 결과 조회를 자동화할 수 있다.\n\n### 주요 기능\n- SQL 쿼리 실행 (동기/비동기)\n- 테이블, 뷰, 데이터셋 생성 및 삭제\n- Job 실행 및 모니터링\n- 결과셋 JSON/CSV 다운로드\n- 권한 기반 데이터 액세스\n\n### 1. Google Cloud 계정 생성\n- [Google Cloud Console](https://console.cloud.google.com/) 접속  \n- 프로젝트 생성 (예: `n8n-bigquery-test`)  \n\n### 2. BigQuery API 활성화\n- **API & Services → Library**  \n- **BigQuery API** 검색 후 **Enable** 클릭  \n\n### 3. 서비스 계정(Service Account) 생성\n- **IAM & Admin → Service Accounts**  \n- 새 서비스 계정 생성 → 이름/설명 입력  \n- 역할(Role) 선택:  \n\n✅ BigQuery Data Viewer (조회 전용)\n✅ BigQuery Data Editor (읽기/쓰기)\n✅ BigQuery Admin (전체 권한 필요 시)\n\n- 완료 후 **JSON 키 파일** 다운로드  \n\n### 4. 권한 및 보안\n- 서비스 계정 키(JSON)는 민감 정보이므로 안전하게 보관  \n- 필요 시 데이터셋 단위 접근 제어도 별도 설정 가능  \n\n### 5. n8n 연동\n- n8n에서 **Google BigQuery Node** 추가  \n- `Create a Credential` 선택 → **Service Account JSON** 업로드 또는 붙여넣기  \n- 연결 후 테스트 실행  \n\n### 6. 쿼리 실행 예시\n```sql\nSELECT name, COUNT(*) AS cnt\nFROM `project_id.dataset.table`\nGROUP BY name\nORDER BY cnt DESC\nLIMIT 10;\n\n\t•\t결과는 JSON으로 반환되며 후속 워크플로우에서 활용 가능\n\n7. 대표 REST 엔드포인트\n\t•\tJob 실행: POST https://bigquery.googleapis.com/bigquery/v2/projects/{projectId}/queries\n\t•\tJob 상태 조회: GET https://bigquery.googleapis.com/bigquery/v2/projects/{projectId}/queries/{jobId}\n\t•\tDataset 조회: GET https://bigquery.googleapis.com/bigquery/v2/projects/{projectId}/datasets\n\t•\tTable 데이터 가져오기: GET https://bigquery.googleapis.com/bigquery/v2/projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data\n\n",
+        "height": 1376,
+        "width": 624
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -464
+      ],
+      "id": "98228317-0c8c-4725-98a2-60353e7d0aa6",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "url": "https://api.wheretheiss.at/v1/satellites/25544/",
+        "options": {},
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "timestamps",
+              "value": "={{Date.now();}}"
+            }
+          ]
+        }
+      },
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        576,
+        832
+      ],
+      "typeVersion": 1,
+      "id": "1d1f3f39-8cc2-48a5-9d90-9186812525dc"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 60
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        832
+      ],
+      "id": "a47d4917-37ce-477c-a409-5515838f5c3c",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6677fd8e-d5dd-4d35-b225-9e70a9ee6def",
+              "name": "latitude",
+              "value": "={{ $json.latitude }}",
+              "type": "string"
+            },
+            {
+              "id": "4deb945a-c22d-4832-b2ab-2cc73bcc7c4a",
+              "name": "longitude",
+              "value": "={{ $json.longitude }}",
+              "type": "number"
+            },
+            {
+              "id": "bbe1abfc-cdd6-4f10-a8a4-efcdb8d635d5",
+              "name": "timestamp",
+              "value": "={{ $json.timestamp }}",
+              "type": "number"
+            },
+            {
+              "id": "e1a298a4-d037-4dc6-b892-f91bcfc766c3",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        832
+      ],
+      "id": "912d992e-93cd-484e-9507-5bcc15843554",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "insert",
+        "projectId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "datasetId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "tableId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        1008,
+        832
+      ],
+      "id": "76463209-ea38-4418-b492-72c455b287cb",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "googleApi": {
+          "id": "EzyEBLjEuLP2khnX",
+          "name": "(DP-Service)Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## CREATE\n```\nCREATE TABLE my_dataset.users (\n  user_id INT64,\n  name STRING,\n  age INT64,\n  country STRING\n);\n```",
+        "height": 208,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        -496
+      ],
+      "id": "a79463ac-d5f7-4328-a401-b8ecf2da3cbc",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "n8n-automation-466906",
+          "mode": "list",
+          "cachedResultName": "n8n-automation",
+          "cachedResultUrl": "https://console.cloud.google.com/bigquery?project=n8n-automation-466906"
+        },
+        "sqlQuery": "INSERT INTO my_dataset.users (user_id, name, age, country)\nVALUES\n  (1, 'Alice', 30, 'USA'),\n  (2, 'Bob', 25, 'KOR'),\n  (3, 'Charlie', 35, 'JPN');",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        -224
+      ],
+      "id": "7753df1f-35e6-454f-9ad3-bd2a6bb1a369",
+      "name": "INSERT",
+      "credentials": {
+        "googleBigQueryOAuth2Api": {
+          "id": "cjvgDfPCafPSszxK",
+          "name": "(DP) Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "datapopcorn",
+          "mode": "list",
+          "cachedResultName": "datapopcorn",
+          "cachedResultUrl": "https://console.cloud.google.com/bigquery?project=datapopcorn"
+        },
+        "sqlQuery": "CREATE TABLE my_dataset.users (\n  user_id INT64,\n  name STRING,\n  age INT64,\n  country STRING\n);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        -448
+      ],
+      "id": "842e630b-f4b1-4112-962c-37a3877c44d2",
+      "name": "CREATE",
+      "credentials": {
+        "googleBigQueryOAuth2Api": {
+          "id": "cjvgDfPCafPSszxK",
+          "name": "(DP) Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "n8n-automation-466906",
+          "mode": "list",
+          "cachedResultName": "n8n-automation",
+          "cachedResultUrl": "https://console.cloud.google.com/bigquery?project=n8n-automation-466906"
+        },
+        "sqlQuery": "DELETE FROM my_dataset.users\nWHERE age < 28;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        512
+      ],
+      "id": "b91dd59a-bb77-478b-b7c1-c9e233823f8c",
+      "name": "DELETE",
+      "credentials": {
+        "googleBigQueryOAuth2Api": {
+          "id": "cjvgDfPCafPSszxK",
+          "name": "(DP) Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "n8n-automation-466906",
+          "mode": "list",
+          "cachedResultName": "n8n-automation",
+          "cachedResultUrl": "https://console.cloud.google.com/bigquery?project=n8n-automation-466906"
+        },
+        "sqlQuery": "UPDATE my_dataset.users\nSET country = 'KR'\nWHERE country = 'KOR';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        288
+      ],
+      "id": "0cecdec0-8341-44e8-8787-9651dc63b523",
+      "name": "UPDATE",
+      "credentials": {
+        "googleBigQueryOAuth2Api": {
+          "id": "cjvgDfPCafPSszxK",
+          "name": "(DP) Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "datapopcorn",
+          "mode": "list",
+          "cachedResultName": "datapopcorn",
+          "cachedResultUrl": "https://console.cloud.google.com/bigquery?project=datapopcorn"
+        },
+        "sqlQuery": "SELECT * FROM my_dataset.users;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleBigQuery",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        32
+      ],
+      "id": "5e75f235-b29d-42c5-b279-72fc94441c1b",
+      "name": "SELECT",
+      "credentials": {
+        "googleBigQueryOAuth2Api": {
+          "id": "cjvgDfPCafPSszxK",
+          "name": "(DP) Google BigQuery account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Send location updates of the ISS every 60 minute to a table in Google BigQuery",
+        "height": 96,
+        "width": 960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        736
+      ],
+      "id": "b967e1aa-5bd9-4742-9b62-57e58bf90a6a",
+      "name": "Sticky Note6"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "SELECT": [
+      {
+        "json": {
+          "tconst": "tt0295297",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Chamber of Secrets",
+          "original_title": "Harry Potter and the Chamber of Secrets",
+          "is_adult": "0",
+          "start_year": "2002",
+          "end_year": null,
+          "runtime_minutes": "161",
+          "genres": "Adventure,Family,Fantasy"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt0330373",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Goblet of Fire",
+          "original_title": "Harry Potter and the Goblet of Fire",
+          "is_adult": "0",
+          "start_year": "2005",
+          "end_year": null,
+          "runtime_minutes": "157",
+          "genres": "Adventure,Family,Fantasy"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt0926084",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Deathly Hallows: Part 1",
+          "original_title": "Harry Potter and the Deathly Hallows: Part 1",
+          "is_adult": "0",
+          "start_year": "2010",
+          "end_year": null,
+          "runtime_minutes": "146",
+          "genres": "Adventure,Family,Fantasy"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt0304141",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Prisoner of Azkaban",
+          "original_title": "Harry Potter and the Prisoner of Azkaban",
+          "is_adult": "0",
+          "start_year": "2004",
+          "end_year": null,
+          "runtime_minutes": "142",
+          "genres": "Adventure,Family,Fantasy"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt0373889",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Order of the Phoenix",
+          "original_title": "Harry Potter and the Order of the Phoenix",
+          "is_adult": "0",
+          "start_year": "2007",
+          "end_year": null,
+          "runtime_minutes": "138",
+          "genres": "Action,Adventure,Family"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt0417741",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Half-Blood Prince",
+          "original_title": "Harry Potter and the Half-Blood Prince",
+          "is_adult": "0",
+          "start_year": "2009",
+          "end_year": null,
+          "runtime_minutes": "153",
+          "genres": "Action,Adventure,Family"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt0241527",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Sorcerer's Stone",
+          "original_title": "Harry Potter and the Philosopher's Stone",
+          "is_adult": "0",
+          "start_year": "2001",
+          "end_year": null,
+          "runtime_minutes": "152",
+          "genres": "Adventure,Family,Fantasy"
+        }
+      },
+      {
+        "json": {
+          "tconst": "tt1201607",
+          "title_type": "movie",
+          "primary_title": "Harry Potter and the Deathly Hallows: Part 2",
+          "original_title": "Harry Potter and the Deathly Hallows: Part 2",
+          "is_adult": "0",
+          "start_year": "2011",
+          "end_year": null,
+          "runtime_minutes": "130",
+          "genres": "Adventure,Family,Fantasy"
+        }
+      }
+    ],
+    "HTTP Request": [
+      {
+        "json": {
+          "name": "iss",
+          "id": 25544,
+          "latitude": -35.954130317328,
+          "longitude": 56.932475166637,
+          "altitude": 424.87392989813,
+          "velocity": 27566.788215039,
+          "visibility": "daylight",
+          "footprint": 4532.1771709507,
+          "timestamp": 1758266486,
+          "daynum": 2460937.8065509,
+          "solar_lat": 1.345254453217,
+          "solar_lon": 68.080908465213,
+          "units": "kilometers"
+        }
+      }
+    ],
+    "Edit Fields": [
+      {
+        "json": {
+          "latitude": "-35.954130317328",
+          "longitude": 56.932475166637,
+          "timestamp": 1758266486,
+          "name": "iss"
+        }
+      }
+    ]
+  },
+  "versionId": "1275475b-6462-4913-b6d7-902507e113d6",
+  "activeVersionId": null,
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2025-09-19T06:42:30.432Z",
+      "createdAt": "2025-09-19T06:42:30.432Z",
+      "role": "workflow:owner",
+      "workflowId": "dddnLZlMfOX0rstR",
+      "projectId": "sjNgDrdbhRMMF6SK"
+    }
+  ],
+  "activeVersion": null,
+  "tags": [
+    {
+      "updatedAt": "2025-09-19T05:46:22.728Z",
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스_관리자"
+    },
+    {
+      "updatedAt": "2025-11-19T08:47:47.381Z",
+      "createdAt": "2025-11-19T08:47:47.381Z",
+      "id": "iN3Q4ac9t0z2Kj1c",
+      "name": "active"
+    }
+  ]
+}
