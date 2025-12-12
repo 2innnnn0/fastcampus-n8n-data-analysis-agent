@@ -1,1 +1,168 @@
-u�Zm�
+{
+  "updatedAt": "2025-12-12T07:51:37.628Z",
+  "createdAt": "2025-11-18T05:23:27.411Z",
+  "id": "f6jj6DbIGII88VXn",
+  "name": "My workflow 250665",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1d0bf170-2514-48ca-87c3-c85e0fa7af37",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "01f48684-e11c-4749-9c3a-782740a1841a",
+              "name": "abc",
+              "value": "={{ $now }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3359e921-aaea-4d32-89a5-97d77505bb9c",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "1f53bbac-86e8-4706-8697-f36ac98c1a58",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T05:23:27.411Z",
+      "createdAt": "2025-11-18T05:23:27.411Z",
+      "role": "workflow:owner",
+      "workflowId": "f6jj6DbIGII88VXn",
+      "projectId": "sjNgDrdbhRMMF6SK"
+    }
+  ],
+  "activeVersion": null,
+  "tags": [
+    {
+      "updatedAt": "2025-02-22T00:25:19.087Z",
+      "createdAt": "2025-02-22T00:25:19.087Z",
+      "id": "SvxT35XdbAudYdnK",
+      "name": "스터디2기"
+    },
+    {
+      "updatedAt": "2025-04-05T23:10:12.747Z",
+      "createdAt": "2025-04-05T23:10:12.747Z",
+      "id": "Yeq6b5kzl6aHbiHl",
+      "name": "스터디4기"
+    },
+    {
+      "updatedAt": "2025-03-16T12:36:06.466Z",
+      "createdAt": "2025-03-16T12:36:06.466Z",
+      "id": "0HiJSrbWtZuJangZ",
+      "name": "도서"
+    },
+    {
+      "updatedAt": "2025-03-16T12:35:57.358Z",
+      "createdAt": "2025-03-16T12:35:57.358Z",
+      "id": "PiprPZJvjespE1qT",
+      "name": "네이버API"
+    },
+    {
+      "updatedAt": "2025-02-23T07:21:48.690Z",
+      "createdAt": "2025-02-23T07:21:48.690Z",
+      "id": "vqUWaQiwz2Y8pnpg",
+      "name": "스터디3기"
+    },
+    {
+      "updatedAt": "2025-04-03T04:59:20.339Z",
+      "createdAt": "2025-04-03T04:59:20.339Z",
+      "id": "KJMyKpzWjqlUAV3e",
+      "name": "루즈루틴"
+    },
+    {
+      "updatedAt": "2025-05-04T01:54:54.295Z",
+      "createdAt": "2025-05-04T01:54:54.295Z",
+      "id": "brYosfNDXTdpnRS3",
+      "name": "스터디5기"
+    },
+    {
+      "updatedAt": "2025-04-19T18:11:36.952Z",
+      "createdAt": "2025-04-19T18:11:36.952Z",
+      "id": "rANBNy6cwGBYSoLP",
+      "name": "데이터야놀자"
+    },
+    {
+      "updatedAt": "2025-07-29T06:54:38.612Z",
+      "createdAt": "2025-07-29T06:54:38.612Z",
+      "id": "7leTs7EEaWXX6wWG",
+      "name": "러닝스푼즈"
+    },
+    {
+      "updatedAt": "2025-08-28T01:17:57.626Z",
+      "createdAt": "2025-08-28T01:17:57.626Z",
+      "id": "pTcXn4nct2pZzk4I",
+      "name": "웅진씽크빅"
+    },
+    {
+      "updatedAt": "2025-09-05T04:21:47.593Z",
+      "createdAt": "2025-09-05T04:21:47.593Z",
+      "id": "QEVV1UI2eMzkAubq",
+      "name": "패캠"
+    },
+    {
+      "updatedAt": "2025-09-12T07:47:36.519Z",
+      "createdAt": "2025-09-12T07:47:36.519Z",
+      "id": "wyJKparttXsgG5fP",
+      "name": "오늘의집"
+    },
+    {
+      "updatedAt": "2025-09-18T02:35:45.371Z",
+      "createdAt": "2025-09-18T02:35:45.371Z",
+      "id": "vyODaWW9OWrf7I0w",
+      "name": "인프런"
+    },
+    {
+      "updatedAt": "2025-09-19T05:46:22.728Z",
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스_관리자"
+    },
+    {
+      "updatedAt": "2025-11-19T08:47:47.381Z",
+      "createdAt": "2025-11-19T08:47:47.381Z",
+      "id": "iN3Q4ac9t0z2Kj1c",
+      "name": "active"
+    }
+  ]
+}
