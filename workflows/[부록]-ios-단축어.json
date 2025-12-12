@@ -1,1 +1,617 @@
-u�Zm�
+{
+  "updatedAt": "2025-11-05T07:18:44.297Z",
+  "createdAt": "2025-08-23T07:19:02.577Z",
+  "id": "e2m2VNssMag3PtIQ",
+  "name": "[부록] iOS 단축어",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "assistant",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1376,
+        -160
+      ],
+      "id": "d86c88d1-d8c2-492d-a955-eab9cbd3eee4",
+      "name": "Webhook",
+      "webhookId": "6dfa71ab-04c3-4fb5-bea5-6aba285e834c"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4.1-mini",
+        "options": {}
+      },
+      "id": "cc4d5a1a-4a10-43f1-a4c7-d09e7663473d",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1488,
+        64
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "ledUugAWoH4Uadky",
+          "name": "(fastcampus)OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "![Siri Template Thumbnail](https://uploads.n8n.io/devrel/wf-siri-header.png#full-width)\n## \"Hey Siri, Ask Agent\" workflow\n**Made by [Max Tkacz](https://www.linkedin.com/in/maxtkacz) during the [30 Day AI Sprint](https://30dayaisprint.notion.site/)**\n\nThis template integrates with Apple Shortcuts to trigger an n8n AI Agent via a \"Hey Siri\" command. The shortcut prompts for spoken input, transcribes it, and sends it to the workflow's `When Called by Apple Shortcut` Webhook trigger. The AI Agent processes the input and Siri dictates the response back to you.\n\nThe workflow also passes the current date and time to the `AI Agent`, which you can extend with additional context, like data from an App node, for more customized responses.\n\n",
+        "height": 543,
+        "width": 636,
+        "color": 7
+      },
+      "id": "8268f6dd-d7af-4c35-856e-ec6e9fea6545",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        656,
+        -256
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Set up steps\n1. Add an OpenAI API credential in `OpenAI Chat Model` node, or replace it with another model. Try `Groq` if you want a free alternative (can be used with free Groq account, no CC).\n2. Copy the \"Production URL\" from `When called by Apple Shortcut` node, you'll need this when setting up the shortcut.\n3. Save and activate this n8n workflow.\n4. Download the [Apple Shortcut here](https://uploads.n8n.io/devrel/ask-agent.shortcut), open it on macOS or iOS. This adds the shortcut to your device.\n5. Open the shortcut and swap URL in `Get contents of\" step to the \"Production URL\" you copied from `When called by Apple Shortcut`.\n6. Test it by saying \"Hey Siri, AI Agent\", then ask a question.",
+        "height": 438.5821431288714,
+        "width": 280.2462120317618,
+        "color": 7
+      },
+      "id": "da557de2-6be2-4636-b3bf-faed9e19ab3a",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        656,
+        336
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### ... or watch set up video [5 min]\n[![Siri Template Thumbnail](https://uploads.n8n.io/devrel/thumb-siri.png#full-width)](https://youtu.be/dewsB-4iGA8)\n",
+        "height": 240.6839895136402,
+        "width": 330.5152611046425,
+        "color": 7
+      },
+      "id": "f31280f8-9b75-4ad9-be6b-ddebd80826c2",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        960,
+        336
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.parseJson().input }}",
+        "options": {
+          "systemMessage": "=작업(Task)\n- 당신은 음성으로 답변을 전달하는 도우미입니다. 사용자가 모바일에서 음성으로 듣기 때문에 답변은 짧고 간결해야 합니다. 줄바꿈 기호 같은 특수문자는 쓰지 마세요.\n\n맥락(Context)\n\t•\t오늘은 {{ $now.setLocale('Asia/Seoul') }}입니다.\n\t•\t사용자가 물어보면, 당신은 n8n 워크플로우에서 실행되는 AI 에이전트임을 알려주세요.\n- 날씨에 대해서 물어보면 openweathermap 도구를 사용해서 오늘 날씨를 알려주세요.\n- 메트릭 스토어에 대해서 물어보면 Metric Store 도구를 사용해서 답변해주세요.\n- 자전거 데이터에 대해서 물어보면  bike rent history 도구를 사용해서 답변해주세요.\n\n출력(Output)\n- 답변은 짧고 명확하게, 음성 전달에 맞게 최적화하세요. 모르는 내용은 모른다고만 답하세요."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        -160
+      ],
+      "id": "79c84363-ce19-4fb0-a5b7-58f23466e629",
+      "name": "Voice AI Agent"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/plain; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2016,
+        -160
+      ],
+      "id": "4c945dd6-b48e-491e-b0c5-36abd5309c65",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "cityName": "seoul, kr",
+        "language": "ko"
+      },
+      "type": "n8n-nodes-base.openWeatherMapTool",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        64
+      ],
+      "id": "eeef18e1-cc74-487e-a10d-1a541e6f2678",
+      "name": "OpenWeatherMap",
+      "credentials": {
+        "openWeatherMapApi": {
+          "id": "fYW3S0U0ax0daIMD",
+          "name": "OpenWeatherMap account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "10qP4HbwvJ_caSLwRfPiu49B7LcezUvGA4qhcf-HNU3A",
+          "mode": "list",
+          "cachedResultName": "Metric Store (BI Report)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/10qP4HbwvJ_caSLwRfPiu49B7LcezUvGA4qhcf-HNU3A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sheet', ``, 'string') }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1856,
+        64
+      ],
+      "id": "887ff4f0-65c3-4312-8770-15834699543d",
+      "name": "Metric Store",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "91ar5Cg6JmPJpWXZ",
+          "name": "(DP) Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## iOS 단축어 연동 (iOS 사용자만 가능)",
+        "height": 96,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        -64
+      ],
+      "id": "201bc268-e2e6-4d8d-a0d3-b3e25db045eb",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "seoulbike_rentalhistory"
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        48
+      ],
+      "id": "60be2f50-867b-4b08-a809-a1fd461f19da",
+      "name": "Bike Rent History",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Vj5XKmwFWTcP1bL7",
+          "name": "(Cateteria) Supabase account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Voice AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Voice AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Voice AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenWeatherMap": {
+      "ai_tool": [
+        [
+          {
+            "node": "Voice AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Metric Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "Voice AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bike Rent History": {
+      "ai_tool": [
+        [
+          {
+            "node": "Voice AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "2abb3dbe-5d38-40df-b993-1ae871d667c7",
+  "activeVersionId": "2abb3dbe-5d38-40df-b993-1ae871d667c7",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-08-23T07:19:02.577Z",
+      "createdAt": "2025-08-23T07:19:02.577Z",
+      "role": "workflow:owner",
+      "workflowId": "e2m2VNssMag3PtIQ",
+      "projectId": "sjNgDrdbhRMMF6SK"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-12-05T06:01:27.007Z",
+    "createdAt": "2025-12-05T06:01:27.007Z",
+    "versionId": "2abb3dbe-5d38-40df-b993-1ae871d667c7",
+    "workflowId": "e2m2VNssMag3PtIQ",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "assistant",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          1376,
+          -160
+        ],
+        "id": "d86c88d1-d8c2-492d-a955-eab9cbd3eee4",
+        "name": "Webhook",
+        "webhookId": "6dfa71ab-04c3-4fb5-bea5-6aba285e834c"
+      },
+      {
+        "parameters": {
+          "model": "gpt-4.1-mini",
+          "options": {}
+        },
+        "id": "cc4d5a1a-4a10-43f1-a4c7-d09e7663473d",
+        "name": "OpenAI Chat Model",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "position": [
+          1488,
+          64
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "openAiApi": {
+            "id": "ledUugAWoH4Uadky",
+            "name": "(fastcampus)OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "![Siri Template Thumbnail](https://uploads.n8n.io/devrel/wf-siri-header.png#full-width)\n## \"Hey Siri, Ask Agent\" workflow\n**Made by [Max Tkacz](https://www.linkedin.com/in/maxtkacz) during the [30 Day AI Sprint](https://30dayaisprint.notion.site/)**\n\nThis template integrates with Apple Shortcuts to trigger an n8n AI Agent via a \"Hey Siri\" command. The shortcut prompts for spoken input, transcribes it, and sends it to the workflow's `When Called by Apple Shortcut` Webhook trigger. The AI Agent processes the input and Siri dictates the response back to you.\n\nThe workflow also passes the current date and time to the `AI Agent`, which you can extend with additional context, like data from an App node, for more customized responses.\n\n",
+          "height": 543,
+          "width": 636,
+          "color": 7
+        },
+        "id": "8268f6dd-d7af-4c35-856e-ec6e9fea6545",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          656,
+          -256
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "### Set up steps\n1. Add an OpenAI API credential in `OpenAI Chat Model` node, or replace it with another model. Try `Groq` if you want a free alternative (can be used with free Groq account, no CC).\n2. Copy the \"Production URL\" from `When called by Apple Shortcut` node, you'll need this when setting up the shortcut.\n3. Save and activate this n8n workflow.\n4. Download the [Apple Shortcut here](https://uploads.n8n.io/devrel/ask-agent.shortcut), open it on macOS or iOS. This adds the shortcut to your device.\n5. Open the shortcut and swap URL in `Get contents of\" step to the \"Production URL\" you copied from `When called by Apple Shortcut`.\n6. Test it by saying \"Hey Siri, AI Agent\", then ask a question.",
+          "height": 438.5821431288714,
+          "width": 280.2462120317618,
+          "color": 7
+        },
+        "id": "da557de2-6be2-4636-b3bf-faed9e19ab3a",
+        "name": "Sticky Note1",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          656,
+          336
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "### ... or watch set up video [5 min]\n[![Siri Template Thumbnail](https://uploads.n8n.io/devrel/thumb-siri.png#full-width)](https://youtu.be/dewsB-4iGA8)\n",
+          "height": 240.6839895136402,
+          "width": 330.5152611046425,
+          "color": 7
+        },
+        "id": "f31280f8-9b75-4ad9-be6b-ddebd80826c2",
+        "name": "Sticky Note2",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          960,
+          336
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.body.parseJson().input }}",
+          "options": {
+            "systemMessage": "=작업(Task)\n- 당신은 음성으로 답변을 전달하는 도우미입니다. 사용자가 모바일에서 음성으로 듣기 때문에 답변은 짧고 간결해야 합니다. 줄바꿈 기호 같은 특수문자는 쓰지 마세요.\n\n맥락(Context)\n\t•\t오늘은 {{ $now.setLocale('Asia/Seoul') }}입니다.\n\t•\t사용자가 물어보면, 당신은 n8n 워크플로우에서 실행되는 AI 에이전트임을 알려주세요.\n- 날씨에 대해서 물어보면 openweathermap 도구를 사용해서 오늘 날씨를 알려주세요.\n- 메트릭 스토어에 대해서 물어보면 Metric Store 도구를 사용해서 답변해주세요.\n- 자전거 데이터에 대해서 물어보면  bike rent history 도구를 사용해서 답변해주세요.\n\n출력(Output)\n- 답변은 짧고 명확하게, 음성 전달에 맞게 최적화하세요. 모르는 내용은 모른다고만 답하세요."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          1616,
+          -160
+        ],
+        "id": "79c84363-ce19-4fb0-a5b7-58f23466e629",
+        "name": "Voice AI Agent"
+      },
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "={{ $json.output }}",
+          "options": {
+            "responseCode": 200,
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Content-Type",
+                  "value": "text/plain; charset=utf-8"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.4,
+        "position": [
+          2016,
+          -160
+        ],
+        "id": "4c945dd6-b48e-491e-b0c5-36abd5309c65",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "cityName": "seoul, kr",
+          "language": "ko"
+        },
+        "type": "n8n-nodes-base.openWeatherMapTool",
+        "typeVersion": 1,
+        "position": [
+          1680,
+          64
+        ],
+        "id": "eeef18e1-cc74-487e-a10d-1a541e6f2678",
+        "name": "OpenWeatherMap",
+        "credentials": {
+          "openWeatherMapApi": {
+            "id": "fYW3S0U0ax0daIMD",
+            "name": "OpenWeatherMap account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "documentId": {
+            "__rl": true,
+            "value": "10qP4HbwvJ_caSLwRfPiu49B7LcezUvGA4qhcf-HNU3A",
+            "mode": "list",
+            "cachedResultName": "Metric Store (BI Report)",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/10qP4HbwvJ_caSLwRfPiu49B7LcezUvGA4qhcf-HNU3A/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sheet', ``, 'string') }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheetsTool",
+        "typeVersion": 4.7,
+        "position": [
+          1856,
+          64
+        ],
+        "id": "887ff4f0-65c3-4312-8770-15834699543d",
+        "name": "Metric Store",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "91ar5Cg6JmPJpWXZ",
+            "name": "(DP) Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## iOS 단축어 연동 (iOS 사용자만 가능)",
+          "height": 96,
+          "width": 416
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2320,
+          -64
+        ],
+        "id": "201bc268-e2e6-4d8d-a0d3-b3e25db045eb",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "seoulbike_rentalhistory"
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2080,
+          48
+        ],
+        "id": "60be2f50-867b-4b08-a809-a1fd461f19da",
+        "name": "Bike Rent History",
+        "credentials": {
+          "supabaseApi": {
+            "id": "Vj5XKmwFWTcP1bL7",
+            "name": "(Cateteria) Supabase account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Voice AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Voice AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Voice AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenWeatherMap": {
+        "ai_tool": [
+          [
+            {
+              "node": "Voice AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Metric Store": {
+        "ai_tool": [
+          [
+            {
+              "node": "Voice AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Bike Rent History": {
+        "ai_tool": [
+          [
+            {
+              "node": "Voice AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-09-19T05:46:22.728Z",
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스_관리자"
+    },
+    {
+      "updatedAt": "2025-11-19T08:47:47.381Z",
+      "createdAt": "2025-11-19T08:47:47.381Z",
+      "id": "iN3Q4ac9t0z2Kj1c",
+      "name": "active"
+    }
+  ]
+}
