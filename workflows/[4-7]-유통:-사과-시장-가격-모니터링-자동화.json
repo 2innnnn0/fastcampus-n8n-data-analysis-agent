@@ -1,1 +1,392 @@
-u�Zm�
+{
+  "updatedAt": "2025-09-21T07:58:21.467Z",
+  "createdAt": "2025-09-04T10:15:05.935Z",
+  "id": "jLb4BH0gAPfD4Y2n",
+  "name": "[4-7] 유통: 사과 시장 가격 모니터링 자동화",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -4976,
+        1280
+      ],
+      "id": "23b12268-c79e-4a19-8340-de31e367e4ba",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "34a195aa-483d-491c-92e5-6fa8f97d162b",
+              "name": "Title",
+              "value": "={{ $json.Title }}",
+              "type": "string"
+            },
+            {
+              "id": "9681f05c-3d6e-4fd2-9899-8ef10cf0dc36",
+              "name": "Info",
+              "value": "={{ $json.Info }}",
+              "type": "string"
+            },
+            {
+              "id": "1df68043-750a-4ad4-9e03-c79f229f6165",
+              "name": "purchase_count_bucket",
+              "value": "={{ Math.floor($json[\"Number\"].match(/[\\d.]+/g).join('') / 10000) * 10000 + \"~\" + (Math.floor($json[\"Number\"].match(/[\\d.]+/g).join('') / 10000) + 1) * 10000 }}",
+              "type": "string"
+            },
+            {
+              "id": "92993572-a20b-4b29-aef0-2ba287ecb19d",
+              "name": "purchase_count",
+              "value": "={{ $json[\"Number\"].match(/[\\d.]+/g).join('') }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5568,
+        1280
+      ],
+      "id": "1426cc4e-1026-475a-9677-7052fd48bbea",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## TASK\n- AI Agent",
+        "height": 424,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -4800,
+        1152
+      ],
+      "id": "902a7507-c3b6-4b8a-b47a-8a954a6943d2",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## TASK\n- 데이터불러오기 & 전처리",
+        "height": 280,
+        "width": 944,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -5792,
+        1184
+      ],
+      "id": "aed806f9-a5f9-4b30-864b-b08ef2ccb57a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## TRIGGER",
+        "height": 268,
+        "width": 220
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -6048,
+        1184
+      ],
+      "id": "d7747692-99cf-4870-bf75-73efff3de762",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -4752,
+        1472
+      ],
+      "id": "4ff2a1e2-9db7-42b5-b4ca-43af48d30d1a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ledUugAWoH4Uadky",
+          "name": "(fastcampus)OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1GWpzLkrVlTP4TKqOb-DKlBWV2PX0-NTxGRVc_kQZRTE",
+          "mode": "list",
+          "cachedResultName": "#28_기간별 사과 시장 데이터",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GWpzLkrVlTP4TKqOb-DKlBWV2PX0-NTxGRVc_kQZRTE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1626593129,
+          "mode": "list",
+          "cachedResultName": "사과입찰_경락정보",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GWpzLkrVlTP4TKqOb-DKlBWV2PX0-NTxGRVc_kQZRTE/edit#gid=1626593129"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -5760,
+        1280
+      ],
+      "id": "7d359c1a-a8aa-44df-b860-a630d20a402c",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "91ar5Cg6JmPJpWXZ",
+          "name": "(DP) Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=당신은 사용자 입력을 분석하여, 해당 데이터의 구조와 의미를 반영한 적절한 차트를 생성하고 결과 보고서를 HTML 코드로 출력하는 AI입니다.\n\n사용자는 자연어로 시각화 요청을 합니다. 예를 들어 ‘1만원 가격 범위별로 히스토그램 그려줘’라는 지시가 들어오면, 다음과 같이 이해하고 출력합니다:\n\t•\t차트 유형: 히스토그램\n\t•\tX축 (bin): 가격 값의 구간 (0-10000, 10001-20000, …)\n\t•\tY축: 각 구간에 해당하는 데이터 수 (빈도)\n\n데이터를 해석할 때는 다음을 고려하십시오:\n\t1.\t사용자 의도 파악: 요청한 범주(예: 가격, 연령, 날짜 등)와 분석 기준(예: 구간별 분포, 항목별 비교 등)을 정확히 파악하십시오.\n\t2.\t데이터 구조 확인: 전달된 데이터의 필드명, 데이터 유형(numeric, categorical 등), 값 분포 등을 기반으로 최적의 시각화 방법을 선택하십시오.\n\t3.\t자동 차트 구문 생성: 시각화 도구가 이해할 수 있도록 적절한 차트 구성 요소(x축, y축, 범례 등)를 자동 추론하여 명시적으로 정의하십시오.\n\t4.\t필요 시 binning 수행: 구간을 나눠야 할 경우, 사용자의 언급이 없더라도 데이터 분포를 고려하여 합리적인 구간(bin)을 설정하십시오.\n\n⸻\n\n✅ 출력 지침 (추가 사항)\n\n최종 출력 결과는 HTML 코드 형식으로 작성해야 하며, 다음 요소들을 포함하십시오:\n\t•\t<h2>: 시각화 제목 또는 설명\n\t•\t<p>: 시각화 목적 및 분석 기준 요약\n\t•\t<ul>: 차트 명세 (차트 유형, X/Y축, binning 여부 등)\n\t•\t<div>: 차트를 렌더링할 HTML 컨테이너 (id=\"chart\" 등으로 명시)\n\t•\t<script>: 필요한 경우 JavaScript 기반 차트 코드 (예: Chart.js, ECharts 등 사용 가능)\n\n예시 출력 구조는 다음과 같습니다:\n\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n  <title>○○ 분석 보고서</title>\n  <!-- 공문서 스타일 적용을 위한 기본 CSS -->\n  <style>\n    body {\n      font-family: \"Nanum Gothic\", sans-serif;\n      margin: 40px;\n      color: #333;\n      line-height: 1.6;\n    }\n    header, footer {\n      text-align: center;\n      margin-bottom: 30px;\n    }\n    header h1 {\n      font-size: 28px;\n      margin: 0;\n    }\n    header p {\n      font-size: 14px;\n      margin: 5px 0 0;\n    }\n    section {\n      margin-bottom: 40px;\n    }\n    section h2 {\n      font-size: 20px;\n      border-bottom: 2px solid #000;\n      padding-bottom: 6px;\n      margin-bottom: 16px;\n    }\n    section p, section ul {\n      font-size: 14px;\n      margin: 0 0 12px 0;\n    }\n    section ul {\n      list-style-type: disc;\n      margin-left: 20px;\n    }\n    #chart {\n      width: 100%;\n      max-width: 700px;\n      height: 400px;\n      margin: 0 auto;\n    }\n    footer p {\n      font-size: 12px;\n      color: #666;\n    }\n  </style>\n  <!-- ECharts 라이브러리 로드 -->\n  <script src=\"https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js\"></script>\n</head>\n<body>\n  <!-- 리포트 헤더 -->\n  <header>\n    <h1>○○ 부문 데이터 분석 보고서</h1>\n    <p>작성부서: ○○부서 | 작성일: 2025년 MM월 DD일 | 작성자: 홍길동</p>\n  </header>\n\n  <!-- 1. 개요 및 목적 -->\n  <section id=\"overview\">\n    <h2>1. 개요 및 목적</h2>\n    <p>\n      본 보고서는 ○○ 데이터를 기반으로 **[분석 목적: ex. 가격 분포 확인, 고객 이탈 요인 분석 등]**을 수행하여,\n      향후 정책 수립 및 의사결정에 필요한 인사이트를 제공하고자 합니다.\n    </p>\n  </section>\n\n  <!-- 2. 차트 요약 및 명세 -->\n  <section id=\"chart-spec\">\n    <h2>2. 분석 차트 요약</h2>\n    <ul>\n      <li>차트 유형: 히스토그램</li>\n      <li>X축: 가격 구간 (0-10,000원 단위 binning)</li>\n      <li>Y축: 각 구간별 데이터 개수(빈도)</li>\n      <li>사용 라이브러리: ECharts</li>\n    </ul>\n  </section>\n\n  <!-- 3. 차트 렌더링 컨테이너 -->\n  <section id=\"visualization\">\n    <h2>3. 시각화 결과</h2>\n    <div id=\"chart\"></div>\n  </section>\n\n  <!-- 4. 시사점 및 제언 -->\n  <section id=\"insights\">\n    <h2>4. 시사점 및 제언</h2>\n    <p>※ 차트 결과를 바탕으로 다음과 같은 정책 개선 및 후속 조치 방안을 제시합니다.</p>\n    <ul>\n      <li>○○ 구간의 빈도수가 높은 원인 조사 및 예산 증액 검토</li>\n      <li>저가 상품 구간 활용 강화 방안 마련</li>\n      <li>추가 데이터 수집(연령, 지역 등) 및 다차원 분석 수행</li>\n    </ul>\n  </section>\n\n  <!-- 푸터 -->\n  <footer>\n    <p>※ 본 보고서는 내부 참고용으로만 활용하시기 바랍니다.</p>\n  </footer>\n\n  <!-- ECharts 스크립트 -->\n  <script>\n    // 1) DOM 가져오기 및 초기화\n    var chartDom = document.getElementById('chart');\n    var myChart = echarts.init(chartDom);\n\n    // 2) 옵션 설정 (예시 데이터 입력)\n    var option = {\n      title: {\n        text: '가격 분포 히스토그램',\n        left: 'center',\n        textStyle: { fontSize: 16 }\n      },\n      tooltip: { trigger: 'axis' },\n      xAxis: {\n        type: 'category',\n        name: '가격 구간 (원)',\n        data: ['0-10,000', '10,001-20,000', '20,001-30,000', '30,001-40,000']\n      },\n      yAxis: {\n        type: 'value',\n        name: '빈도(건)'\n      },\n      series: [{\n        name: '빈도수',\n        type: 'bar',\n        barWidth: '60%',\n        data: [120, 95, 80, 45]\n      }]\n    };\n\n    // 3) 차트 그리기\n    myChart.setOption(option);\n  </script>\n</body>\n</html>"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -4720,
+        1280
+      ],
+      "id": "e7ca37bf-9dec-42f6-99dd-8dda51fafd44",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -6000,
+        1280
+      ],
+      "id": "b82cb3ac-6469-44f2-96a8-f29e549a7d68",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "Bucket"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        -5184,
+        1280
+      ],
+      "id": "ac02f90c-f1c6-4887-b70a-e97144210d04",
+      "name": "Sort"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "sum",
+              "field": "Number"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "Bucket",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        -5376,
+        1280
+      ],
+      "id": "e1a03e9d-6ccd-4b2b-b6ca-c27c862eaef3",
+      "name": "Summarize"
+    },
+    {
+      "parameters": {
+        "content": "## SYSTEM MESSGAGE GUIDE\n\n#### 사용 목적\n다음 용도를 위해, n8n에서 바로 사용할 수 있는 완전하고 독립적인 에이전트 프롬프트를 만들어라:\n1. [ TRIGGER -> TASK -> TARGET 으로 정리된 내용 입력하기 ]\n2. 데이터 구조 예시 넣어주기\n\n⸻\n#### 프롬프트에 반드시 포함해야 할 섹션\n텍스트 그대로 아래 항목들을 포함해야 한다:\n\t1.\tRole (역할) – 에이전트가 누구이며 어떤 역할을 하는지.\n\t2.\tInputs (입력) – 사용자가 제공하는 필드.\n\t3.\tTask (작업) – 에이전트가 수행하는 단계별 절차.\n\t4.\tOutput (출력) – 최종 산출물의 구체적인 설명 (톤, 구조 포함).\n\t5.\tConstraints (제약조건) – 규칙과 제한사항.\n\t6.\tCapabilities & Reminders (능력과 주의사항) – 도구, 기술, 품질 관련 팁.",
+        "height": 432,
+        "width": 672,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -4800,
+        688
+      ],
+      "id": "6974613b-a7c7-4129-ba47-7b448da0653a",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "![](https://raw.githubusercontent.com/2innnnn0/assets/refs/heads/master/image/datapopcorn_logo_50px.png)\n# 유통: 사과 시장 가격 모니터링 자동화\n### Source : https://docs.google.com/spreadsheets/d/1GWpzLkrVlTP4TKqOb-DKlBWV2PX0-NTxGRVc_kQZRTE/edit?gid=333955906#gid=333955906\n\n(수집)\n사과 시장 데이터 (CSV / 구글 시트 / 공공 API 등) 주기적 수집\n날짜별 시장, 도매법인, 규격 단위의 거래 정보 확보\n(전처리)\n평균가, 최고가, 최저가, 거래량 → 숫자형 정규화\n날짜 포맷 통일 (YYYY-MM-DD)\n품종 및 규격별 그룹 정리 (10kg 상자, 20kg 상자, 트레이 등)\n(분석)\n도매시장별 평균 단가 비교\n품목/규격별 가격 변동 추이 분석\n거래량 상위 시장 및 단가 기준 이상치 탐지 (Claude 활용 가능)\n(시각화)\n가격 추이 라인차트 자동 생성\n일자별/시장별 요약표 생성 후 Slack 또는 Email 자동 전송",
+        "height": 576,
+        "width": 744
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -6048,
+        592
+      ],
+      "id": "16326971-b971-4158-a375-d251aa21ca25",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "ac1a40be-a409-4584-ba67-7575f4ec209c",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-09-04T10:15:05.935Z",
+      "createdAt": "2025-09-04T10:15:05.935Z",
+      "role": "workflow:owner",
+      "workflowId": "jLb4BH0gAPfD4Y2n",
+      "projectId": "sjNgDrdbhRMMF6SK"
+    }
+  ],
+  "activeVersion": null,
+  "tags": [
+    {
+      "updatedAt": "2025-09-19T05:46:22.728Z",
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스_관리자"
+    },
+    {
+      "updatedAt": "2025-11-19T08:47:47.381Z",
+      "createdAt": "2025-11-19T08:47:47.381Z",
+      "id": "iN3Q4ac9t0z2Kj1c",
+      "name": "active"
+    }
+  ]
+}
