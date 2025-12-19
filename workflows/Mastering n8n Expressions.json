@@ -1,0 +1,705 @@
+{
+  "name": "Tutorial - Mastering n8n Expressions",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b7a5c67c-668b-4427-ae97-5e322ba2ac45",
+      "name": "튜토리얼 시작",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -1728,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# 튜토리얼 - n8n 표현식 마스터하기\n\n환영합니다! JSON이 무엇인지 알고 계시네요. 이제 **어떻게 사용하는지** 배워봅시다. 이 워크플로우는 한 노드에서 데이터를 가져와 다른 노드에서 n8n의 강력한 표현식을 사용하여 활용하는 방법을 가르쳐줍니다.\n\n**표현식이란 무엇인가요?**\n표현식은 이중 중괄호 `{{ }}` 안의 작은 코드 조각으로, 워크플로우가 실행될 때 동적 값으로 대체됩니다. 노드들을 연결하는 \"접착제\" 역할을 합니다.\n\n**이 튜토리얼 사용법:**\n1.  첫 번째 노드인 **\"소스 데이터\"**에는 우리가 사용할 모든 데이터가 들어있습니다. 한 번 실행하여 안에 무엇이 있는지 확인해보세요.\n2.  위에서 아래로 경로를 따라가세요. 각 노드는 새로운 레슨입니다.\n3.  각 레슨의 스티키 노트를 읽고, 노드의 구성과 출력을 살펴보며 개념을 이해하세요.",
+        "height": 560,
+        "width": 640,
+        "color": 5
+      },
+      "id": "58a68939-9677-48c9-9526-a18aec25203e",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2000,
+        -16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 우리의 데이터 소스\n\n이 노드는 튜토리얼을 위한 모든 샘플 데이터를 담고 있습니다. 파일 캐비닛이라고 생각하세요. 다른 모든 노드들이 이 캐비닛에서 특정 정보를 꺼내갈 것입니다.\n\n구조에 익숙해지기 위해 출력을 살펴보세요.\n우리가 가진 것들:\n- 간단한 텍스트 (`name`)\n- 숫자 (`age`)\n- 기술 목록 (`skills`)\n- 복합 프로젝트 목록 (`projects`)\n- 중첩된 연락처 객체 (`contact`)",
+        "height": 520,
+        "width": 520,
+        "color": 7
+      },
+      "id": "8047b631-6306-47b2-8b7a-690eb7f75370",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1328,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "user_name",
+              "type": "string",
+              "value": "={{ $('0 Source').item.json.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4c4008ea-bc31-435d-9207-3f888cf94041",
+      "name": "1. 기본기",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -592,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 1: 간단한 값 접근하기\n\n이것은 n8n에서 가장 자주 할 일입니다.\n\n**목표:** \"소스 데이터\" 노드에서 사용자의 이름을 가져오기.\n\n**표현식:** `{{ $('소스 데이터').item.json.name }}`\n\n**분석:**\n- `{{ ... }}`: n8n에게 \"이것은 동적 표현식이다\"라고 알려줍니다.\n- `$('소스 데이터')`: 데이터를 가져올 노드를 선택합니다.\n- `.item.json`: 현재 아이템의 JSON 데이터로 범위를 좍힙니다.\n- `.name`: 원하는 **키**를 선택합니다.\n\n**다른 방법:**\n`{{ $json.name }}`도 이 경우에 작동합니다. `$json`은 이전 노드에서 데이터에 접근하기 때문입니다.",
+        "height": 580,
+        "width": 500,
+        "color": 2
+      },
+      "id": "13aa7a51-c169-4ff5-a1b7-fa7100c3aa6d",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -800,
+        -64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "second_skill",
+              "type": "string",
+              "value": "={{ $('0 Source').last().json.skills[1] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ea72ff2c-d726-4cdd-a4fa-f781dad3a6ca",
+      "name": "3. 배열 다루기",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        640,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 3: 배열 요소 접근하기\n\n데이터가 목록(배열) 안에 있으면 어떤가요? *어떤* 아이템을 원하는지 지정해야 합니다.\n\n**목표:** 사용자의 *두 번째* 기술을 가져오기.\n\n**표현식:** `{{ $('소스 데이터').last().json.skills[1] }}`\n\n**분석:**\n- `...skills`: 기술 배열을 선택합니다.\n- `[1]`: 특정 위치의 아이템을 선택합니다.\n- **중요:** 배열은 \"0부터 시작\"합니다. 즉, 첫 번째 아이템은 `[0]`, 두 번째는 `[1]`, 세 번째는 `[2]` 식입니다.",
+        "height": 520,
+        "width": 540,
+        "color": 4
+      },
+      "id": "1708439a-f215-432a-b068-8a3ad40e6008",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        432,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "user_email",
+              "type": "string",
+              "value": "={{ $('0 Source').last().json.contact.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0a261b2e-43dd-4aa5-8d3d-1736b7aa32e4",
+      "name": "4. 더 깊이 들어가기",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1200,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 4: 중첩된 데이터 접근하기\n\n때로는 데이터가 다른 객체 안의 객체로 구성되어 있습니다.\n\n**목표:** 사용자의 이메일 주소를 가져오기.\n\n**표현식:** `{{ $('소스 데이터').last().json.contact.email }}`\n\n**분석:**\n- `...contact`: 먼저 `contact` 객체에 접근합니다.\n- `.email`: 그다음 또 다른 점 `.`을 사용하여 한 단계 더 깊이 들어가 그 안의 `email` 키 값을 가져옵니다.",
+        "height": 480,
+        "width": 540,
+        "color": 5
+      },
+      "id": "ed6462a6-f04a-4fd1-ae94-ea952eddaa4d",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        992,
+        48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "first_project_status",
+              "type": "string",
+              "value": "={{ $('0 Source').last().json.projects[0].status }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "18118f20-fec9-4672-8a98-d8af6edc95e8",
+      "name": "5. 콤보 움직임",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1792,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 5: 객체 배열에서 데이터 접근하기\n\n이것이 이전 레슨들의 최종 테스트입니다!\n\n**목표:** 리스트에서 *첫 번째* 프로젝트의 *상태*를 가져오기.\n\n**표현식:** `{{ $('소스 데이터').last().json.projects[0].status }}`\n\n**분석:**\n1.  `...projects`: 프로젝트 배열을 선택합니다.\n2.  `[0]`: 그 배열에서 첫 번째 객체를 선택합니다.\n3.  `.status`: 선택된 객체에서 `status` 키의 값을 가져옵니다.",
+        "height": 480,
+        "width": 580,
+        "color": 6
+      },
+      "id": "3396636a-43f6-4458-9fd3-755a512525ba",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1552,
+        48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "name_in_caps",
+              "type": "string",
+              "value": "={{ $('0 Source').last().json.name.toUpperCase() }}"
+            },
+            {
+              "id": "67890",
+              "name": "age_in_dog_years",
+              "type": "number",
+              "value": "={{ Math.round($('0 Source').last().json.age / 7) }}"
+            },
+            {
+              "id": "abcde",
+              "name": "age_data_type",
+              "type": "string",
+              "value": "={{ typeof $('0 Source').last().json.age }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b6921262-7aad-415d-86dd-74cc6ad475c5",
+      "name": "6. 마법의 읽간",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2384,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 6: 마법의 읽간 (JS 함수)\n\n데이터를 가져오는 것 이상을 할 수 있습니다. **조작하고 검사할 수 있습니다!**\n\n**표현식들:**\n- **텍스트 변환:** `{{ $('소스 데이터').last().json.name.toUpperCase() }}`\n- **수학 계산:** `{{ Math.round($('소스 데이터').last().json.age / 7) }}`\n- **데이터 타입 확인:** `{{ typeof $('소스 데이터').last().json.age }}`\n\n**분석:**\n- **`.toUpperCase()`**: 문자열을 위한 표준 JavaScript 함수입니다.\n- **`Math.round(...)`**: `Math` 객체는 강력한 수학 함수들에 접근하게 해줍니다.\n- **`typeof`**: 보고 있는 데이터의 종류를 알려주는 연산자입니다(\"string\", \"number\", \"object\" 등).",
+        "height": 520,
+        "width": 580,
+        "color": 3
+      },
+      "id": "41a62f3e-ff7c-4f02-94fb-74be70ce807b",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2144,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "all_skills_string",
+              "type": "string",
+              "value": "={{ $('Skill Split').all().map(item => item.json.skills).join(', ') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8753392c-0cc0-4d6b-8ec2-241b2fceedfa",
+      "name": "9. \"전체 아이템\" 뷰",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        4304,
+        368
+      ],
+      "executeOnce": true,
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 9: 여러 아이템 다루기 (`$items` & 화살표 함수)\n\n노드가 *여러* 아이템을 출력하고 이를 요약하고 싶다면? `$items()`이 당신의 도구입니다.\n\n**목표:** 사용자의 모든 기술을 콤마로 구분된 단일 문자열로 바꾸기.\n\n**표현식:** `{{ $('스킬 분리').all().map(item `=>` item.json.skills).join(', ') }}`\n\n**`item => ...`이 무엇인가요?**\n이것은 **화살표 함수**로, \"모든 것에 대해 이것을 하라\"의 줄임말입니다.\n- `item`: 루프를 돌면서 리스트의 각 아이템에 대한 임시 이름.\n- =>: 아이템과 동작을 분리하는 \"화살표\".\n- `item.json.skills`: 수행할 동작—이 경우에는 아이템에서 기술 값을 가져오기.",
+        "height": 520,
+        "width": 780,
+        "color": 5
+      },
+      "id": "625f1860-40d4-4b12-ae2b-4a25edd131bd",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3872,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "final_summary",
+              "type": "string",
+              "value": "=사용자 {{ $('2. n8n 선택자').last().json.user_name_from_first }}는 {{ $('0 Source').last().json.age }}살입니다.\n\n최고의 기술은 {{ $('3. 배열 다루기').last().json.second_skill }}입니다.\n\n첫 번째 프로젝트는 {{ $('0 Source').last().json.projects[0].name }}이며, 현재 {{ $('5. 콤보 움직임').last().json.first_project_status }} 상태입니다.\n\n모든 기술: {{ $('9. \"전체 아이템\" 뷰').last().json.all_skills_string }}."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8509b70d-ee0b-4b6f-a0ed-9783b76bec66",
+      "name": "최종 시험",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        4880,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 🎓 최종 시험: 모든 것을 합쳐보기\n\n이 노드는 우리가 배운 모든 것을 사용하여 최종 요약 객체를 만듭니다.\n\n각 필드의 표현식을 보세요. 서로 다른 노드에서 데이터를 가져와 방금 연습한 다양한 기법을 사용합니다.\n\n**축하합니다! 이제 n8n에서 데이터를 연결하고 강력하고 동적인 워크플로우를 구축할 기초 지식을 갖게 되었습니다.**",
+        "height": 420,
+        "width": 520,
+        "color": 6
+      },
+      "id": "eb054368-81ed-4aac-8af2-828dd5b6af20",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4672,
+        112
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "user_name_from_first",
+              "type": "string",
+              "value": "={{ $('0 Source').last().json.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ee2eaeea-3d9b-4f04-89eb-5b264271ff8e",
+      "name": "2. n8n 선택자",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        32,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 2: n8n 선택자 (`.first()`, `.last()`, `.all()`)\n\n지난 레슨에서는 `.item`을 사용했습니다. 노드에서 출력 아이템이 하나만 있을 때, 이는 `.last()`와 동일합니다. `.last()`를 명시적으로 사용하는 것이 종종 더 안전하고 명확합니다.\n\n**목표:** `.last()` 선택자를 사용하여 사용자의 이름을 가져오기.\n\n**표현식:** `{{ $('소스 데이터').last().json.name }}`\n\n**왜 더 좋은가요?**\n노드가 여러 아이템을 반환할 경우, `.last()`는 마지막 아이템에서만 데이터를 가져오는 것을 보장합니다.\n\n선택된 데이터를 입력 아이템과 매치해야 하는 경우, `.item`을 바꿀 수 없는 곳입니다.\n\n**다른 선택자들:**\n- **`.first()`**: 첫 번째 아이템에서 데이터를 가져옵니다.\n- **`.all()`**: 모든 아이템에서 데이터를 가져와 객체 배열로 반환합니다. (`$items`와 다릅니다!)",
+        "height": 620,
+        "width": 680
+      },
+      "id": "44ec1f9e-1f95-4259-94b7-9dc23b0886b6",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -96
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "contact_keys",
+              "type": "array",
+              "value": "={{ Object.keys($('0 Source').last().json.contact) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83189cb4-46f3-4a58-9291-576a6377d318",
+      "name": "7. 객체 검사하기",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2944,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 7: 객체 검사하기 (`Object.keys()`)\n\n객체는 있지만 그 안에 어떤 키들이 있는지 모른다면? `Object.keys()`가 도와줍니다.\n\n**목표:** `contact` 객체 안의 모든 키 목록 가져오기.\n\n**표현식:** `{{ Object.keys($('소스 데이터').last().json.contact) }}`\n\n동적으로 데이터를 처리하는 데 매우 유용합니다. 키 이름들을 포함하는 **배열**을 반환합니다(예: `[\"email\", \"phone\"]`).",
+        "height": 520,
+        "width": 500,
+        "color": 2
+      },
+      "id": "7a70f1b5-6651-49bf-8a72-f4ea6d91cd62",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2752,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "contact_as_string",
+              "type": "string",
+              "value": "={{ JSON.stringify($('0 Source').last().json.contact, null, 2) }}"
+            },
+            {
+              "id": "06003b65-7482-4d5a-b2c0-1794859ab461",
+              "name": "skills",
+              "type": "array",
+              "value": "={{ $('0 Source').last().json.skills }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "35c52a73-e261-428a-bc62-cd8b4d0960a9",
+      "name": "8. 유틸리티 함수",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        3504,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 레슨 8: 유틸리티 함수 (`JSON.stringify()`)\n\n때로는 구조화된 JSON 객체를 깨끗한 단일 문자열로 다시 변환해야 합니다. AI 프롬프트에서처럼 다른 서비스로 데이터를 보낼 때 자주 사용됩니다.\n\n**목표:** 전체 `contact` 객체를 포매팅된 문자열로 변환하기.\n\n**표현식:** `{{ JSON.stringify($('소스 데이터').last().json.contact, null, 2) }}`\n\n**분석:**\n- **`JSON.stringify(...)`**: 변환을 수행하는 함수.\n- **`null, 2`**: 이 선택적 매개변수들은 2칸의 들여쓰기로 \"예쁘게 출력\"하도록 하여 읽기 쉽게 만듭니다.",
+        "height": 520,
+        "width": 580
+      },
+      "id": "fb9e5dd1-a1a9-433c-997b-0f9db85d52ef",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3264,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Credit : https://n8n.io/workflows/5271-learn-n8n-expressions-with-an-interactive-step-by-step-tutorial-for-beginners/",
+        "height": 80,
+        "width": 656
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2000,
+        -160
+      ],
+      "id": "a0ce3dc7-8372-4195-9c31-6ac11c1c950f",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## 요약\n1. 이전 노드에서 단순한 값을 접근하기\n2. .last()와 .first() 같은 n8n의 내장 셀렉터 사용하기\n3. 리스트(Array)에서 특정 항목 가져오기\n4. 중첩된 데이터(Object)에서 값 파고들기\n5. 배열 안의 객체에서 데이터를 꺼내기 위해 위 기법들 조합하기\n6. 단순한 값 조회를 넘어서, JavaScript 함수로 수학 연산이나 텍스트 가공 수행하기\n7. Object.keys() 및 JSON.stringify() 같은 유틸리티 함수로 데이터 구조 확인하기\n8. .all()과 화살표 함수(arrow function)를 사용하여 여러 항목에서 데이터 요약하기",
+        "height": 256,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        -272
+      ],
+      "id": "fa8b1355-e475-488f-a37f-666aac8f9ad1",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "name",
+              "type": "string",
+              "value": "Alice"
+            },
+            {
+              "id": "67890",
+              "name": "age",
+              "type": "number",
+              "value": 30
+            },
+            {
+              "id": "abcde",
+              "name": "is_active",
+              "type": "boolean",
+              "value": true
+            },
+            {
+              "id": "fghij",
+              "name": "skills",
+              "type": "array",
+              "value": "[\"JavaScript\",\"Python\",\"n8n\"]"
+            },
+            {
+              "id": "klmno",
+              "name": "projects",
+              "type": "array",
+              "value": "[{\"name\":\"Project A\",\"status\":\"Done\"},{\"name\":\"Project B\",\"status\":\"In Progress\"}]"
+            },
+            {
+              "id": "pqrst",
+              "name": "contact",
+              "type": "object",
+              "value": "{\"email\":\"alice@example.com\",\"phone\":null}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c32e6330-a4da-45f6-a009-69c065259570",
+      "name": "0 Source",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1120,
+        368
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "skills",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "id": "4da3b4b1-7657-4b2e-8843-b7371d693e3b",
+      "name": "Skill Split",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        4016,
+        368
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "튜토리얼 시작": {
+      "main": [
+        [
+          {
+            "node": "0 Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. 기본기": {
+      "main": [
+        [
+          {
+            "node": "2. n8n 선택자",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. 배열 다루기": {
+      "main": [
+        [
+          {
+            "node": "4. 더 깊이 들어가기",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. 더 깊이 들어가기": {
+      "main": [
+        [
+          {
+            "node": "5. 콤보 움직임",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. 콤보 움직임": {
+      "main": [
+        [
+          {
+            "node": "6. 마법의 읽간",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. 마법의 읽간": {
+      "main": [
+        [
+          {
+            "node": "7. 객체 검사하기",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9. \"전체 아이템\" 뷰": {
+      "main": [
+        [
+          {
+            "node": "최종 시험",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. n8n 선택자": {
+      "main": [
+        [
+          {
+            "node": "3. 배열 다루기",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7. 객체 검사하기": {
+      "main": [
+        [
+          {
+            "node": "8. 유틸리티 함수",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8. 유틸리티 함수": {
+      "main": [
+        [
+          {
+            "node": "Skill Split",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "0 Source": {
+      "main": [
+        [
+          {
+            "node": "1. 기본기",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skill Split": {
+      "main": [
+        [
+          {
+            "node": "9. \"전체 아이템\" 뷰",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c0f3e70f-8b3f-4091-8e83-569382f990e5",
+  "meta": {
+    "instanceId": "b5ece4a7f1d316800b5067c86423ddc5cb2f9cd86ec345924a6f385dc750a41b"
+  },
+  "id": "WfDrUU24g8beGkwC",
+  "tags": [
+    {
+      "createdAt": "2025-06-25T04:00:38.130Z",
+      "updatedAt": "2025-06-25T04:00:38.130Z",
+      "id": "EyGUZypc5DKHVUyY",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}

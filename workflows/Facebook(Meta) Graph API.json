@@ -1,0 +1,1321 @@
+{
+  "name": "Facebook(Meta) Graph API",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "6e2538ef-eb67-4503-a6c0-a722e3dba7f8",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        800,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "v23.0",
+        "node": "me/adaccounts",
+        "edge": "insights",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        240
+      ],
+      "id": "dae4db36-1870-440f-adc6-e1d66368cc69",
+      "name": "me/adaccounts",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "CJWK8HqTDRD7a5Wx",
+          "name": "n8n-ads-performance"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "v23.0",
+        "node": "={{ $json.data[0].id }}",
+        "edge": "insights",
+        "options": {
+          "fields": {
+            "field": [
+              {
+                "name": "campaign_name,ad_name,impressions,clicks,spend"
+              }
+            ]
+          },
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "time_range",
+                "value": "={\"since\":\"2025-01-01\",\"until\":\"2025-01-30\"}"
+              },
+              {
+                "name": "level",
+                "value": "ad"
+              },
+              {
+                "name": "breakdowns",
+                "value": "publisher_platform, platform_position"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        240
+      ],
+      "id": "d2a7a8b4-19a4-49ea-8a23-bcf5a346621d",
+      "name": "insights",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "SpMHIhagsOluIay2",
+          "name": "Facebook Graph account (DP)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Facebook Graph API 발급 방법\n*사전에 페이스북(or 인스타그램) 광고 진행이력이 있어야 합니다.\n1. https://developers.facebook.com/ 에서 페이스북 계정 로그인\n2. 앱을 생성 후 `마케팅API` 제품 추가.\n3. 도구 > 엑세스 토큰 받기. \n    - 권한은 모두 체크. ads_management, ads_read, read_insights\n    - (토큰값 예시) EAAUKEp****\n4. 아래 Graph API 토큰 값에 추가하기.\n5. me/adaccounts를 실행하면 act_<AD_CCOUNT_ID>가 나옴",
+        "height": 256,
+        "width": 528
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        112
+      ],
+      "id": "484112cb-4649-41ce-b601-3c53bc5af1f1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## HTTP Request 복사 붙여넣기 👉\n(아래 본인 정보들로 수정)\n\n## 인스타그램 광고 \n- 최소 권한: ads_read (토큰은 비즈니스 “시스템 사용자”로 발급 권장)\n```\ncurl -G \\ \n   \"https://graph.facebook.com/v23.0/act_AD_ACCOUNT_ID/insights\" \\\n  --data-urlencode \"access_token=<ACCESS_TOKEN>\" \\\n  --data-urlencode \"level=ad\" \\\n  --data-urlencode \"fields=campaign_id,campaign_name,adset_id,adset_name,ad_id,ad_name,impressions,reach,clicks,spend,actions\" \\\n  --data-urlencode \"date_preset=this_year\" \\\n  --data-urlencode \"breakdowns=publisher_platform,platform_position\" \\\n  --data-urlencode 'filtering=[{\"field\":\"publisher_platform\",\"operator\":\"IN\",\"value\":[\"instagram\"]}]'\n```\n\n- level: campaign / adset / ad 중 선택\n- breakdowns로 IG 위치(피드/스토리즈/릴스 등)까지 분해\n- 대용량이면 async=true로 비동기 리포트 권장\n- date_preset : (기본값) last_30d (최근 30일)  ￼\n\t•\t지정 가능 값(대표):\n\t•\ttoday, yesterday\n\t•\tlast_3d, last_7d, last_14d, last_28d, last_30d, last_90d\n\t•\tthis_week_mon_today, this_week_sun_today, last_week_mon_sun, last_week_sun_sat\n\t•\tthis_month, last_month, this_quarter, last_quarter, this_year, last_year\n\t•\tmaximum = 보유 데이터 최대(최대 약 37개월) — lifetime는 v10부터 폐지되고 maximum으로 대체됨  ￼\n\t•\t참고: date_preset은 상대 기간이라 간단하고 빠릅니다. time_range(since/until)나 time_ranges를 쓰면date_preset은 무시됨\n\n### AD_ACCOUNT_ID 찾기\n- 광고 관리자 URL에 act=xxxxxx 로 보이거나, 비즈니스 설정 > 광고계정에서 확인.",
+        "height": 736,
+        "width": 704
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        416
+      ],
+      "id": "fce7e63b-0eb3-4cc9-a035-6f544f1c0927",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v23.0/act_556216297176338/insights",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_token"
+            },
+            {
+              "name": "level",
+              "value": "ad"
+            },
+            {
+              "name": "fields",
+              "value": "campaign_id,campaign_name,adset_id,adset_name,ad_id,ad_name,impressions,reach,clicks,spend,actions"
+            },
+            {
+              "name": "date_preset",
+              "value": "this_year"
+            },
+            {
+              "name": "breakdowns",
+              "value": "publisher_platform,platform_position"
+            },
+            {
+              "name": "filtering",
+              "value": "[{\"field\":\"publisher_platform\",\"operator\":\"IN\",\"value\":[\"instagram\"]}]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        784,
+        640
+      ],
+      "id": "f0aa70ab-f660-44b8-ae8e-918e96b58634",
+      "name": "Instagram Ads API"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        640
+      ],
+      "id": "299ee7e3-523c-4736-a812-f32400ae9282",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee1b1137-f7c1-45ec-bdab-39794e4b47d2",
+              "name": "={{ $json.actions[0].action_type }}",
+              "value": "={{ $json.actions[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "37e853e8-6199-4891-ad26-318fe66fb3b4",
+              "name": "={{ $json.actions[1].action_type }}",
+              "value": "={{ $json.actions[1].value }}",
+              "type": "string"
+            },
+            {
+              "id": "dfbd211c-0bb4-43a2-8590-0be2065e05c9",
+              "name": "={{ $json.actions[2].action_type }}",
+              "value": "={{ $json.actions[2].value }}",
+              "type": "string"
+            },
+            {
+              "id": "c97b117f-58dc-4ef6-8915-0aa3131cdd5e",
+              "name": "={{ $json.actions[2].action_type }}",
+              "value": "={{ $json.actions[2].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b74f9bdc-54b2-45a2-a402-02b6e3512326",
+              "name": "={{ $json.actions[3].action_type }}",
+              "value": "={{ $json.actions[3].value }}",
+              "type": "string"
+            },
+            {
+              "id": "24b75bc5-3c72-4e5d-8af1-548089704947",
+              "name": "={{ $json.actions[4].action_type }}",
+              "value": "={{ $json.actions[4].value }}",
+              "type": "string"
+            },
+            {
+              "id": "b8b13235-8afb-4e9c-b89f-2a5d33b39892",
+              "name": "={{ $json.actions[4].action_type }}",
+              "value": "={{ $json.actions[4].value }}",
+              "type": "string"
+            },
+            {
+              "id": "dcc60639-5b5a-4036-8e3c-760467d29ab3",
+              "name": "={{ $json.actions[5].action_type }}",
+              "value": "={{ $json.actions[5].value }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "actions",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        640
+      ],
+      "id": "5e933325-cba2-4c8f-8fb5-6f266b554750",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "app1GdaD8adgqnA5m",
+          "mode": "list",
+          "cachedResultName": "IG ads Performance",
+          "cachedResultUrl": "https://airtable.com/app1GdaD8adgqnA5m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tble6PhUeFWooyluX",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/app1GdaD8adgqnA5m/tble6PhUeFWooyluX"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "impressions": "={{ $json.impressions }}",
+            "clicks": "={{ $json.clicks }}",
+            "spend": "={{ $json.spend }}",
+            "campaign_name": "={{ $json.campaign_name }}",
+            "ad_name": "={{ $json.ad_name }}",
+            "position": "={{ $json.platform_position }}",
+            "date_start": "={{ $json.date_start.toDateTime().format('yyyy-MM-dd') }}",
+            "date_stop": "={{ $json.date_stop.toDateTime().format('yyyy-MM-dd') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "campaign_name",
+              "displayName": "campaign_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ad_name",
+              "displayName": "ad_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "date_start",
+              "displayName": "date_start",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "date_stop",
+              "displayName": "date_stop",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "impressions",
+              "displayName": "impressions",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "clicks",
+              "displayName": "clicks",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "spend",
+              "displayName": "spend",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "position",
+              "displayName": "position",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1664,
+        240
+      ],
+      "id": "d7c13cc0-d86b-4de4-91d4-38769d2db3dd",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "axePgCQryYCPaxxw",
+          "name": "(datapopcorn)Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        240
+      ],
+      "id": "12576a15-30d9-4fbd-a14b-8d241e7265df",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v23.0/act_AD_ACCOUNT_ID/insights",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "ACCESS_TOKEN"
+            },
+            {
+              "name": "level",
+              "value": "ad"
+            },
+            {
+              "name": "fields",
+              "value": "campaign_id,campaign_name,adset_id,adset_name,ad_id,ad_name,impressions,reach,clicks,spend,actions"
+            },
+            {
+              "name": "date_preset",
+              "value": "this_year"
+            },
+            {
+              "name": "breakdowns",
+              "value": "publisher_platform,platform_position"
+            },
+            {
+              "name": "filtering",
+              "value": "%5B%7B%22field%22%3A%22publisher_platform%22%2C%22operator%22%3A%22IN%22%2C%22value%22%3A%5B%22instagram%22%5D%7D%5D"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        784,
+        832
+      ],
+      "id": "0c15f88c-d25a-4516-9792-9dfa5c30dc12",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v19.0/act_730363959975053/insights",
+        "options": {},
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "Bearer "
+            }
+          ]
+        },
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "level",
+              "value": "account"
+            },
+            {
+              "name": "fields",
+              "value": "account_id,account_name,spend,reach,impressions,inline_link_clicks,actions,action_values"
+            },
+            {
+              "name": "time_range",
+              "value": "={\"since\":\"{{ $json.currentPeriod.until }}\",\"until\":\"{{ $json.currentPeriod.until }}\"} "
+            },
+            {
+              "name": "limit",
+              "value": "500"
+            },
+            {
+              "name": "action_report_time",
+              "value": "conversion"
+            },
+            {
+              "name": "action_attribution_windows",
+              "value": "7d_click"
+            }
+          ]
+        }
+      },
+      "name": "Meta Ads API 호출",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        992,
+        832
+      ],
+      "id": "9eec4a6c-fa66-4acf-94a6-b7effe4b7701"
+    }
+  ],
+  "pinData": {
+    "Split Out": [
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "264",
+          "reach": "237",
+          "clicks": "12",
+          "spend": "2714",
+          "actions": [
+            {
+              "action_type": "page_engagement",
+              "value": "76"
+            },
+            {
+              "action_type": "post_engagement",
+              "value": "76"
+            },
+            {
+              "action_type": "post_interaction_gross",
+              "value": "1"
+            },
+            {
+              "action_type": "link_click",
+              "value": "13"
+            },
+            {
+              "action_type": "video_view",
+              "value": "62"
+            },
+            {
+              "action_type": "post_reaction",
+              "value": "1"
+            }
+          ],
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "feed"
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "22",
+          "reach": "22",
+          "clicks": "0",
+          "spend": "110",
+          "actions": [
+            {
+              "action_type": "page_engagement",
+              "value": "3"
+            },
+            {
+              "action_type": "post_engagement",
+              "value": "3"
+            },
+            {
+              "action_type": "video_view",
+              "value": "3"
+            }
+          ],
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_explore"
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "3",
+          "reach": "3",
+          "clicks": "0",
+          "spend": "16",
+          "actions": [
+            {
+              "action_type": "page_engagement",
+              "value": "1"
+            },
+            {
+              "action_type": "post_engagement",
+              "value": "1"
+            },
+            {
+              "action_type": "video_view",
+              "value": "1"
+            }
+          ],
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_profile_feed"
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "4243",
+          "reach": "3917",
+          "clicks": "159",
+          "spend": "22792",
+          "actions": [
+            {
+              "action_type": "page_engagement",
+              "value": "1131"
+            },
+            {
+              "action_type": "post_engagement",
+              "value": "1131"
+            },
+            {
+              "action_type": "post",
+              "value": "4"
+            },
+            {
+              "action_type": "post_interaction_gross",
+              "value": "11"
+            },
+            {
+              "action_type": "link_click",
+              "value": "170"
+            },
+            {
+              "action_type": "video_view",
+              "value": "950"
+            },
+            {
+              "action_type": "post_reaction",
+              "value": "7"
+            }
+          ],
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_reels"
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "65",
+          "reach": "57",
+          "clicks": "2",
+          "spend": "591",
+          "actions": [
+            {
+              "action_type": "page_engagement",
+              "value": "10"
+            },
+            {
+              "action_type": "post_engagement",
+              "value": "10"
+            },
+            {
+              "action_type": "link_click",
+              "value": "2"
+            },
+            {
+              "action_type": "video_view",
+              "value": "8"
+            }
+          ],
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_stories"
+        }
+      }
+    ],
+    "Instagram Ads API": [
+      {
+        "json": {
+          "data": [
+            {
+              "campaign_id": "120215435670310380",
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "adset_id": "120215435670440380",
+              "adset_name": "Instagram Post",
+              "ad_id": "120215435670540380",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "264",
+              "reach": "237",
+              "clicks": "12",
+              "spend": "2714",
+              "actions": [
+                {
+                  "action_type": "page_engagement",
+                  "value": "76"
+                },
+                {
+                  "action_type": "post_engagement",
+                  "value": "76"
+                },
+                {
+                  "action_type": "post_interaction_gross",
+                  "value": "1"
+                },
+                {
+                  "action_type": "link_click",
+                  "value": "13"
+                },
+                {
+                  "action_type": "video_view",
+                  "value": "62"
+                },
+                {
+                  "action_type": "post_reaction",
+                  "value": "1"
+                }
+              ],
+              "date_start": "2025-01-01",
+              "date_stop": "2025-08-11",
+              "publisher_platform": "instagram",
+              "platform_position": "feed"
+            },
+            {
+              "campaign_id": "120215435670310380",
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "adset_id": "120215435670440380",
+              "adset_name": "Instagram Post",
+              "ad_id": "120215435670540380",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "22",
+              "reach": "22",
+              "clicks": "0",
+              "spend": "110",
+              "actions": [
+                {
+                  "action_type": "page_engagement",
+                  "value": "3"
+                },
+                {
+                  "action_type": "post_engagement",
+                  "value": "3"
+                },
+                {
+                  "action_type": "video_view",
+                  "value": "3"
+                }
+              ],
+              "date_start": "2025-01-01",
+              "date_stop": "2025-08-11",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_explore"
+            },
+            {
+              "campaign_id": "120215435670310380",
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "adset_id": "120215435670440380",
+              "adset_name": "Instagram Post",
+              "ad_id": "120215435670540380",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "3",
+              "reach": "3",
+              "clicks": "0",
+              "spend": "16",
+              "actions": [
+                {
+                  "action_type": "page_engagement",
+                  "value": "1"
+                },
+                {
+                  "action_type": "post_engagement",
+                  "value": "1"
+                },
+                {
+                  "action_type": "video_view",
+                  "value": "1"
+                }
+              ],
+              "date_start": "2025-01-01",
+              "date_stop": "2025-08-11",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_profile_feed"
+            },
+            {
+              "campaign_id": "120215435670310380",
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "adset_id": "120215435670440380",
+              "adset_name": "Instagram Post",
+              "ad_id": "120215435670540380",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "4243",
+              "reach": "3917",
+              "clicks": "159",
+              "spend": "22792",
+              "actions": [
+                {
+                  "action_type": "page_engagement",
+                  "value": "1131"
+                },
+                {
+                  "action_type": "post_engagement",
+                  "value": "1131"
+                },
+                {
+                  "action_type": "post",
+                  "value": "4"
+                },
+                {
+                  "action_type": "post_interaction_gross",
+                  "value": "11"
+                },
+                {
+                  "action_type": "link_click",
+                  "value": "170"
+                },
+                {
+                  "action_type": "video_view",
+                  "value": "950"
+                },
+                {
+                  "action_type": "post_reaction",
+                  "value": "7"
+                }
+              ],
+              "date_start": "2025-01-01",
+              "date_stop": "2025-08-11",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_reels"
+            },
+            {
+              "campaign_id": "120215435670310380",
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "adset_id": "120215435670440380",
+              "adset_name": "Instagram Post",
+              "ad_id": "120215435670540380",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "65",
+              "reach": "57",
+              "clicks": "2",
+              "spend": "591",
+              "actions": [
+                {
+                  "action_type": "page_engagement",
+                  "value": "10"
+                },
+                {
+                  "action_type": "post_engagement",
+                  "value": "10"
+                },
+                {
+                  "action_type": "link_click",
+                  "value": "2"
+                },
+                {
+                  "action_type": "video_view",
+                  "value": "8"
+                }
+              ],
+              "date_start": "2025-01-01",
+              "date_stop": "2025-08-11",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_stories"
+            }
+          ],
+          "paging": {
+            "cursors": {
+              "before": "MAZDZD",
+              "after": "NAZDZD"
+            }
+          }
+        }
+      }
+    ],
+    "insights": [
+      {
+        "json": {
+          "data": [
+            {
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "264",
+              "clicks": "12",
+              "spend": "2714",
+              "date_start": "2025-01-01",
+              "date_stop": "2025-01-30",
+              "publisher_platform": "instagram",
+              "platform_position": "feed"
+            },
+            {
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "22",
+              "clicks": "0",
+              "spend": "110",
+              "date_start": "2025-01-01",
+              "date_stop": "2025-01-30",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_explore"
+            },
+            {
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "3",
+              "clicks": "0",
+              "spend": "16",
+              "date_start": "2025-01-01",
+              "date_stop": "2025-01-30",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_profile_feed"
+            },
+            {
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "4243",
+              "clicks": "159",
+              "spend": "22792",
+              "date_start": "2025-01-01",
+              "date_stop": "2025-01-30",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_reels"
+            },
+            {
+              "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+              "impressions": "65",
+              "clicks": "2",
+              "spend": "591",
+              "date_start": "2025-01-01",
+              "date_stop": "2025-01-30",
+              "publisher_platform": "instagram",
+              "platform_position": "instagram_stories"
+            }
+          ],
+          "paging": {
+            "cursors": {
+              "before": "MAZDZD",
+              "after": "NAZDZD"
+            }
+          }
+        }
+      }
+    ],
+    "Edit Fields": [
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "264",
+          "reach": "237",
+          "clicks": "12",
+          "spend": "2714",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "feed",
+          "page_engagement": "76",
+          "post_engagement": "76",
+          "post_interaction_gross": "1",
+          "link_click": "13",
+          "video_view": "62",
+          "post_reaction": "1"
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "22",
+          "reach": "22",
+          "clicks": "0",
+          "spend": "110",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_explore",
+          "page_engagement": "3",
+          "post_engagement": "3",
+          "video_view": "3",
+          "undefined": null
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "3",
+          "reach": "3",
+          "clicks": "0",
+          "spend": "16",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_profile_feed",
+          "page_engagement": "1",
+          "post_engagement": "1",
+          "video_view": "1",
+          "undefined": null
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "4243",
+          "reach": "3917",
+          "clicks": "159",
+          "spend": "22792",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_reels",
+          "page_engagement": "1131",
+          "post_engagement": "1131",
+          "post": "4",
+          "post_interaction_gross": "11",
+          "link_click": "170",
+          "video_view": "950"
+        }
+      },
+      {
+        "json": {
+          "campaign_id": "120215435670310380",
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "adset_id": "120215435670440380",
+          "adset_name": "Instagram Post",
+          "ad_id": "120215435670540380",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "65",
+          "reach": "57",
+          "clicks": "2",
+          "spend": "591",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-08-11",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_stories",
+          "page_engagement": "10",
+          "post_engagement": "10",
+          "link_click": "2",
+          "video_view": "8",
+          "undefined": null
+        }
+      }
+    ],
+    "Split Out1": [
+      {
+        "json": {
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "264",
+          "clicks": "12",
+          "spend": "2714",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-01-30",
+          "publisher_platform": "instagram",
+          "platform_position": "feed"
+        }
+      },
+      {
+        "json": {
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "22",
+          "clicks": "0",
+          "spend": "110",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-01-30",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_explore"
+        }
+      },
+      {
+        "json": {
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "3",
+          "clicks": "0",
+          "spend": "16",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-01-30",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_profile_feed"
+        }
+      },
+      {
+        "json": {
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "4243",
+          "clicks": "159",
+          "spend": "22792",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-01-30",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_reels"
+        }
+      },
+      {
+        "json": {
+          "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+          "impressions": "65",
+          "clicks": "2",
+          "spend": "591",
+          "date_start": "2025-01-01",
+          "date_stop": "2025-01-30",
+          "publisher_platform": "instagram",
+          "platform_position": "instagram_stories"
+        }
+      }
+    ],
+    "Create a record": [
+      {
+        "json": {
+          "id": "recgGSyJ3Zd73YwLo",
+          "createdTime": "2025-08-11T03:08:11.000Z",
+          "fields": {
+            "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "date_start": "2024-12-31T15:00:00.000Z",
+            "date_stop": "2025-01-29T15:00:00.000Z",
+            "impressions": 264,
+            "clicks": 12,
+            "spend": 2714,
+            "position": "feed"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recmW4XmU30s5qu7R",
+          "createdTime": "2025-08-11T03:08:11.000Z",
+          "fields": {
+            "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "date_start": "2024-12-31T15:00:00.000Z",
+            "date_stop": "2025-01-29T15:00:00.000Z",
+            "impressions": 22,
+            "clicks": 0,
+            "spend": 110,
+            "position": "instagram_explore"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recqO5Y4rn6DVYpYb",
+          "createdTime": "2025-08-11T03:08:11.000Z",
+          "fields": {
+            "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "date_start": "2024-12-31T15:00:00.000Z",
+            "date_stop": "2025-01-29T15:00:00.000Z",
+            "impressions": 3,
+            "clicks": 0,
+            "spend": 16,
+            "position": "instagram_profile_feed"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recbCKH5hmTHkz0ig",
+          "createdTime": "2025-08-11T03:08:12.000Z",
+          "fields": {
+            "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "date_start": "2024-12-31T15:00:00.000Z",
+            "date_stop": "2025-01-29T15:00:00.000Z",
+            "impressions": 4243,
+            "clicks": 159,
+            "spend": 22792,
+            "position": "instagram_reels"
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "recmttPtsCfNj5YDx",
+          "createdTime": "2025-08-11T03:08:12.000Z",
+          "fields": {
+            "campaign_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "ad_name": "Instagram 게시물: 올해 3% 만큼의 잔디가 자랐습니다.",
+            "date_start": "2024-12-31T15:00:00.000Z",
+            "date_stop": "2025-01-29T15:00:00.000Z",
+            "impressions": 65,
+            "clicks": 2,
+            "spend": 591,
+            "position": "instagram_stories"
+          }
+        }
+      }
+    ],
+    "me/adaccounts": [
+      {
+        "json": {
+          "data": [
+            {
+              "account_id": "556216297176338",
+              "id": "act_556216297176338"
+            }
+          ],
+          "paging": {
+            "cursors": {
+              "before": "MTIwMjE0NzY0Nzg5NzIwMzgw",
+              "after": "MTIwMjE0NzY0Nzg5NzIwMzgw"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "me/adaccounts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "me/adaccounts": {
+      "main": [
+        [
+          {
+            "node": "insights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Ads API": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insights": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2fe3ef30-f766-4026-aca5-db622d16363b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a8fb7fd31983317952de5fe842ded2643867d47ad03573d086b1bc8ab17aa03b"
+  },
+  "id": "gUjsmbCSlmOmrXyM",
+  "tags": [
+    {
+      "createdAt": "2025-05-20T05:37:20.732Z",
+      "updatedAt": "2025-05-20T05:37:20.732Z",
+      "id": "tqx1yZajxcxP5kJn",
+      "name": "패스트캠퍼스"
+    }
+  ]
+}
