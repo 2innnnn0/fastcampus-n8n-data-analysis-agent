@@ -55,7 +55,7 @@ n8n 데이터분석 AI Agent 프로젝트
 이 프로젝트는 강의 수강을 위한 예제로 제작되었으며,  
 추가적인 기여나 피드백은 언제든 환영합니다.
 
-- 문의: `data.popcorn@gmail.com`
+- 문의: `datapopcorn@gmail.com`
 - 강사: 데이터팝콘 (n8n 글로벌 앰버서더)
 
 ---
